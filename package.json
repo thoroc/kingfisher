@@ -1,0 +1,16 @@
+{
+  "name": "my-wing-app",
+  "version": "0.0.0",
+  "description": "A description of my Wing application",
+  "author": "Your Name",
+  "license": "MIT",
+  "wing": true,
+  "script": {
+    "build": "wing compile",
+    "console": "wing it",
+    "test": "wing test"
+  },
+  "dependencies": {
+    "@winglibs/dynamodb": "^0.1.7"
+  }
+}

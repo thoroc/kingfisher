@@ -1,6 +1,6 @@
 bring cloud;
 bring "./IRestApiAdapter.w" as restApiAdapter;
-bring "../core/Session.w" as Session;
+bring "../core" as core;
 
 pub class SessionApiAdapter impl restApiAdapter.IRestApiAdapter {
     _h: cloud.IFunctionHandler;
@@ -13,8 +13,8 @@ pub class SessionApiAdapter impl restApiAdapter.IRestApiAdapter {
         return sessionId;
     }
 
-    inflight static _html(sessionId: str): str {
-        return Session.htmlFormatter(sessionId);
+    inflight static _textHtml(sessionId: str): str {
+        return core.Session.formatHtml(sessionId);
     }
 
     inflight static _applicationJson(sessionId: str): str {
@@ -27,11 +27,13 @@ pub class SessionApiAdapter impl restApiAdapter.IRestApiAdapter {
 
     inflight _findContentType(formatters: Map<inflight (str): str>, headers: Map<str>): str {
         let contentTypes = (headers.tryGet("Accept") ?? "").split(",");
+
         for ct in contentTypes {
             if formatters.has(ct) {
                 return ct;
             }
         }
+
         return "text/plain";
     }
 
@@ -39,7 +41,7 @@ pub class SessionApiAdapter impl restApiAdapter.IRestApiAdapter {
         let sessionId = this._h.handle(id) ?? "";  // TODO: guard against empty greeting or what??
         let formatters = {
             "text/plain" => SessionApiAdapter._textPlain,
-            "text/html"  => SessionApiAdapter._html,
+            "text/html"  => SessionApiAdapter._textHtml,
             "application/json" => SessionApiAdapter._applicationJson
         };
 

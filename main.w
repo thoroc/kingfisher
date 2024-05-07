@@ -1,28 +1,17 @@
-bring cloud;
-bring dynamodb;
-bring expect;
+bring "./core" as core;
+bring "./adapters" as adapters;
+bring "./handlers" as handlers;
+bring "./ports" as ports;
 
-let db = new dynamodb.Table(
-  name: "MyTable",
-  attributes: [
-    {
-      name: "ID",
-      type: "S"
-    }
-  ],
-  hashKey: "ID"
-);
 
-let fn = new cloud.Function(inflight () => {
-  let record = db.get(
-    Key: {
-      ID: "id"
-    }
-  );
+pub class Session {
+  pub api: ports.SessionRestApi;
 
-  return "hello, world";
-});
-
-test "fn returns hello" {
-  expect.equal(fn.invoke(""), "hello, world");
+  new() {
+    let getSessionHandler = new handlers.GetSessionHandler();
+    let sessionApiAdapter = new adapters.SessionApiAdapter(getSessionHandler);
+    this.api = new ports.SessionRestApi(sessionApiAdapter);
+  }
 }
+
+let session = new Session();

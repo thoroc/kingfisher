@@ -1,16 +1,23 @@
 {
-  "name": "my-wing-app",
-  "version": "0.0.0",
-  "description": "A description of my Wing application",
-  "author": "Your Name",
+  "name": "redbull",
+  "version": "0.0.1",
+  "description": "Redbull gives you wings!",
+  "author": "thoroc",
   "license": "MIT",
   "wing": true,
-  "script": {
-    "build": "wing compile",
-    "console": "wing it",
-    "test": "wing test"
+  "scripts": {
+    "build": "tsc",
+    "test": "jest"
   },
   "dependencies": {
-    "@winglibs/dynamodb": "^0.1.7"
-  }
+    "@winglibs/dynamodb": "^0.1.7",
+    "jest": "^29.7.0",
+    "typescript": "^5.4.5"
+  },
+  "devDependencies": {
+    "@types/jest": "^29.5.12",
+    "@types/node": "^20.12.7",
+    "ts-jest": "^29.1.2"
+  },
+  "packageManager": "pnpm@9.0.5"
 }

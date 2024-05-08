@@ -19,6 +19,7 @@ pub class SessionRestApi{
 
     pub inflight invoke(sessionId: str): str {
         let result = http.get("{this._apiUrl}/session?id={sessionId}");
+
         assert(200 == result.status);
 
         return result.body;

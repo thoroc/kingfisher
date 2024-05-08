@@ -1,3 +1,7 @@
-export function makeSession(sessionId: string): string {
-  return `SessionId: ${sessionId}!`;
+export type Session = {
+  sessionId: string;
+};
+
+export function makeSession(session: Session): string {
+  return `SessionId: ${session.sessionId}!`;
 }

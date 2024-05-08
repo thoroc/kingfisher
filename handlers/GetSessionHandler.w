@@ -7,10 +7,12 @@ pub class GetSessionHandler impl cloud.IFunctionHandler {
       return "nil";
     }
 
-    let id: Json = Json.parse(event ?? "nil");
+    log("Received event: {event!}");
 
-    log("Received id: {id}");
-    let message = "id: {id}";
+    let session: Json = Json.parse(event ?? "nil");
+
+    log("Received id: {session}");
+    let message = "id: {session}";
 
     return message;
   }

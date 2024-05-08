@@ -1,10 +1,10 @@
-import { makeSession } from './makeSession';
+import { Session, makeSession } from './makeSession';
 
 test('makeSession should return the correct session string', () => {
-  const sessionId = '12345';
+  const session: Session = { sessionId: '12345' };
   const expected = 'SessionId: 12345!';
 
-  const result = makeSession(sessionId);
+  const result = makeSession(session);
 
   expect(result).toBe(expected);
 });

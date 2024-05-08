@@ -1,0 +1,13 @@
+{
+  "name": "redbull",
+  "version": "0.0.1",
+  "description": "Redbull gives you wings!",
+  "author": "thoroc",
+  "license": "MIT",
+  "wing": true,
+  "scripts": {
+    "dev": "wing it",
+    "compile": "wing compile",
+    "test": "wing test"
+  }
+}

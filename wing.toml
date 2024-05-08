@@ -1,4 +1,0 @@
-[tf-aws]
-vpc = "new"
-vpc_lambda = true
-vpc_api_gateway = true

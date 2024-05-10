@@ -5,6 +5,8 @@ let sessionApi = new cloud.Api();
 
 let basePath = "/sessions";
 
+let getSessionHandler = new handlers.GetSessionHandler();
+
 sessionApi.get(basePath, inflight (request: cloud.ApiRequest): cloud.ApiResponse => {
   if (request.query.has("sessionId")) {
     let sessionId = request.query.get("sessionId");
@@ -16,11 +18,9 @@ sessionApi.get(basePath, inflight (request: cloud.ApiRequest): cloud.ApiResponse
       };
     }
 
-    let output = handlers.GetSessionHandler.invoke(sessionId);
-
     return cloud.ApiResponse {
       status: 200,
-      body: output
+      body: getSessionHandler.handle(sessionId)
     };
   }
 

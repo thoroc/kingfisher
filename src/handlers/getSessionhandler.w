@@ -1,6 +1,7 @@
+bring cloud;
 
-pub class GetSessionHandler {
-  pub static inflight invoke(event: str?): str? {
+pub class GetSessionHandler impl cloud.IFunctionHandler {
+  pub inflight handle(event: str?): str? {
     return "Hello {event!} from the Handler!";
   }
 }

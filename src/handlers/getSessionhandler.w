@@ -21,8 +21,6 @@ pub class GetSessionHandler impl cloud.IFunctionHandler {
       return Json.stringify({"error": "No record for sessionId={sessionId!}"});
     }
 
-    let session = Json.stringify(data.Item);
-
-    return Json.stringify(session);
+    return Json.stringify(data.Item);
   }
 }

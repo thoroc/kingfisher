@@ -34,7 +34,10 @@ sessionApi.get(basePath, inflight (request: cloud.ApiRequest): cloud.ApiResponse
 
     return cloud.ApiResponse {
       status: 200,
-      body: "Fetching data for sessionId={getSessionHandler.handle(sessionId)!}"
+      headers: {
+        "Content-Type" => "application/json"
+      },
+      body: Json.stringify({sessionId: sessionId})
     };
   }
 
@@ -44,11 +47,14 @@ sessionApi.get(basePath, inflight (request: cloud.ApiRequest): cloud.ApiResponse
 });
 
 sessionApi.post("{basePath}", inflight (request: cloud.ApiRequest): cloud.ApiResponse => {
-  let output = postSessionHandler.handle();
+  let sessionId = postSessionHandler.handle();
 
   return cloud.ApiResponse {
     status: 201,
-    body: "Created new sessionId: {output!}"
+    headers: {
+      "Content-Type" => "application/json"
+    },
+    body: Json.stringify({sessionId: sessionId})
   };
 
 });
@@ -61,7 +67,10 @@ sessionApi.put("{basePath}/:sessionId", inflight (request: cloud.ApiRequest): cl
 
     return cloud.ApiResponse {
       status: 200,
-      body: "Updated session with sessionId: {sessionId}"
+      headers: {
+        "Content-Type" => "application/json"
+      },
+      body: Json.stringify({sessionId: sessionId})
     };
   }
 

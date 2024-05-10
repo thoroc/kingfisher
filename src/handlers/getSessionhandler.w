@@ -2,6 +2,7 @@ bring cloud;
 
 pub class GetSessionHandler impl cloud.IFunctionHandler {
   pub inflight handle(event: str?): str? {
-    return "Hello {event!} from the GetSessionHandler!";
+    log("Hello {event!} from the GetSessionHandler!");
+    return event;
   }
 }

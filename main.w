@@ -7,6 +7,7 @@ let basePath = "/sessions";
 
 let getSessionHandler = new handlers.GetSessionHandler();
 let postSessionHandler = new handlers.PostSessionHandler();
+let putSessionHandler = new handlers.PutSessionHandler();
 
 sessionApi.get(basePath, inflight (request: cloud.ApiRequest): cloud.ApiResponse => {
   if (request.query.has("sessionId")) {
@@ -21,7 +22,7 @@ sessionApi.get(basePath, inflight (request: cloud.ApiRequest): cloud.ApiResponse
 
     return cloud.ApiResponse {
       status: 200,
-      body: getSessionHandler.handle(sessionId)
+      body: "Fetching data for sessionId={getSessionHandler.handle(sessionId)!}"
     };
   }
 
@@ -30,15 +31,25 @@ sessionApi.get(basePath, inflight (request: cloud.ApiRequest): cloud.ApiResponse
   };
 });
 
-sessionApi.post("{basePath}/:sessionId", inflight (request: cloud.ApiRequest): cloud.ApiResponse => {
+sessionApi.post("{basePath}", inflight (request: cloud.ApiRequest): cloud.ApiResponse => {
+  let output = postSessionHandler.handle();
+
+  return cloud.ApiResponse {
+    status: 201,
+    body: "Created new sessionId: {output!}"
+  };
+
+});
+
+sessionApi.put("{basePath}/:sessionId", inflight (request: cloud.ApiRequest): cloud.ApiResponse => {
   if (request.vars.has("sessionId")) {
     let sessionId = request.vars.get("sessionId");
-    let output = postSessionHandler.handle(sessionId);
+    let output = putSessionHandler.handle(sessionId);
     log(output!);
 
     return cloud.ApiResponse {
-      status: 201,
-      body: "Created new sessionId"
+      status: 200,
+      body: "Updated session with sessionId: {sessionId}"
     };
   }
 

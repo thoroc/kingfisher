@@ -6,6 +6,7 @@ let sessionApi = new cloud.Api();
 let basePath = "/sessions";
 
 let getSessionHandler = new handlers.GetSessionHandler();
+let postSessionHandler = new handlers.PostSessionHandler();
 
 sessionApi.get(basePath, inflight (request: cloud.ApiRequest): cloud.ApiResponse => {
   if (request.query.has("sessionId")) {
@@ -31,6 +32,10 @@ sessionApi.get(basePath, inflight (request: cloud.ApiRequest): cloud.ApiResponse
 
 sessionApi.post("{basePath}/:sessionId", inflight (request: cloud.ApiRequest): cloud.ApiResponse => {
   if (request.vars.has("sessionId")) {
+    let sessionId = request.vars.get("sessionId");
+    let output = postSessionHandler.handle(sessionId);
+    log(output!);
+
     return cloud.ApiResponse {
       status: 201,
       body: "Created new sessionId"

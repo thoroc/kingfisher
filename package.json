@@ -14,6 +14,7 @@
     "tf:plan": "terraform -chdir=./target/main.tfaws plan"
   },
   "dependencies": {
-    "@winglibs/dynamodb": "^0.1.7"
+    "@winglibs/dynamodb": "^0.1.7",
+    "winglang": "^0.73.41"
   }
 }

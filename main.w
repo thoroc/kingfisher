@@ -11,26 +11,16 @@ let getSessionsHandler = new cloud.Function(inflight (event: str?): str? => {
 });
 
 sessionApi.get(basePath, inflight (request: cloud.ApiRequest): cloud.ApiResponse => {
-  
-  log("Method: {request.method}");
+  if (request.query.has("sessionId")) {
+    let sessionId = request.query.get("sessionId");
 
-  log("Path: {request.path}");
-
-  let queryEntries: str = request.query.entries().join();
-  log("Query: {queryEntries}");
-
-  let sessionIdFromQuery = (() => {
-    if (request.query.has("sessionId")) {
-      return request.query.get("sessionId");
-    }
-
-    return "sessionId is not available in the query";
-  })();
-  log("sessionId from Query: {sessionIdFromQuery}");
-
+    return cloud.ApiResponse {
+      status: 200,
+      body: "Hello {sessionId}"
+    };
+  }
 
   return cloud.ApiResponse {
-    status: 200,
-    body: "Hello world!"
+    status: 404,
   };
 });

@@ -1,15 +1,25 @@
 bring cloud;
+bring ex;
 bring "./src/handlers" as handlers;
 
 let companyName = "ACME";
 
 let sessionApi = new cloud.Api() as "{companyName}-Session-Api";
+let sessionTable = new ex.Table(
+  name: "sessions",
+  primaryKey: "id",
+  columns: {
+    "sessionId": ex.ColumnType.STRING,
+    "createdAt": ex.ColumnType.DATE,
+    "updatedAt": ex.ColumnType.DATE,
+  }
+) as "{companyName}-Session-Table";
 
 let basePath = "/sessions";
 
-let getSessionHandler = new handlers.GetSessionHandler() as "{companyName}-GET-Session";
-let postSessionHandler = new handlers.PostSessionHandler() as "{companyName}-POST-Session";
-let putSessionHandler = new handlers.PutSessionHandler() as "{companyName}-PUT-Session";
+let getSessionHandler = new handlers.GetSessionHandler(sessionTable) as "{companyName}-GET-Session";
+let postSessionHandler = new handlers.PostSessionHandler(sessionTable) as "{companyName}-POST-Session";
+let putSessionHandler = new handlers.PutSessionHandler(sessionTable) as "{companyName}-PUT-Session";
 
 sessionApi.get(basePath, inflight (request: cloud.ApiRequest): cloud.ApiResponse => {
   if (request.query.has("sessionId")) {

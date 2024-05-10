@@ -6,8 +6,11 @@
   "license": "MIT",
   "wing": true,
   "scripts": {
+    "compile": "wing compile --platform tf-aws main.w",
     "dev": "wing it",
-    "compile": "wing compile",
-    "test": "wing test"
+    "test": "wing test",
+    "tf:apply": "terraform -chdir=./target/main.tfaws apply",
+    "tf:init": "terraform -chdir=./target/main.tfaws init",
+    "tf:plan": "terraform -chdir=./target/main.tfaws plan"
   }
 }

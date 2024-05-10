@@ -38,6 +38,9 @@ sessionApi.get(basePath, inflight (request: cloud.ApiRequest): cloud.ApiResponse
     if (Json.parse(response!).has("error")) {
       return cloud.ApiResponse {
         status: 400,
+        headers: {
+          "Content-Type" => "application/json"
+        },
         body: response
       };
     }

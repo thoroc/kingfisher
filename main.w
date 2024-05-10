@@ -4,7 +4,9 @@ let sessionApi = new cloud.Api();
 
 let basePath = "/sessions";
 
-let getSessionsHandler = new cloud.Function(inflight () => {
+let getSessionsHandler = new cloud.Function(inflight (event: str?): str? => {
+  log(event!);
+
   return "hello World!";
 });
 
@@ -14,7 +16,7 @@ sessionApi.get(basePath, inflight (request: cloud.ApiRequest): cloud.ApiResponse
 
   log("Path: {request.path}");
 
-  let queryEntries = request.query.entries().join();
+  let queryEntries: str = request.query.entries().join();
   log("Query: {queryEntries}");
 
   let sessionIdFromQuery = (() => {
@@ -26,27 +28,6 @@ sessionApi.get(basePath, inflight (request: cloud.ApiRequest): cloud.ApiResponse
   })();
   log("sessionId from Query: {sessionIdFromQuery}");
 
-  let varsEntries = request.vars.entries().join();
-  log("Vars: {varsEntries}");
-
-  log("Vars Keys: {request.vars.keys().join()}");
-
-  let sessionIdFromVars = (() => {
-    if (request.vars.has("sessionId")) {
-      return request.vars.get("sessionId");
-    }
-
-    return "sessionId is not available in the vars";
-  })(); 
-
-  log("SessionId from Vars: {sessionIdFromVars}");
-
-  log("Body: {request.body!}");
-
-  let headers = request?.headers?.entries()?.join();
-  log("Headers: {headers!}");
-  let headerKeys = request?.headers?.keys()?.join();
-  log("Header available: {headerKeys!}");
 
   return cloud.ApiResponse {
     status: 200,

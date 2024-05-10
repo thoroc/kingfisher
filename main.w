@@ -1,13 +1,15 @@
 bring cloud;
 bring "./src/handlers" as handlers;
 
-let sessionApi = new cloud.Api();
+let companyName = "ACME";
+
+let sessionApi = new cloud.Api() as "{companyName}-Session-Api";
 
 let basePath = "/sessions";
 
-let getSessionHandler = new handlers.GetSessionHandler();
-let postSessionHandler = new handlers.PostSessionHandler();
-let putSessionHandler = new handlers.PutSessionHandler();
+let getSessionHandler = new handlers.GetSessionHandler() as "{companyName}-GET-Session";
+let postSessionHandler = new handlers.PostSessionHandler() as "{companyName}-POST-Session";
+let putSessionHandler = new handlers.PutSessionHandler() as "{companyName}-PUT-Session";
 
 sessionApi.get(basePath, inflight (request: cloud.ApiRequest): cloud.ApiResponse => {
   if (request.query.has("sessionId")) {

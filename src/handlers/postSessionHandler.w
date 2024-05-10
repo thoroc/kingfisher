@@ -1,26 +1,28 @@
 bring cloud;
-bring ex;
+bring dynamodb;
 bring util;
 bring "../types.w" as types;
 
 
 pub class PostSessionHandler impl cloud.IFunctionHandler {
-  _table: ex.Table;
+  _table: dynamodb.Table;
 
-  new(table: ex.Table) {
+  new(table: dynamodb.Table) {
     this._table = table;
   }
 
   pub inflight handle(event: str?): str? {
     let sessionId = util.uuidv4();
-    log("Hello {sessionId} from the PostSessionHandler");
+    log("Creating new session with sessionId={sessionId}");
 
     let data = types.Session {
       sessionId: sessionId, 
       createdAt: std.Datetime.utcNow().toIso()
     };
 
-    this._table.insert(sessionId, Json.stringify(data));
+    this._table.put(
+      Item: data
+    );
 
     return sessionId;
   }

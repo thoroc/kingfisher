@@ -1,15 +1,15 @@
 bring cloud;
-bring ex;
+bring dynamodb;
 
 pub class PutSessionHandler impl cloud.IFunctionHandler {
-  _table: ex.Table;
+  _table: dynamodb.Table;
 
-  new(table: ex.Table) {
+  new(table: dynamodb.Table) {
     this._table = table;
   }
 
-  pub inflight handle(event: str?): str? {
-    log("Hello {event!} from the PutSessionHandler!");
-    return event;
+  pub inflight handle(sessionId: str?): str? {
+    log("Updating session with sessionId={sessionId!}");
+    return sessionId;
   }
 }

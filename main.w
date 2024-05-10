@@ -1,18 +1,19 @@
 bring cloud;
-bring ex;
+bring dynamodb;
 bring "./src/handlers" as handlers;
 
 let companyName = "ACME";
 
 let sessionApi = new cloud.Api() as "{companyName}-Session-Api";
-let sessionTable = new ex.Table(
+let sessionTable = new dynamodb.Table(
   name: "sessions",
-  primaryKey: "id",
-  columns: {
-    "sessionId": ex.ColumnType.STRING,
-    "createdAt": ex.ColumnType.DATE,
-    "updatedAt": ex.ColumnType.DATE,
-  }
+  attributes: [
+    {
+      name: "sessionId",
+      type: "S"
+    },
+  ],
+  hashKey: "sessionId"
 ) as "{companyName}-Session-Table";
 
 let basePath = "/sessions";
@@ -32,12 +33,21 @@ sessionApi.get(basePath, inflight (request: cloud.ApiRequest): cloud.ApiResponse
       };
     }
 
+    let response = getSessionHandler(sessionId);
+
+    if (Json.parse(response!).has("error")) {
+      return cloud.ApiResponse {
+        status: 400,
+        body: response
+      };
+    }
+
     return cloud.ApiResponse {
       status: 200,
       headers: {
         "Content-Type" => "application/json"
       },
-      body: Json.stringify({sessionId: sessionId})
+      body: response
     };
   }
 

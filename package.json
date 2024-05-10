@@ -12,5 +12,8 @@
     "tf:apply": "terraform -chdir=./target/main.tfaws apply",
     "tf:init": "terraform -chdir=./target/main.tfaws init",
     "tf:plan": "terraform -chdir=./target/main.tfaws plan"
+  },
+  "dependencies": {
+    "@winglibs/dynamodb": "^0.1.7"
   }
 }

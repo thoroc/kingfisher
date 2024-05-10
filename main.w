@@ -29,6 +29,9 @@ sessionApi.get(basePath, inflight (request: cloud.ApiRequest): cloud.ApiResponse
     if (sessionId == "") {
       return cloud.ApiResponse {
         status: 400,
+        headers: {
+          "Content-Type" => "text/plain"
+        },
         body: "No sessionId provided"
       };
     }
@@ -56,6 +59,9 @@ sessionApi.get(basePath, inflight (request: cloud.ApiRequest): cloud.ApiResponse
 
   return cloud.ApiResponse {
     status: 404,
+    headers: {
+      "Content-Type" => "text/plain"
+    },
   };
 });
 
@@ -89,5 +95,8 @@ sessionApi.put("{basePath}/:sessionId", inflight (request: cloud.ApiRequest): cl
 
   return cloud.ApiResponse {
     status: 404,
+    headers: {
+      "Content-Type" => "text/plain"
+    },
   };
 });

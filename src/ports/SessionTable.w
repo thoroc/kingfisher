@@ -18,7 +18,7 @@ pub class SessionTable impl types.ISessionTable{
     );
   }
 
-  pub inflight getSession(sessionId: str): types.Session {
+  pub inflight getSession(sessionId: str): types.SessionResponse {
     let response = this._table.get(
       Key: {
         sessionId: sessionId
@@ -29,14 +29,14 @@ pub class SessionTable impl types.ISessionTable{
       throw("error: No record for sessionId={sessionId}");
     }
 
-    return types.Session.fromJson(response.Item);
+    return types.SessionResponse.fromJson(response.Item);
   }
 
-  pub inflight updateSession(sessionId: str): types.Session {
+  pub inflight updateSession(sessionId: str): types.SessionResponse {
 
     let currSession = this.getSession(sessionId);
 
-    let updatedSession: types.Session = {
+    let updatedSession: types.SessionResponse = {
       sessionId: sessionId,
       createdAt: currSession.createdAt,
       updatedAt: std.Datetime.utcNow().toIso(),
@@ -49,11 +49,11 @@ pub class SessionTable impl types.ISessionTable{
     return updatedSession;
   }
 
-  pub inflight createSession(): types.Session {
+  pub inflight createSession(): types.SessionResponse {
     let sessionId = util.uuidv4();
     let createdAt = std.Datetime.utcNow().toIso();
 
-    let session = {
+    let session: types.SessionResponse = {
       sessionId: sessionId,
       createdAt: createdAt,
     };

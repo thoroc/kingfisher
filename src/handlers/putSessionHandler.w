@@ -1,5 +1,4 @@
 bring cloud;
-bring dynamodb;
 bring "../types.w" as types;
 
 pub class PutSessionHandler impl cloud.IFunctionHandler {
@@ -10,9 +9,9 @@ pub class PutSessionHandler impl cloud.IFunctionHandler {
   }
 
   pub inflight handle(sessionId: str?): str? {
-    log("Updating session with sessionId={sessionId!}");
+    let session: types.SessionResponse = this._table.updateSession(sessionId!);
 
-    let session = this._table.updateSession(sessionId!);
+    log("Updated session with sessionId={session.sessionId}");
 
     return Json.stringify(session);
   }

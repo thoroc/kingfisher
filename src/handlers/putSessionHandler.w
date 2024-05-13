@@ -25,15 +25,17 @@ pub class PutSessionHandler impl cloud.IFunctionHandler {
     let session = data.Item;
 
     let updated = types.Session {
-      sessionId: Json.stringify(session?.get("sessionId")),
-      createdAt: Json.stringify(session?.get("createdAt")),
+      sessionId: str.fromJson(session?.get("sessionId")),
+      createdAt: str.fromJson(session?.get("createdAt")),
       updatedAt: std.Datetime.utcNow().toIso()
     };
+
+    log(Json.stringify(updated));
 
     this._table.put(
       Item: updated
     );
 
-    return sessionId;
+    return Json.stringify(updated);
   }
 }

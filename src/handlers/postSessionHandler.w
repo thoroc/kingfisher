@@ -14,19 +14,17 @@ pub class PostSessionHandler impl cloud.IFunctionHandler {
   pub inflight handle(event: str?): str? {
     let sessionId = util.uuidv4();
 
-    log(util.env("WING_TARGET"));
-
     log("Creating new session with sessionId={sessionId}");
 
-    let data = types.Session {
+    let session = types.Session {
       sessionId: sessionId, 
       createdAt: std.Datetime.utcNow().toIso()
     };
 
     this._table.put(
-      Item: data
+      Item: session
     );
 
-    return sessionId;
+    return Json.stringify(session);
   }
 }

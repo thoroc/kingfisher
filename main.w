@@ -4,8 +4,8 @@ bring util;
 bring "./src/handlers" as handlers;
 bring "./src/types.w" as types;
 
-let companyName = "ACME";
-let AwsRegion = "eu-west-1";
+let companyName = util.env("ORGANISATION_NAME");
+let AwsRegion = util.env("AWS_REGION");
 
 let sessionApi = new cloud.Api() as "{companyName}-Session-Api";
 let sessionTable = new dynamodb.Table(
@@ -58,15 +58,15 @@ sessionApi.get(basePath, inflight (request: cloud.ApiRequest): cloud.ApiResponse
       };
     }
 
-    let response = getSessionHandler(sessionId);
+    let session = getSessionHandler(sessionId);
 
-    if (Json.parse(response!).has("error")) {
+    if (Json.parse(session!).has("error")) {
       return cloud.ApiResponse {
         status: 400,
         headers: {
           "Content-Type" => "application/json"
         },
-        body: response
+        body: session
       };
     }
 
@@ -75,7 +75,7 @@ sessionApi.get(basePath, inflight (request: cloud.ApiRequest): cloud.ApiResponse
       headers: {
         "Content-Type" => "application/json"
       },
-      body: response
+      body: session
     };
   }
 
@@ -88,14 +88,14 @@ sessionApi.get(basePath, inflight (request: cloud.ApiRequest): cloud.ApiResponse
 });
 
 sessionApi.post("{basePath}", inflight (request: cloud.ApiRequest): cloud.ApiResponse => {
-  let sessionId = postSessionHandler.handle();
+  let session = postSessionHandler.handle();
 
   return cloud.ApiResponse {
     status: 201,
     headers: {
       "Content-Type" => "application/json"
     },
-    body: Json.stringify({sessionId: sessionId})
+    body: session
   };
 
 });
@@ -103,15 +103,15 @@ sessionApi.post("{basePath}", inflight (request: cloud.ApiRequest): cloud.ApiRes
 sessionApi.put("{basePath}/:sessionId", inflight (request: cloud.ApiRequest): cloud.ApiResponse => {
   if (request.vars.has("sessionId")) {
     let sessionId = request.vars.get("sessionId");
-    let output = putSessionHandler.handle(sessionId);
-    log(output!);
+    let session = putSessionHandler.handle(sessionId);
+    log(session!);
 
     return cloud.ApiResponse {
       status: 200,
       headers: {
         "Content-Type" => "application/json"
       },
-      body: Json.stringify({sessionId: sessionId})
+      body: session
     };
   }
 

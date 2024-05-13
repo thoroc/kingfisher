@@ -1,8 +1,10 @@
 bring cloud;
 bring dynamodb;
 bring "./src/handlers" as handlers;
+bring "./src/types.w" as types;
 
 let companyName = "ACME";
+let AwsRegion = "eu-west-1";
 
 let sessionApi = new cloud.Api() as "{companyName}-Session-Api";
 let sessionTable = new dynamodb.Table(
@@ -13,14 +15,23 @@ let sessionTable = new dynamodb.Table(
       type: "S"
     },
   ],
-  hashKey: "sessionId"
+  hashKey: "sessionId",
 ) as "{companyName}-Session-Table";
 
 let basePath = "/sessions";
 
-let getSessionHandler = new handlers.GetSessionHandler(sessionTable) as "{companyName}-GET-Session";
-let postSessionHandler = new handlers.PostSessionHandler(sessionTable) as "{companyName}-POST-Session";
-let putSessionHandler = new handlers.PutSessionHandler(sessionTable) as "{companyName}-PUT-Session";
+let handlerOptions: types.SessionHandlerOptions = {
+  table: sessionTable,
+  region: AwsRegion,
+  credentials: {
+    accessKeyId: "accessKeyId",
+    secretAccessKey: "secret"
+  }
+};
+
+let getSessionHandler = new handlers.GetSessionHandler(handlerOptions) as "{companyName}-GET-Session";
+let postSessionHandler = new handlers.PostSessionHandler(handlerOptions) as "{companyName}-POST-Session";
+let putSessionHandler = new handlers.PutSessionHandler(handlerOptions) as "{companyName}-PUT-Session";
 
 sessionApi.get(basePath, inflight (request: cloud.ApiRequest): cloud.ApiResponse => {
   if (request.query.has("sessionId")) {

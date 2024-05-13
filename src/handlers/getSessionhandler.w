@@ -1,17 +1,29 @@
 bring cloud;
 bring dynamodb;
+bring "../types.w" as types;
 
 pub class GetSessionHandler impl cloud.IFunctionHandler {
   _table: dynamodb.Table;
+  _credentials: dynamodb.Credentials?;
 
-  new(table: dynamodb.Table) {
-    this._table = table;
+  new(options: types.SessionHandlerOptions) {
+    this._table = options.table;
+    this._credentials = options.credentials;
   }
 
   pub inflight handle(sessionId: str?): str? {
     log("Getting record for session with sessionId={sessionId!}");
 
-    let data = this._table.get(
+    let client = new dynamodb.Client({
+      tableName: this._table.tableName, 
+      // credentials: this._credentials
+      credentials: {
+        accessKeyId: this._credentials?.accessKeyId!, 
+        secretAccessKey: this._credentials?.secretAccessKey!
+      }
+    });
+
+    let data = client.get(
       Key: {
         sessionId: sessionId
       }

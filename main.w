@@ -38,7 +38,6 @@ let basePath = "/sessions";
 let handlerOptions: types.SessionHandlerOptions = {
   table: sessionTable,
   region: AwsRegion,
-  clientOptions: sessionDbConnection
 };
 
 let getSessionHandler = new handlers.GetSessionHandler(handlerOptions) as "{companyName}-GET-Session";

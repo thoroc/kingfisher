@@ -6,11 +6,9 @@ bring "../types.w" as types;
 
 pub class PostSessionHandler impl cloud.IFunctionHandler {
   _table: dynamodb.Table;
-  _credentials: dynamodb.Credentials?;
 
   new(options: types.SessionHandlerOptions) {
     this._table = options.table;
-    this._credentials = options.clientOptions?.clientConfig?.credentials;
   }
 
   pub inflight handle(event: str?): str? {
@@ -20,21 +18,12 @@ pub class PostSessionHandler impl cloud.IFunctionHandler {
 
     log("Creating new session with sessionId={sessionId}");
 
-    let client = new dynamodb.Client({
-      tableName: this._table.tableName, 
-      // credentials: this._credentials
-      credentials: {
-        accessKeyId: this._credentials?.accessKeyId!, 
-        secretAccessKey: this._credentials?.secretAccessKey!
-      }
-    });
-
     let data = types.Session {
       sessionId: sessionId, 
       createdAt: std.Datetime.utcNow().toIso()
     };
 
-    client.put(
+    this._table.put(
       Item: data
     );
 

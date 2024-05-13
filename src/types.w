@@ -12,5 +12,4 @@ pub struct AwsConfig {
 
 pub struct SessionHandlerOptions extends AwsConfig{
   table: dynamodb.Table;
-  clientOptions: dynamodb.Connection;
 }

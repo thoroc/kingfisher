@@ -8,7 +8,7 @@ pub class GetSessionHandler impl cloud.IFunctionHandler {
 
   new(options: types.SessionHandlerOptions) {
     this._table = options.table;
-    this._credentials = options.credentials;
+    this._credentials = options.clientOptions?.clientConfig?.credentials;
   }
 
   pub inflight handle(sessionId: str?): str? {

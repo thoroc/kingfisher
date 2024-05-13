@@ -12,5 +12,5 @@ pub struct AwsConfig {
 
 pub struct SessionHandlerOptions extends AwsConfig{
   table: dynamodb.Table;
-  credentials: dynamodb.Credentials?;
+  clientOptions: dynamodb.Connection;
 }

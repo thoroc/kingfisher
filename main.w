@@ -1,5 +1,6 @@
 bring cloud;
 bring dynamodb;
+bring util;
 bring "./src/handlers" as handlers;
 bring "./src/types.w" as types;
 
@@ -18,15 +19,26 @@ let sessionTable = new dynamodb.Table(
   hashKey: "sessionId",
 ) as "{companyName}-Session-Table";
 
+let sessionDbConnection: dynamodb.Connection = {
+  tableName: sessionTable.tableName,
+  clientConfig: {
+    endpoint: "http://localhost:3000",
+    region: AwsRegion,
+    credentials: {
+      accessKeyId: "local",
+      secretAccessKey: "local"
+    },
+  }
+};
+
+log(util.env("WING_TARGET"));
+
 let basePath = "/sessions";
 
 let handlerOptions: types.SessionHandlerOptions = {
   table: sessionTable,
   region: AwsRegion,
-  credentials: {
-    accessKeyId: "accessKeyId",
-    secretAccessKey: "secret"
-  }
+  clientOptions: sessionDbConnection
 };
 
 let getSessionHandler = new handlers.GetSessionHandler(handlerOptions) as "{companyName}-GET-Session";

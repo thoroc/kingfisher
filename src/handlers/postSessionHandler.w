@@ -10,11 +10,14 @@ pub class PostSessionHandler impl cloud.IFunctionHandler {
 
   new(options: types.SessionHandlerOptions) {
     this._table = options.table;
-    this._credentials = options.credentials;
+    this._credentials = options.clientOptions?.clientConfig?.credentials;
   }
 
   pub inflight handle(event: str?): str? {
     let sessionId = util.uuidv4();
+
+    log(util.env("WING_TARGET"));
+
     log("Creating new session with sessionId={sessionId}");
 
     let client = new dynamodb.Client({

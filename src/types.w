@@ -10,6 +10,12 @@ pub struct AwsConfig {
   region: str;
 }
 
+pub interface ISessionTable {
+  inflight createSession(): Session;
+  inflight getSession(sessionId: str): Session;
+  inflight updateSession(sessionId: str): Session;
+}
+
 pub struct SessionHandlerOptions extends AwsConfig{
-  table: dynamodb.Table;
+  table: ISessionTable;
 }

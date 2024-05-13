@@ -3,33 +3,13 @@ bring dynamodb;
 bring util;
 bring "./src/handlers" as handlers;
 bring "./src/types.w" as types;
+bring "./src/ports" as ports;
 
 let companyName = util.env("ORGANISATION_NAME");
 let AwsRegion = util.env("AWS_REGION");
 
 let sessionApi = new cloud.Api() as "{companyName}-Session-Api";
-let sessionTable = new dynamodb.Table(
-  name: "sessions",
-  attributes: [
-    {
-      name: "sessionId",
-      type: "S"
-    },
-  ],
-  hashKey: "sessionId",
-) as "{companyName}-Session-Table";
-
-let sessionDbConnection: dynamodb.Connection = {
-  tableName: sessionTable.tableName,
-  clientConfig: {
-    endpoint: "http://localhost:3000",
-    region: AwsRegion,
-    credentials: {
-      accessKeyId: "local",
-      secretAccessKey: "local"
-    },
-  }
-};
+let sessionTable = new ports.SessionTable("sessions") as "{companyName}-Session-Table";
 
 log(util.env("WING_TARGET"));
 

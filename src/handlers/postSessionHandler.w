@@ -5,7 +5,7 @@ bring "../types.w" as types;
 
 
 pub class PostSessionHandler impl cloud.IFunctionHandler {
-  _table: dynamodb.Table;
+  _table: types.ISessionTable;
 
   new(options: types.SessionHandlerOptions) {
     this._table = options.table;
@@ -16,14 +16,7 @@ pub class PostSessionHandler impl cloud.IFunctionHandler {
 
     log("Creating new session with sessionId={sessionId}");
 
-    let session = types.Session {
-      sessionId: sessionId, 
-      createdAt: std.Datetime.utcNow().toIso()
-    };
-
-    this._table.put(
-      Item: session
-    );
+    let session = this._table.createSession();
 
     return Json.stringify(session);
   }

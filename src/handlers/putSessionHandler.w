@@ -8,8 +8,20 @@ pub class PutSessionHandler impl cloud.IFunctionHandler {
     this._table = options.table;
   }
 
-  pub inflight handle(sessionId: str?): str? {
-    let session: types.SessionResponse = this._table.updateSession(sessionId!);
+  pub inflight handle(event: str?): str? {
+    log("Event={event!}");
+
+    let sessionJson = Json.parse(event!);
+    let sessionRequest = types.SessionRequest.tryFromJson(sessionJson);
+
+    if (sessionRequest == nil) {
+      log("Invalid request");
+      return nil;
+    }
+
+    log("SessionRequest={Json.stringify(sessionRequest!)}");
+
+    let session: types.SessionResponse = this._table.updateSession(sessionRequest!);
 
     log("Updated session with sessionId={session.sessionId}");
 

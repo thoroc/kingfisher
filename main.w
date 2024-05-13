@@ -11,8 +11,6 @@ let AwsRegion = util.env("AWS_REGION");
 let sessionApi = new cloud.Api() as "{companyName}-Session-Api";
 let sessionTable = new ports.SessionTable("sessions") as "{companyName}-Session-Table";
 
-log(util.env("WING_TARGET"));
-
 let basePath = "/sessions";
 
 let handlerOptions: types.SessionHandlerOptions = {
@@ -82,9 +80,42 @@ sessionApi.post("{basePath}", inflight (request: cloud.ApiRequest): cloud.ApiRes
 
 sessionApi.put("{basePath}/:sessionId", inflight (request: cloud.ApiRequest): cloud.ApiResponse => {
   if (request.vars.has("sessionId")) {
-    let sessionId = request.vars.get("sessionId");
-    let session = putSessionHandler.handle(sessionId);
+
+    log("body={request.body!}");
+
+    let requestData = Json.parse(request.body!);
+
+    let user = types.User.tryFromJson(requestData.get("user"));
+
+    if (user == nil) {
+      return cloud.ApiResponse {
+        status: 400,
+        headers: {
+          "Content-Type" => "text/plain"
+        },
+        body: "Invalid User data"
+      };
+    }
+
+    log("User={Json.stringify(user)}");
+
+    let sessionRequest = types.SessionRequest.fromJson({
+      sessionId: request.vars.get("sessionId"),
+      user: user,
+    });
+
+    let session = putSessionHandler.handle(Json.stringify(sessionRequest));
     log(session!);
+
+    if (session == nil) {
+      return cloud.ApiResponse {
+        status: 400,
+        headers: {
+          "Content-Type" => "text/plain"
+        },
+        body: "Could not save Session data"
+      };
+    }
 
     return cloud.ApiResponse {
       status: 200,

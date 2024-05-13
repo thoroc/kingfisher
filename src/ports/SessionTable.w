@@ -32,14 +32,17 @@ pub class SessionTable impl types.ISessionTable{
     return types.SessionResponse.fromJson(response.Item);
   }
 
-  pub inflight updateSession(sessionId: str): types.SessionResponse {
+  pub inflight updateSession(session: types.SessionRequest): types.SessionResponse {
 
-    let currSession = this.getSession(sessionId);
+    let currSession = this.getSession(session.sessionId);
+
+    // TODO: find a way to update the fields from currSession with session
 
     let updatedSession: types.SessionResponse = {
-      sessionId: sessionId,
+      sessionId: session.sessionId,
       createdAt: currSession.createdAt,
       updatedAt: std.Datetime.utcNow().toIso(),
+      user: session.user,
     };
 
     this._table.put(
@@ -60,6 +63,21 @@ pub class SessionTable impl types.ISessionTable{
 
     this._table.put(
       Item: session
+    );
+
+    return session;
+  }
+
+  pub inflight closeSession(sessionId: str): types.SessionResponse {
+    let session = this.getSession(sessionId);
+
+    this._table.put(
+      Item: {
+        sessionId: sessionId,
+        createdAt: session.createdAt,
+        updatedAt: std.Datetime.utcNow().toIso(),
+        closedAt: std.Datetime.utcNow().toIso(),
+      }
     );
 
     return session;

@@ -18,9 +18,9 @@ let handlerOptions: types.SessionHandlerOptions = {
   region: AwsRegion,
 };
 
-let getSessionHandler = new handlers.GetSessionHandler(handlerOptions) as "{companyName}-GET-Session";
-let postSessionHandler = new handlers.PostSessionHandler(handlerOptions) as "{companyName}-POST-Session";
-let putSessionHandler = new handlers.PutSessionHandler(handlerOptions) as "{companyName}-PUT-Session";
+let getSessionHandler = new handlers.GetSessionHandler(handlerOptions) as "{companyName}-GetSessionFn";
+let createSessionHandler = new handlers.CreateSessionHandler(handlerOptions) as "{companyName}-CreateSessionFn";
+let putSessionHandler = new handlers.UpdateSessionHandler(handlerOptions) as "{companyName}-UpdateSessionFn";
 
 sessionApi.get(basePath, inflight (request: cloud.ApiRequest): cloud.ApiResponse => {
   if (request.query.has("sessionId")) {
@@ -65,8 +65,8 @@ sessionApi.get(basePath, inflight (request: cloud.ApiRequest): cloud.ApiResponse
   };
 });
 
-sessionApi.post("{basePath}", inflight (request: cloud.ApiRequest): cloud.ApiResponse => {
-  let session = postSessionHandler.handle();
+sessionApi.post("{basePath}/new", inflight (request: cloud.ApiRequest): cloud.ApiResponse => {
+  let session = createSessionHandler.handle();
 
   return cloud.ApiResponse {
     status: 201,

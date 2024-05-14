@@ -2,7 +2,7 @@ bring cloud;
 bring "../types.w" as types;
 
 
-pub class PostSessionHandler impl cloud.IFunctionHandler {
+pub class CreateSessionHandler impl cloud.IFunctionHandler {
   _table: types.ISessionTable;
 
   new(options: types.SessionHandlerOptions) {

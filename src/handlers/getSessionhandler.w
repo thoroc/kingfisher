@@ -9,9 +9,14 @@ pub class GetSessionHandler impl cloud.IFunctionHandler {
   }
 
   pub inflight handle(sessionId: str?): str? {
-    let session: types.SessionResponse = this._table.getSession(sessionId!);
+    let session = this._table.getSession(sessionId!);
 
-    log("Fetched record for session with sessionId={session.sessionId}");
+    if (session == nil) {
+      log("No record found for session with sessionId={sessionId!}");
+      return nil;
+    }
+
+    log("Fetched record for session with sessionId={session!.sessionId}");
 
     return Json.stringify(session);
   }

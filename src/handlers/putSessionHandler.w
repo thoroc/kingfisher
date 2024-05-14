@@ -21,9 +21,14 @@ pub class PutSessionHandler impl cloud.IFunctionHandler {
 
     log("SessionRequest={Json.stringify(sessionRequest!)}");
 
-    let session: types.SessionResponse = this._table.updateSession(sessionRequest!);
+    let session = this._table.updateSession(sessionRequest!);
 
-    log("Updated session with sessionId={session.sessionId}");
+    if (session == nil) {
+      log("Failed to update session");
+      return nil;
+    }
+
+    log("Updated session with sessionId={session!.sessionId}");
 
     return Json.stringify(session);
   }

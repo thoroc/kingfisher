@@ -10,9 +10,14 @@ pub class PostSessionHandler impl cloud.IFunctionHandler {
   }
 
   pub inflight handle(event: str?): str? {
-    let session: types.SessionResponse = this._table.createSession();
+    let session = this._table.createSession();
 
-    log("Created new session with sessionId={session.sessionId}");
+    if (session == nil) {
+      log("Failed to create new session");
+      return nil;
+    }
+
+    log("Created new session with sessionId={session!.sessionId}");
 
     return Json.stringify(session);
   }

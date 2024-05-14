@@ -37,9 +37,9 @@ pub struct SessionResponse extends SessionRequest {
 }
 
 pub interface ISessionTable {
-  inflight createSession(): SessionResponse;
-  inflight getSession(sessionId: str): SessionResponse;
-  inflight updateSession(session: SessionRequest): SessionResponse;
+  inflight createSession(): SessionResponse?;
+  inflight getSession(sessionId: str): SessionResponse?;
+  inflight updateSession(session: SessionRequest): SessionResponse?;
 }
 
 pub struct SessionHandlerOptions extends AwsConfig {

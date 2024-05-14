@@ -18,7 +18,7 @@ pub class SessionTable impl types.ISessionTable{
     );
   }
 
-  pub inflight getSession(sessionId: str): types.SessionResponse {
+  pub inflight getSession(sessionId: str): types.SessionResponse? {
     let response = this._table.get(
       Key: {
         sessionId: sessionId
@@ -27,20 +27,23 @@ pub class SessionTable impl types.ISessionTable{
 
     if (response.Item == nil) {
       throw("error: No record for sessionId={sessionId}");
+      return nil;
     }
 
     return types.SessionResponse.fromJson(response.Item);
   }
 
-  pub inflight updateSession(session: types.SessionRequest): types.SessionResponse {
+  pub inflight updateSession(session: types.SessionRequest): types.SessionResponse? {
 
     let currSession = this.getSession(session.sessionId);
 
-    // TODO: find a way to update the fields from currSession with session
+    if (currSession == nil) {
+      return nil;
+    }
 
     let updatedSession: types.SessionResponse = {
+      createdAt: currSession!.createdAt,
       sessionId: session.sessionId,
-      createdAt: currSession.createdAt,
       updatedAt: std.Datetime.utcNow().toIso(),
       user: session.user,
     };
@@ -52,13 +55,13 @@ pub class SessionTable impl types.ISessionTable{
     return updatedSession;
   }
 
-  pub inflight createSession(): types.SessionResponse {
+  pub inflight createSession(): types.SessionResponse? {
     let sessionId = util.uuidv4();
     let createdAt = std.Datetime.utcNow().toIso();
 
     let session: types.SessionResponse = {
-      sessionId: sessionId,
       createdAt: createdAt,
+      sessionId: sessionId,
     };
 
     this._table.put(
@@ -68,18 +71,25 @@ pub class SessionTable impl types.ISessionTable{
     return session;
   }
 
-  pub inflight closeSession(sessionId: str): types.SessionResponse {
-    let session = this.getSession(sessionId);
+  pub inflight closeSession(sessionId: str): types.SessionResponse? {
+    let currSession = this.getSession(sessionId);
+
+    if (currSession == nil) {
+      return nil;
+    }
+
+    let closedSession: types.SessionResponse = {
+      closedAt: std.Datetime.utcNow().toIso(),
+      createdAt: currSession!.createdAt,
+      sessionId: sessionId,
+      updatedAt: std.Datetime.utcNow().toIso(),
+      user: currSession!.user,
+    };
 
     this._table.put(
-      Item: {
-        sessionId: sessionId,
-        createdAt: session.createdAt,
-        updatedAt: std.Datetime.utcNow().toIso(),
-        closedAt: std.Datetime.utcNow().toIso(),
-      }
+      Item: closedSession
     );
 
-    return session;
+    return closedSession;
   }
 }

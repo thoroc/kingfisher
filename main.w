@@ -83,9 +83,19 @@ sessionApi.put("{basePath}/:sessionId", inflight (request: cloud.ApiRequest): cl
 
     log("body={request.body!}");
 
-    let requestData = Json.parse(request.body!);
+    let requestData = Json.tryParse(request.body);
 
-    let user = types.User.tryFromJson(requestData.get("user"));
+    if (requestData == nil) {
+      return cloud.ApiResponse {
+        status: 400,
+        headers: {
+          "Content-Type" => "text/plain"
+        },
+        body: "Invalid request data"
+      };
+    }
+
+    let user = types.User.tryFromJson(requestData!.get("user"));
 
     if (user == nil) {
       return cloud.ApiResponse {

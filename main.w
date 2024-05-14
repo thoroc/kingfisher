@@ -4,6 +4,7 @@ bring util;
 bring "./src/handlers" as handlers;
 bring "./src/types.w" as types;
 bring "./src/ports" as ports;
+bring "./src/http" as http;
 
 let companyName = util.env("ORGANISATION_NAME");
 let AwsRegion = util.env("AWS_REGION");
@@ -28,29 +29,35 @@ sessionApi.get(basePath, inflight (request: cloud.ApiRequest): cloud.ApiResponse
     let sessionId = request.query.get("sessionId");
 
     if (sessionId == "") {
+      let httpStatus = http.HttpStatusTransformer.fromStatusEnum(http.HttpStatuses.BAD_REQUEST);
+
       return cloud.ApiResponse {
-        status: 400,
+        status: httpStatus.code,
         headers: {
           "Content-Type" => "text/plain"
         },
-        body: "No sessionId provided"
+        body: "{httpStatus.message} - sessionId is required"
       };
     }
 
     let session = getSessionHandler(sessionId);
 
     if (Json.parse(session!).has("error")) {
+      let error = Json.parse(session!).get("error");
+
       return cloud.ApiResponse {
-        status: 400,
+        status: error.get("code").asNum(),
         headers: {
           "Content-Type" => "application/json"
         },
-        body: session
+        body: error.get("message").asStr(),
       };
     }
 
+    let httpStatus = http.HttpStatusTransformer.fromStatusEnum(http.HttpStatuses.OK);
+
     return cloud.ApiResponse {
-      status: 200,
+      status: httpStatus.code,
       headers: {
         "Content-Type" => "application/json"
       },
@@ -58,27 +65,46 @@ sessionApi.get(basePath, inflight (request: cloud.ApiRequest): cloud.ApiResponse
     };
   }
 
+  let httpStatus = http.HttpStatusTransformer.fromStatusEnum(http.HttpStatuses.NOT_FOUND);
+
   return cloud.ApiResponse {
-    status: 404,
+    status: httpStatus.code,
     headers: {
       "Content-Type" => "text/plain"
     },
+    body: httpStatus.message
   };
 });
 
+// Create a new session
 sessionApi.post("{basePath}/new", inflight (request: cloud.ApiRequest): cloud.ApiResponse => {
   let session = createSessionHandler.handle();
+  log("Create Session Response={session!}");
+
+  if (Json.parse(session!).has("error")) {
+    let error = Json.parse(session!).get("error");
+
+    return cloud.ApiResponse {
+      status: error.get("code").asNum(),
+      headers: {
+        "Content-Type" => "application/json"
+      },
+      body: error.get("message").asStr(),
+    };
+  }
+
+  let httpStatus = http.HttpStatusTransformer.fromStatusEnum(http.HttpStatuses.CREATED);
 
   return cloud.ApiResponse {
-    status: 201,
+    status: httpStatus.code,
     headers: {
       "Content-Type" => "application/json"
     },
     body: session
   };
-
 });
 
+// Update a session
 sessionApi.put("{basePath}/:sessionId", inflight (request: cloud.ApiRequest): cloud.ApiResponse => {
   if (request.vars.has("sessionId")) {
 
@@ -87,24 +113,28 @@ sessionApi.put("{basePath}/:sessionId", inflight (request: cloud.ApiRequest): cl
     let requestData = Json.tryParse(request.body);
 
     if (requestData == nil) {
+      let httpStatus = http.HttpStatusTransformer.fromStatusEnum(http.HttpStatuses.BAD_REQUEST);
+
       return cloud.ApiResponse {
-        status: 400,
+        status: httpStatus.code,
         headers: {
           "Content-Type" => "text/plain"
         },
-        body: "Invalid request data"
+        body: httpStatus.message
       };
     }
 
     let user = types.User.tryFromJson(requestData!.get("user"));
 
     if (user == nil) {
+      let httpStatus = http.HttpStatusTransformer.fromStatusEnum(http.HttpStatuses.BAD_REQUEST);
+
       return cloud.ApiResponse {
-        status: 400,
+        status: httpStatus.code,
         headers: {
           "Content-Type" => "text/plain"
         },
-        body: "Invalid User data"
+        body: httpStatus.message
       };
     }
 
@@ -116,20 +146,24 @@ sessionApi.put("{basePath}/:sessionId", inflight (request: cloud.ApiRequest): cl
     });
 
     let session = putSessionHandler.handle(Json.stringify(sessionRequest));
-    log(session!);
+    log("Update Session Response={session!}");
 
-    if (session == nil) {
+    if (Json.parse(session!).has("error")) {
+      let error = Json.parse(session!).get("error");
+
       return cloud.ApiResponse {
-        status: 400,
+        status: error.get("code").asNum(),
         headers: {
-          "Content-Type" => "text/plain"
+          "Content-Type" => "application/json"
         },
-        body: "Could not save Session data"
+        body: error.get("message").asStr(),
       };
     }
 
+    let httpStatus = http.HttpStatusTransformer.fromStatusEnum(http.HttpStatuses.OK);
+
     return cloud.ApiResponse {
-      status: 200,
+      status: httpStatus.code,
       headers: {
         "Content-Type" => "application/json"
       },
@@ -137,14 +171,18 @@ sessionApi.put("{basePath}/:sessionId", inflight (request: cloud.ApiRequest): cl
     };
   }
 
+  let httpStatus = http.HttpStatusTransformer.fromStatusEnum(http.HttpStatuses.NOT_FOUND);
+
   return cloud.ApiResponse {
-    status: 404,
+    status: httpStatus.code,
     headers: {
       "Content-Type" => "text/plain"
     },
+    body: httpStatus.message
   };
 });
 
+// Close a session
 sessionApi.put("{basePath}/:sessionId/close", inflight (request: cloud.ApiRequest): cloud.ApiResponse => {
   if (request.vars.has("sessionId")) {
 
@@ -153,20 +191,24 @@ sessionApi.put("{basePath}/:sessionId/close", inflight (request: cloud.ApiReques
     });
 
     let session = closeSessionHandler.handle(Json.stringify(sessionRequest));
-    log(session!);
+    log("Close Session Response={session!}");
 
-    if (session == nil) {
+    if (Json.parse(session!).has("error")) {
+      let error = Json.parse(session!).get("error");
+
       return cloud.ApiResponse {
-        status: 400,
+        status: error.get("code").asNum(),
         headers: {
-          "Content-Type" => "text/plain"
+          "Content-Type" => "application/json"
         },
-        body: "Could not close the Session"
+        body: error.get("message").asStr(),
       };
     }
 
+    let httpStatus = http.HttpStatusTransformer.fromStatusEnum(http.HttpStatuses.OK);
+
     return cloud.ApiResponse {
-      status: 200,
+      status: httpStatus.code,
       headers: {
         "Content-Type" => "application/json"
       },
@@ -174,10 +216,13 @@ sessionApi.put("{basePath}/:sessionId/close", inflight (request: cloud.ApiReques
     };
   }
 
+  let httpStatus = http.HttpStatusTransformer.fromStatusEnum(http.HttpStatuses.NOT_FOUND);
+
   return cloud.ApiResponse {
-    status: 404,
+    status: httpStatus.code,
     headers: {
       "Content-Type" => "text/plain"
     },
+    body: httpStatus.message
   };
 });

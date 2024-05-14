@@ -1,5 +1,6 @@
 bring cloud;
 bring "../types.w" as types;
+bring "../exceptions" as exceptions;
 
 pub class UpdateSessionHandler impl cloud.IFunctionHandler {
   _table: types.ISessionTable;
@@ -15,8 +16,11 @@ pub class UpdateSessionHandler impl cloud.IFunctionHandler {
       let sessionRequest = types.SessionRequest.tryFromJson(sessionJson);
 
       if (sessionRequest == nil) {
-        log("Invalid request");
-        return nil;
+        let exception = new exceptions.BadRequestError();
+
+        log(exception.message!);
+
+        return Json.stringify(exception.asErr());
       }
 
       log("SessionRequest={Json.stringify(sessionRequest!)}");
@@ -24,8 +28,21 @@ pub class UpdateSessionHandler impl cloud.IFunctionHandler {
       let session = this._table.updateSession(sessionRequest!);
 
       if (session == nil) {
-        log("Failed to update session");
-        return nil;
+        let message = "Failed to update session";
+        let exception = new exceptions.InternalServerError(message);
+
+        log(message);
+
+        return Json.stringify(exception.asErr());
+      }
+
+      if (session?.closedAt != nil) {
+        let message = "Session already closed";
+        let exception = new exceptions.BadRequestError(message);
+
+        log(message);
+
+        return Json.stringify(exception.asErr());
       }
 
       log("Updated session with sessionId={session!.sessionId}");

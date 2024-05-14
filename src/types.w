@@ -1,4 +1,6 @@
 bring dynamodb;
+bring "./http" as http;
+// bring "./exceptions" as exceptions;
 
 pub struct Session {
   sessionId: str;
@@ -34,6 +36,10 @@ pub struct SessionResponse extends SessionRequest {
   createdAt: str;
   updatedAt: str?;
   closedAt: str?;
+}
+
+pub struct SessionError {
+  error: http.HttpStatus;
 }
 
 pub interface ISessionTable {

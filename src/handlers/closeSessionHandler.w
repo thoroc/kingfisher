@@ -28,6 +28,13 @@ pub class CloseSessionHandler impl cloud.IFunctionHandler {
         return nil;
       }
 
+      log("Session={Json.stringify(session!)}");
+
+      if (session?.closedAt != nil) {
+        log("Session already closed");
+        return nil;
+      }
+
       log("Updated session with sessionId={session!.sessionId}");
 
       return Json.stringify(session);

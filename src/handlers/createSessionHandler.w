@@ -1,5 +1,6 @@
 bring cloud;
 bring "../types.w" as types;
+bring "../exceptions" as exceptions;
 
 
 pub class CreateSessionHandler impl cloud.IFunctionHandler {
@@ -13,8 +14,12 @@ pub class CreateSessionHandler impl cloud.IFunctionHandler {
     let session = this._table.createSession();
 
     if (session == nil) {
-      log("Failed to create new session");
-      return nil;
+      let message = "Failed to create new session";
+      let exceptions = new exceptions.InternalServerError(message);
+
+      log(message);
+
+      return Json.stringify(exceptions.asErr());
     }
 
     log("Created new session with sessionId={session!.sessionId}");

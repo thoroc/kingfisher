@@ -21,6 +21,7 @@ let handlerOptions: types.SessionHandlerOptions = {
 let getSessionHandler = new handlers.GetSessionHandler(handlerOptions) as "{companyName}-GetSessionFn";
 let createSessionHandler = new handlers.CreateSessionHandler(handlerOptions) as "{companyName}-CreateSessionFn";
 let putSessionHandler = new handlers.UpdateSessionHandler(handlerOptions) as "{companyName}-UpdateSessionFn";
+let closeSessionHandler = new handlers.CloseSessionHandler(handlerOptions) as "{companyName}-CloseSessionFn";
 
 sessionApi.get(basePath, inflight (request: cloud.ApiRequest): cloud.ApiResponse => {
   if (request.query.has("sessionId")) {
@@ -124,6 +125,43 @@ sessionApi.put("{basePath}/:sessionId", inflight (request: cloud.ApiRequest): cl
           "Content-Type" => "text/plain"
         },
         body: "Could not save Session data"
+      };
+    }
+
+    return cloud.ApiResponse {
+      status: 200,
+      headers: {
+        "Content-Type" => "application/json"
+      },
+      body: session
+    };
+  }
+
+  return cloud.ApiResponse {
+    status: 404,
+    headers: {
+      "Content-Type" => "text/plain"
+    },
+  };
+});
+
+sessionApi.put("{basePath}/:sessionId/close", inflight (request: cloud.ApiRequest): cloud.ApiResponse => {
+  if (request.vars.has("sessionId")) {
+
+    let sessionRequest = types.SessionRequest.fromJson({
+      sessionId: request.vars.get("sessionId"),
+    });
+
+    let session = closeSessionHandler.handle(Json.stringify(sessionRequest));
+    log(session!);
+
+    if (session == nil) {
+      return cloud.ApiResponse {
+        status: 400,
+        headers: {
+          "Content-Type" => "text/plain"
+        },
+        body: "Could not close the Session"
       };
     }
 

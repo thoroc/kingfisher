@@ -40,6 +40,7 @@ pub interface ISessionTable {
   inflight createSession(): SessionResponse?;
   inflight getSession(sessionId: str): SessionResponse?;
   inflight updateSession(session: SessionRequest): SessionResponse?;
+  inflight closeSession(sessionId: str): SessionResponse?;
 }
 
 pub struct SessionHandlerOptions extends AwsConfig {

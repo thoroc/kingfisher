@@ -24,9 +24,10 @@ let createSessionHandler = new handlers.CreateSessionHandler(handlerOptions) as 
 let putSessionHandler = new handlers.UpdateSessionHandler(handlerOptions) as "{companyName}-UpdateSessionFn";
 let closeSessionHandler = new handlers.CloseSessionHandler(handlerOptions) as "{companyName}-CloseSessionFn";
 
-sessionApi.get(basePath, inflight (request: cloud.ApiRequest): cloud.ApiResponse => {
-  if (request.query.has("sessionId")) {
-    let sessionId = request.query.get("sessionId");
+// Get a session
+sessionApi.get("{basePath}/:sessionId", inflight (request: cloud.ApiRequest): cloud.ApiResponse => {
+  if (request.vars.has("sessionId")) {
+    let sessionId = request.vars.get("sessionId");
 
     if (sessionId == "") {
       let httpStatus = http.HttpStatusTransformer.fromStatusEnum(http.HttpStatuses.BAD_REQUEST);
@@ -183,7 +184,7 @@ sessionApi.put("{basePath}/:sessionId", inflight (request: cloud.ApiRequest): cl
 });
 
 // Close a session
-sessionApi.put("{basePath}/:sessionId/close", inflight (request: cloud.ApiRequest): cloud.ApiResponse => {
+sessionApi.post("{basePath}/:sessionId/close", inflight (request: cloud.ApiRequest): cloud.ApiResponse => {
   if (request.vars.has("sessionId")) {
 
     let sessionRequest = types.SessionRequest.fromJson({

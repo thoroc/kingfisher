@@ -8,7 +8,10 @@ pub inflight class HttpException extends exceptions.Exception {
 
   new(status: http.HttpStatuses, message: str?) {
     super("HttpException", message);
-    this.status = http.HttpStatusTransformer.fromStatusEnum(status);
+    this.status = http.HttpStatus {
+      code: http.HttpStatusTransformer.fromStatusEnum(status).code,
+      message: message ?? http.HttpStatusTransformer.fromStatusEnum(status).message
+    };
   }
 
   pub asErr(): types.SessionError {
@@ -21,11 +24,14 @@ pub inflight class HttpException extends exceptions.Exception {
   }
 
   pub asJson(): Json {
-    return Json.stringify(this.asErr());
+    return {
+      code: this.status.code,
+      message: this.status.message
+    };
   }
 
   pub asStr(): str {
-    return Json.stringify(this.status);
+    return "{this.status.code} - {this.status.message}";
   }
 }
 

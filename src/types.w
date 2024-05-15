@@ -9,7 +9,7 @@ pub struct Session {
 }
 
 pub struct AwsConfig {
-  region: str;
+  region: str?;
 }
 
 pub struct Address {
@@ -40,13 +40,14 @@ pub struct SessionResponse extends SessionRequest {
 
 pub struct SessionError {
   error: http.HttpStatus;
+  message: str?;
 }
 
 pub interface ISessionTable {
+  inflight closeSession(sessionId: str): SessionResponse?;
   inflight createSession(): SessionResponse?;
   inflight getSession(sessionId: str): SessionResponse?;
   inflight updateSession(session: SessionRequest): SessionResponse?;
-  inflight closeSession(sessionId: str): SessionResponse?;
 }
 
 pub struct SessionHandlerOptions extends AwsConfig {

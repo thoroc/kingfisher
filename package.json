@@ -15,6 +15,6 @@
   },
   "dependencies": {
     "@winglibs/dynamodb": "^0.1.7",
-    "winglang": "^0.73.41"
+    "winglang": "^0.73.47"
   }
 }

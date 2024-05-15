@@ -18,7 +18,7 @@ pub class UpdateSessionHandler impl cloud.IFunctionHandler {
       if (sessionRequest == nil) {
         let exception = new exceptions.BadRequestError();
 
-        log(exception.message!);
+        log(exception.status.message);
 
         return Json.stringify(exception.asErr());
       }

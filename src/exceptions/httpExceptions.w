@@ -3,11 +3,10 @@ bring "../http" as http;
 bring "../types.w" as types;
 
 // HTTP exceptions
-pub inflight class HttpException extends exceptions.Exception {
+pub inflight class HttpException {
   pub status: http.HttpStatus;
 
   new(status: http.HttpStatuses, message: str?) {
-    super("HttpException", message);
     this.status = http.HttpStatus {
       code: http.HttpStatusTransformer.fromStatusEnum(status).code,
       message: message ?? http.HttpStatusTransformer.fromStatusEnum(status).message

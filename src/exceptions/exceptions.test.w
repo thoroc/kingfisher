@@ -1,21 +1,21 @@
 bring expect;
-bring "./exceptions.w" as exception;
+bring "./exceptions.w" as sut;
 
 test "creates new Exception" {
   let tag = "test";
   let message = "Error Message";
 
-  let e = new exception.Exception(tag, message);
+  let exception = new sut.Exception(tag, message);
 
-  expect.equal(e.tag, tag);
-  expect.equal(e.message, message);
+  expect.equal(exception.tag, tag);
+  expect.equal(exception.message, message);
 }
 
 // test "Throws an error" {
 //   let tag = "test";
 //   let message = "Error Message";
 
-//   let e = new exception.Exception(tag, message);
+//   let exception = new exception.Exception(tag, message);
 
 //   expect.ok()
 // }
@@ -24,45 +24,44 @@ test "creates new Exception from Json" {
   let tag = "test";
   let message = "Error Message";
 
-  let e = new exception.Exception(tag, message);
   let json = {
     "tag": tag,
     "message": message
   };
 
-  let e2 = exception.Exception.fromJson(Json.stringify(json));
+  let exception = sut.Exception.fromJson(Json.stringify(json));
 
-  expect.equal(e2.tag, tag);
-  expect.equal(e2.message, message);
+  expect.equal(exception.tag, tag);
+  expect.equal(exception.message, message);
 }
 
 test "Returns Exception as Json" {
   let tag = "test";
   let message = "Error Message";
 
-  let e = new exception.Exception(tag, message);
+  let exception = new sut.Exception(tag, message);
   let json = {
     "tag": tag,
     "message": message
   };
 
-  expect.equal(e.toJson(), json);
+  expect.equal(exception.toJson(), json);
 }
 
 test "Create a KeyError Exception" {
   let message = "test";
 
-  let e = new exception.KeyError(message);
+  let exception = new sut.KeyError(message);
 
-  expect.equal(e.tag, "KeyError");
-  expect.equal(e.message, message);
+  expect.equal(exception.tag, "KeyError");
+  expect.equal(exception.message, message);
 }
 
 test "Create a ValueError Exception" {
   let message = "test";
 
-  let e = new exception.ValueError(message);
+  let exception = new sut.ValueError(message);
 
-  expect.equal(e.tag, "ValueError");
-  expect.equal(e.message, message);
+  expect.equal(exception.tag, "ValueError");
+  expect.equal(exception.message, message);
 }

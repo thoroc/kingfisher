@@ -126,6 +126,7 @@ pub enum HttpStatuses {
   LOOP_DETECTED,
   NOT_EXTENDED,
   NETWORK_AUTHENTICATION_REQUIRED,
+  UNKNOWN,
 }
 
 pub struct HttpStatus {
@@ -262,7 +263,7 @@ pub class HttpStatusTransformer {
     } elif code == 511 {
       return HttpStatuses.NETWORK_AUTHENTICATION_REQUIRED;
     } else {
-      return HttpStatuses.INTERNAL_SERVER_ERROR;
+      return HttpStatuses.UNKNOWN;
     }
   }
 

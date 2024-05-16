@@ -18,6 +18,23 @@ pub class UpdateSessionHandler impl cloud.IApiEndpointHandler {
 
     log("request.body={request.body!}");
 
+    let session = this._table.getSession(sessionId);
+
+    if (session?.closedAt != nil) {
+      let message = "Session already closed";
+      let exception = new exceptions.BadRequestError(message);
+
+      log(message);
+
+      return {
+        status: exception.status.code,
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: Json.stringify(exception.asErr())
+      };
+    }
+
     if let sessionJson = Json.tryParse(request.body!) {
       let user = ports.User.tryFromJson(sessionJson.get("user"));
 
@@ -37,19 +54,6 @@ pub class UpdateSessionHandler impl cloud.IApiEndpointHandler {
         sessionId: sessionId,
         user: user!
       });
-
-      if (response?.closedAt != nil) {
-        let message = "Session already closed";
-        let exception = new exceptions.BadRequestError(message);
-
-        log(message);
-
-        return {
-          status: exception.status.code,
-          headers: { "Content-Type": "application/json" },
-          body: Json.stringify(exception.asErr())
-        };
-      }
 
       log("Updated session with sessionId={sessionId}");
 

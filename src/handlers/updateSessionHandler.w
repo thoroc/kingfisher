@@ -4,17 +4,17 @@ bring "../exceptions" as exceptions;
 bring "../ports" as ports;
 bring "./defaultSessionHandler.w" as options;
 
-pub class UpdateSessionHandler impl cloud.IFunctionHandler {
+pub class UpdateSessionHandler impl cloud.IApiEndpointHandler {
   _table: ports.ISessionTable;
 
   new(options: options.SessionHandlerOptions) {
     this._table = options.table;
   }
 
-  pub inflight handle(event: str?): str? {
-    log("Event={event!}");
+  pub inflight handle(request: cloud.ApiRequest): cloud.ApiResponse {
+    let sessionId = request.vars.get("sessionId");
 
-    if let sessionJson = Json.tryParse(event!) {
+    if let sessionJson = Json.tryParse(request.body!) {
       let sessionRequest = ports.SessionRequest.tryFromJson(sessionJson);
 
       if (sessionRequest == nil) {
@@ -22,7 +22,11 @@ pub class UpdateSessionHandler impl cloud.IFunctionHandler {
 
         log(exception.status.message);
 
-        return Json.stringify(exception.asErr());
+        return {
+          status: exception.status.code,
+          headers: { "Content-Type": "application/json" },
+          body: Json.stringify(exception.asErr())
+        };
       }
 
       log("SessionRequest={Json.stringify(sessionRequest!)}");
@@ -35,7 +39,11 @@ pub class UpdateSessionHandler impl cloud.IFunctionHandler {
 
         log(message);
 
-        return Json.stringify(exception.asErr());
+        return {
+          status: exception.status.code,
+          headers: { "Content-Type": "application/json" },
+          body: Json.stringify(exception.asErr())
+        };
       }
 
       if (session?.closedAt != nil) {
@@ -44,12 +52,20 @@ pub class UpdateSessionHandler impl cloud.IFunctionHandler {
 
         log(message);
 
-        return Json.stringify(exception.asErr());
+        return {
+          status: exception.status.code,
+          headers: { "Content-Type": "application/json" },
+          body: Json.stringify(exception.asErr())
+        };
       }
 
-      log("Updated session with sessionId={session!.sessionId}");
+      log("Updated session with sessionId={sessionId}");
 
-      return Json.stringify(session);
+      return {
+        status: 200,
+        headers: { "Content-Type": "application/json" },
+        body: Json.stringify(session)
+      };
     }
   }
 }

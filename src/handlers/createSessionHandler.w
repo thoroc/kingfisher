@@ -4,15 +4,14 @@ bring "../exceptions" as exceptions;
 bring "../ports" as ports;
 bring "./defaultSessionHandler.w" as options;
 
-
-pub class CreateSessionHandler impl cloud.IFunctionHandler {
+pub class CreateSessionHandler impl cloud.IApiEndpointHandler {
   _table: ports.ISessionTable;
 
   new(options: options.SessionHandlerOptions) {
     this._table = options.table;
   }
 
-  pub inflight handle(event: str?): str? {
+  pub inflight handle(request: cloud.ApiRequest): cloud.ApiResponse {
     let session = this._table.createSession();
 
     if (session == nil) {
@@ -21,11 +20,23 @@ pub class CreateSessionHandler impl cloud.IFunctionHandler {
 
       log(message);
 
-      return Json.stringify(exceptions.asErr());
+      return cloud.ApiResponse {
+        status: exceptions.status.code,
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: Json.stringify(exceptions.asErr())
+      };
     }
 
     log("Created new session with sessionId={session!.sessionId}");
 
-    return Json.stringify(session);
+    return cloud.ApiResponse {
+      status: 201 ,
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: Json.stringify(session),
+    };
   }
 }

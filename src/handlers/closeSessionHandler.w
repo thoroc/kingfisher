@@ -1,11 +1,13 @@
 bring cloud;
 bring "../types.w" as types;
 bring "../exceptions" as exceptions;
+bring "../ports" as ports;
+bring "./defaultSessionHandler.w" as options;
 
 pub class CloseSessionHandler impl cloud.IFunctionHandler {
-  _table: types.ISessionTable;
+  _table: ports.ISessionTable;
 
-  new(options: types.SessionHandlerOptions) {
+  new(options: options.SessionHandlerOptions) {
     this._table = options.table;
   }
 
@@ -13,7 +15,7 @@ pub class CloseSessionHandler impl cloud.IFunctionHandler {
     log("Event={event!}");
 
     if let sessionJson = Json.tryParse(event!) {
-      let sessionRequest = types.SessionRequest.tryFromJson(sessionJson);
+      let sessionRequest = ports.SessionRequest.tryFromJson(sessionJson);
 
       if (sessionRequest == nil) {
         let exception = new exceptions.BadRequestError();

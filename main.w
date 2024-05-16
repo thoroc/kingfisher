@@ -14,7 +14,7 @@ let sessionTable = new ports.SessionTable("sessions") as "{companyName}-Session-
 
 let basePath = "/sessions";
 
-let handlerOptions: types.SessionHandlerOptions = {
+let handlerOptions: handlers.SessionHandlerOptions = {
   table: sessionTable,
   region: AwsRegion,
 };
@@ -125,7 +125,7 @@ sessionApi.put("{basePath}/:sessionId", inflight (request: cloud.ApiRequest): cl
       };
     }
 
-    let user = types.User.tryFromJson(requestData!.get("user"));
+    let user = ports.User.tryFromJson(requestData!.get("user"));
 
     if (user == nil) {
       let httpStatus = http.HttpStatusTransformer.fromStatusEnum(http.HttpStatuses.BAD_REQUEST);
@@ -141,7 +141,7 @@ sessionApi.put("{basePath}/:sessionId", inflight (request: cloud.ApiRequest): cl
 
     log("User={Json.stringify(user)}");
 
-    let sessionRequest = types.SessionRequest.fromJson({
+    let sessionRequest = ports.SessionRequest.fromJson({
       sessionId: request.vars.get("sessionId"),
       user: user,
     });
@@ -187,7 +187,7 @@ sessionApi.put("{basePath}/:sessionId", inflight (request: cloud.ApiRequest): cl
 sessionApi.post("{basePath}/:sessionId/close", inflight (request: cloud.ApiRequest): cloud.ApiResponse => {
   if (request.vars.has("sessionId")) {
 
-    let sessionRequest = types.SessionRequest.fromJson({
+    let sessionRequest = ports.SessionRequest.fromJson({
       sessionId: request.vars.get("sessionId"),
     });
 

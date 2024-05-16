@@ -1,22 +1,22 @@
-bring "../types.w" as types;
+bring "../ports" as ports;
 
-pub class MockTable impl types.ISessionTable {
-  _response: types.SessionResponse?;
+pub class MockTable impl ports.ISessionTable {
+  _response: ports.SessionResponse?;
 
-  new(response: types.SessionResponse?) {
+  new(response: ports.SessionResponse?) {
     this._response = response;
   }
 
-  pub inflight closeSession(sessionId: str): types.SessionResponse? {
+  pub inflight closeSession(sessionId: str): ports.SessionResponse? {
     return this._response;
   }
-  pub inflight createSession(): types.SessionResponse? {
+  pub inflight createSession(): ports.SessionResponse? {
     return this._response;
   }
-  pub inflight getSession(sessionId: str): types.SessionResponse? {
+  pub inflight getSession(sessionId: str): ports.SessionResponse? {
     return this._response;
   }
-  pub inflight updateSession(session: types.SessionRequest): types.SessionResponse? {
+  pub inflight updateSession(session: ports.SessionRequest): ports.SessionResponse? {
     return this._response;
   }
 }

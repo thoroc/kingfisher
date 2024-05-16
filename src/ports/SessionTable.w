@@ -2,7 +2,40 @@ bring dynamodb;
 bring util;
 bring "../types.w" as types;
 
-pub class SessionTable impl types.ISessionTable{
+pub struct Address {
+  houseNumber: str;
+  street: str;
+  city: str;
+  postcode: str;
+}
+
+pub struct User {
+  firstName: str;
+  lastName: str;
+  email: str?;
+  phoneNumber: str?;
+  address: Address?;
+}
+
+pub struct SessionRequest {
+  sessionId: str;
+  user: User?;
+}
+
+pub struct SessionResponse extends SessionRequest {
+  createdAt: str;
+  updatedAt: str?;
+  closedAt: str?;
+}
+
+pub interface ISessionTable {
+  inflight closeSession(sessionId: str): SessionResponse?;
+  inflight createSession(): SessionResponse?;
+  inflight getSession(sessionId: str): SessionResponse?;
+  inflight updateSession(session: SessionRequest): SessionResponse?;
+}
+
+pub class SessionTable impl ISessionTable {
   _table: dynamodb.Table;
 
   new(tableName: str) {
@@ -18,7 +51,7 @@ pub class SessionTable impl types.ISessionTable{
     );
   }
 
-  pub inflight getSession(sessionId: str): types.SessionResponse? {
+  pub inflight getSession(sessionId: str): SessionResponse? {
     let response = this._table.get(
       Key: {
         sessionId: sessionId
@@ -30,10 +63,10 @@ pub class SessionTable impl types.ISessionTable{
       return nil;
     }
 
-    return types.SessionResponse.fromJson(response.Item);
+    return SessionResponse.fromJson(response.Item);
   }
 
-  pub inflight updateSession(session: types.SessionRequest): types.SessionResponse? {
+  pub inflight updateSession(session: SessionRequest): SessionResponse? {
 
     let currSession = this.getSession(session.sessionId);
 
@@ -41,7 +74,7 @@ pub class SessionTable impl types.ISessionTable{
       return nil;
     }
 
-    let updatedSession: types.SessionResponse = {
+    let updatedSession: SessionResponse = {
       createdAt: currSession!.createdAt,
       sessionId: session.sessionId,
       updatedAt: std.Datetime.utcNow().toIso(),
@@ -55,11 +88,11 @@ pub class SessionTable impl types.ISessionTable{
     return updatedSession;
   }
 
-  pub inflight createSession(): types.SessionResponse? {
+  pub inflight createSession(): SessionResponse? {
     let sessionId = util.uuidv4();
     let createdAt = std.Datetime.utcNow().toIso();
 
-    let session: types.SessionResponse = {
+    let session: SessionResponse = {
       createdAt: createdAt,
       sessionId: sessionId,
     };
@@ -71,14 +104,14 @@ pub class SessionTable impl types.ISessionTable{
     return session;
   }
 
-  pub inflight closeSession(sessionId: str): types.SessionResponse? {
+  pub inflight closeSession(sessionId: str): SessionResponse? {
     let currSession = this.getSession(sessionId);
 
     if (currSession == nil) {
       return nil;
     }
 
-    let closedSession: types.SessionResponse = {
+    let closedSession: SessionResponse = {
       closedAt: std.Datetime.utcNow().toIso(),
       createdAt: currSession!.createdAt,
       sessionId: sessionId,

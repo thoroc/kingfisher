@@ -2,6 +2,7 @@ bring cloud;
 bring "../exceptions" as exceptions;
 bring "../ports" as ports;
 bring "./types.w" as types;
+bring "./response.w" as apiResponse;
 
 pub class GetSessionHandler impl cloud.IApiEndpointHandler {
   _table: ports.ISessionTable;
@@ -20,19 +21,11 @@ pub class GetSessionHandler impl cloud.IApiEndpointHandler {
 
       log(exception.asStr());
 
-      return cloud.ApiResponse {
-        status: exception.status.code,
-        headers: { "Content-Type": "application/json" },
-        body: Json.stringify(exception.asErr())
-      };
+      return new apiResponse.SessionResponseNotFound(exception.asErr()).toCloudApiResponse();
     }
 
     log("Fetched record for session with sessionId={session!.sessionId}");
 
-    return cloud.ApiResponse {
-      status: 200,
-      headers: { "Content-Type": "application/json" },
-      body: Json.stringify(session)
-    };
+    return new apiResponse.SessionResponseOk(session).toCloudApiResponse();
   }
 }

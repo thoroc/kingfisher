@@ -2,6 +2,7 @@ bring cloud;
 bring "../exceptions" as exceptions;
 bring "../ports" as ports;
 bring "./types.w" as types;
+bring "./response.w" as apiResponse;
 
 pub class UpdateSessionHandler impl cloud.IApiEndpointHandler {
   _table: ports.ISessionTable;
@@ -17,9 +18,9 @@ pub class UpdateSessionHandler impl cloud.IApiEndpointHandler {
 
     log("request.body={request.body!}");
 
-    let session = this._table.getSession(sessionId);
+    let currSession = this._table.getSession(sessionId);
 
-    if (session?.closedAt != nil) {
+    if (currSession?.closedAt != nil) {
       let message = "Session already closed";
       let exception = new exceptions.BadRequestError(message);
 
@@ -40,27 +41,17 @@ pub class UpdateSessionHandler impl cloud.IApiEndpointHandler {
       if (user == nil) {
         let exception = new exceptions.BadRequestError("Invalid user");
 
-        log(exception.status.message);
-
-        return {
-          status: exception.status.code,
-          headers: { "Content-Type": "application/json" },
-          body: Json.stringify(exception.asErr())
-        };
+        return new apiResponse.SessionResponseBadRequest(exception.asErr()).toCloudApiResponse();
       }
 
-      let response = this._table.updateSession(ports.SessionRequest {
+      let updatedSession = this._table.updateSession(ports.SessionRequest {
         sessionId: sessionId,
         user: user!
       });
 
       log("Updated session with sessionId={sessionId}");
 
-      return {
-        status: 200,
-        headers: { "Content-Type": "application/json" },
-        body: Json.stringify(response)
-      };
+      return new apiResponse.SessionResponseOk(updatedSession).toCloudApiResponse();
     }
   }
 }

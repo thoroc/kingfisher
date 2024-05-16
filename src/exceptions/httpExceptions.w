@@ -11,9 +11,11 @@ pub inflight class HttpException {
   pub status: http.HttpStatus;
 
   new(status: http.HttpStatuses, message: str?) {
+    let local = http.HttpStatusTransformer.fromStatusEnum(status);
+
     this.status = http.HttpStatus {
-      code: http.HttpStatusTransformer.fromStatusEnum(status).code,
-      message: message ?? http.HttpStatusTransformer.fromStatusEnum(status).message
+      code: local.code,
+      message: message ?? local.message
     };
   }
 

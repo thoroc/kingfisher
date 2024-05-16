@@ -135,6 +135,138 @@ pub struct HttpStatus {
 }
 
 pub class HttpStatusTransformer {
+  pub static inflight toStr(status: HttpStatuses): str {
+    if status == HttpStatuses.CONTINUE {
+      return "Continue";
+    } elif status == HttpStatuses.SWITCHING_PROTOCOLS {
+      return "Switching Protocols";
+    } elif status == HttpStatuses.PROCESSING {
+      return "Processing";
+    } elif status == HttpStatuses.EARLY_HINTS {
+      return "Early Hints";
+    } elif status == HttpStatuses.OK {
+      return "OK";
+    } elif status == HttpStatuses.CREATED {
+      return "Created";
+    } elif status == HttpStatuses.ACCEPTED {
+      return "Accepted";
+    } elif status == HttpStatuses.NON_AUTHORITATIVE_INFORMATION {
+      return "Non-Authoritative Information";
+    } elif status == HttpStatuses.NO_CONTENT {
+      return "No Content";
+    } elif status == HttpStatuses.RESET_CONTENT {
+      return "Reset Content";
+    } elif status == HttpStatuses.PARTIAL_CONTENT {
+      return "Partial Content";
+    } elif status == HttpStatuses.MULTI_STATUS {
+      return "Multi-Status";
+    } elif status == HttpStatuses.ALREADY_REPORTED {
+      return "Already Reported";
+    } elif status == HttpStatuses.IM_USED {
+      return "IM Used";
+    } elif status == HttpStatuses.MULTIPLE_CHOICES {
+      return "Multiple Choices";
+    } elif status == HttpStatuses.MOVED_PERMANENTLY {
+      return "Moved Permanently";
+    } elif status == HttpStatuses.FOUND {
+      return "Found";
+    } elif status == HttpStatuses.SEE_OTHER {
+      return "See Other";
+    } elif status == HttpStatuses.NOT_MODIFIED {
+      return "Not Modified";
+    } elif status == HttpStatuses.USE_PROXY {
+      return "Use Proxy";
+    } elif status == HttpStatuses.SWITCH_PROXY {
+      return "Switch Proxy";
+    } elif status == HttpStatuses.TEMPORARY_REDIRECT {
+      return "Temporary Redirect";
+    } elif status == HttpStatuses.PERMANENT_REDIRECT {
+      return "Permanent Redirect";
+    } elif status == HttpStatuses.BAD_REQUEST {
+      return "Bad Request";
+    } elif status == HttpStatuses.UNAUTHORIZED {
+      return "Unauthorized";
+    } elif status == HttpStatuses.PAYMENT_REQUIRED {
+      return "Payment Required";
+    } elif status == HttpStatuses.FORBIDDEN {
+      return "Forbidden";
+    } elif status == HttpStatuses.NOT_FOUND {
+      return "Not Found";
+    } elif status == HttpStatuses.METHOD_NOT_ALLOWED {
+      return "Method Not Allowed";
+    } elif status == HttpStatuses.NOT_ACCEPTABLE {
+      return "Not Acceptable";
+    } elif status == HttpStatuses.PROXY_AUTHENTICATION_REQUIRED {
+      return "Proxy Authentication Required";
+    } elif status == HttpStatuses.REQUEST_TIMEOUT {
+      return "Request Timeout";
+    } elif status == HttpStatuses.CONFLICT {
+      return "Conflict";
+    } elif status == HttpStatuses.GONE {
+      return "Gone";
+    } elif status == HttpStatuses.LENGTH_REQUIRED {
+      return "Length Required";
+    } elif status == HttpStatuses.PRECONDITION_FAILED {
+      return "Precondition Failed";
+    } elif status == HttpStatuses.PAYLOAD_TOO_LARGE {
+      return "Payload Too Large";
+    } elif status == HttpStatuses.URI_TOO_LONG {
+      return "URI Too Long";
+    } elif status == HttpStatuses.UNSUPPORTED_MEDIA_TYPE {
+      return "Unsupported Media Type";
+    } elif status == HttpStatuses.RANGE_NOT_SATISFIABLE {
+      return "Range Not Satisfiable";
+    } elif status == HttpStatuses.EXPECTATION_FAILED {
+      return "Expectation Failed";
+    } elif status == HttpStatuses.I_M_A_TEAPOT {
+      return "I'm a teapot";
+    } elif status == HttpStatuses.MISDIRECTED_REQUEST {
+      return "Misdirected Request";
+    } elif status == HttpStatuses.UNPROCESSABLE_ENTITY {
+      return "Unprocessable Entity";
+    } elif status == HttpStatuses.LOCKED {
+      return "Locked";
+    } elif status == HttpStatuses.FAILED_DEPENDENCY {
+      return "Failed Dependency";
+    } elif status == HttpStatuses.TOO_EARLY {
+      return "Too Early";
+    } elif status == HttpStatuses.UPGRADE_REQUIRED {
+      return "Upgrade Required";
+    } elif status == HttpStatuses.PRECONDITION_REQUIRED {
+      return "Precondition Required";
+    } elif status == HttpStatuses.TOO_MANY_REQUESTS {
+      return "Too Many Requests";
+    } elif status == HttpStatuses.REQUEST_HEADER_FIELDS_TOO_LARGE {
+      return "Request Header Fields Too Large";
+    } elif status == HttpStatuses.UNAVAILABLE_FOR_LEGAL_REASONS {
+      return "Unavailable For Legal Reasons";
+    } elif status == HttpStatuses.INTERNAL_SERVER_ERROR {
+      return "Internal Server Error";
+    } elif status == HttpStatuses.NOT_IMPLEMENTED {
+      return "Not Implemented";
+    } elif status == HttpStatuses.BAD_GATEWAY {
+      return "Bad Gateway";
+    } elif status == HttpStatuses.SERVICE_UNAVAILABLE {
+      return "Service Unavailable";
+    } elif status == HttpStatuses.GATEWAY_TIMEOUT {
+      return "Gateway Timeout";
+    } elif status == HttpStatuses.HTTP_VERSION_NOT_SUPPORTED {
+      return "HTTP Version Not Supported";
+    } elif status == HttpStatuses.VARIANT_ALSO_NEGOTIATES {
+      return "Variant Also Negotiates";
+    } elif status == HttpStatuses.INSUFFICIENT_STORAGE {
+      return "Insufficient Storage";
+    } elif status == HttpStatuses.LOOP_DETECTED {
+      return "Loop Detected";
+    } elif status == HttpStatuses.NOT_EXTENDED {
+      return "Not Extended";
+    } elif status == HttpStatuses.NETWORK_AUTHENTICATION_REQUIRED {
+      return "Network Authentication Required";
+    } else {
+      return "Unknown";
+    }
+  }
+
   pub static inflight toStatusEnum(code: num): HttpStatuses {
     if code == 100 {
       return HttpStatuses.CONTINUE;

@@ -1,6 +1,510 @@
 bring expect;
 bring "./httpStatus.w" as sut;
 
+test "Transform HttpStatusEnum.Continue to str" {
+  let status = sut.HttpStatuses.CONTINUE;
+
+  let actual = sut.HttpStatusTransformer.toStr(status);
+
+  expect.equal(actual, "Continue");
+}
+
+test "Transform HttpStatusEnum.SwitchingProtocols to str" {
+  let status = sut.HttpStatuses.SWITCHING_PROTOCOLS;
+
+  let actual = sut.HttpStatusTransformer.toStr(status);
+
+  expect.equal(actual, "Switching Protocols");
+}
+
+test "Transform HttpStatusEnum.Processing to str" {
+  let status = sut.HttpStatuses.PROCESSING;
+
+  let actual = sut.HttpStatusTransformer.toStr(status);
+
+  expect.equal(actual, "Processing");
+}
+
+test "Transform HttpStatusEnum.EarlyHints to str" {
+  let status = sut.HttpStatuses.EARLY_HINTS;
+
+  let actual = sut.HttpStatusTransformer.toStr(status);
+
+  expect.equal(actual, "Early Hints");
+}
+
+test "Transform HttpStatusEnum.OK to str" {
+  let status = sut.HttpStatuses.OK;
+
+  let actual = sut.HttpStatusTransformer.toStr(status);
+
+  expect.equal(actual, "OK");
+}
+
+test "Transform HttpStatusEnum.Created to str" {
+  let status = sut.HttpStatuses.CREATED;
+
+  let actual = sut.HttpStatusTransformer.toStr(status);
+
+  expect.equal(actual, "Created");
+}
+
+test "Transform HttpStatusEnum.Accepted to str" {
+  let status = sut.HttpStatuses.ACCEPTED;
+
+  let actual = sut.HttpStatusTransformer.toStr(status);
+
+  expect.equal(actual, "Accepted");
+}
+
+test "Transform HttpStatusEnum.NonAuthoritativeInformation to str" {
+  let status = sut.HttpStatuses.NON_AUTHORITATIVE_INFORMATION;
+
+  let actual = sut.HttpStatusTransformer.toStr(status);
+
+  expect.equal(actual, "Non-Authoritative Information");
+}
+
+test "Transform HttpStatusEnum.NoContent to str" {
+  let status = sut.HttpStatuses.NO_CONTENT;
+
+  let actual = sut.HttpStatusTransformer.toStr(status);
+
+  expect.equal(actual, "No Content");
+}
+
+test "Transform HttpStatusEnum.ResetContent to str" {
+  let status = sut.HttpStatuses.RESET_CONTENT;
+
+  let actual = sut.HttpStatusTransformer.toStr(status);
+
+  expect.equal(actual, "Reset Content");
+}
+
+test "Transform HttpStatusEnum.PartialContent to str" {
+  let status = sut.HttpStatuses.PARTIAL_CONTENT;
+
+  let actual = sut.HttpStatusTransformer.toStr(status);
+
+  expect.equal(actual, "Partial Content");
+}
+
+test "Transform HttpStatusEnum.MultiStatus to str" {
+  let status = sut.HttpStatuses.MULTI_STATUS;
+
+  let actual = sut.HttpStatusTransformer.toStr(status);
+
+  expect.equal(actual, "Multi-Status");
+}
+
+test "Transform HttpStatusEnum.AlreadyReported to str" {
+  let status = sut.HttpStatuses.ALREADY_REPORTED;
+
+  let actual = sut.HttpStatusTransformer.toStr(status);
+
+  expect.equal(actual, "Already Reported");
+}
+
+test "Transform HttpStatusEnum.IMUsed to str" {
+  let status = sut.HttpStatuses.IM_USED;
+
+  let actual = sut.HttpStatusTransformer.toStr(status);
+
+  expect.equal(actual, "IM Used");
+}
+
+test "Transform HttpStatusEnum.MultipleChoices to str" {
+  let status = sut.HttpStatuses.MULTIPLE_CHOICES;
+
+  let actual = sut.HttpStatusTransformer.toStr(status);
+
+  expect.equal(actual, "Multiple Choices");
+}
+
+test "Transform HttpStatusEnum.MovedPermanently to str" {
+  let status = sut.HttpStatuses.MOVED_PERMANENTLY;
+
+  let actual = sut.HttpStatusTransformer.toStr(status);
+
+  expect.equal(actual, "Moved Permanently");
+}
+
+test "Transform HttpStatusEnum.Found to str" {
+  let status = sut.HttpStatuses.FOUND;
+
+  let actual = sut.HttpStatusTransformer.toStr(status);
+
+  expect.equal(actual, "Found");
+}
+
+test "Transform HttpStatusEnum.SeeOther to str" {
+  let status = sut.HttpStatuses.SEE_OTHER;
+
+  let actual = sut.HttpStatusTransformer.toStr(status);
+
+  expect.equal(actual, "See Other");
+}
+
+test "Transform HttpStatusEnum.NotModified to str" {
+  let status = sut.HttpStatuses.NOT_MODIFIED;
+
+  let actual = sut.HttpStatusTransformer.toStr(status);
+
+  expect.equal(actual, "Not Modified");
+}
+
+test "Transform HttpStatusEnum.UseProxy to str" {
+  let status = sut.HttpStatuses.USE_PROXY;
+
+  let actual = sut.HttpStatusTransformer.toStr(status);
+
+  expect.equal(actual, "Use Proxy");
+}
+
+test "Transform HttpStatusEnum.SwitchProxy to str" {
+  let status = sut.HttpStatuses.SWITCH_PROXY;
+
+  let actual = sut.HttpStatusTransformer.toStr(status);
+
+  expect.equal(actual, "Switch Proxy");
+}
+
+test "Transform HttpStatusEnum.TemporaryRedirect to str" {
+  let status = sut.HttpStatuses.TEMPORARY_REDIRECT;
+
+  let actual = sut.HttpStatusTransformer.toStr(status);
+
+  expect.equal(actual, "Temporary Redirect");
+}
+
+test "Transform HttpStatusEnum.PermanentRedirect to str" {
+  let status = sut.HttpStatuses.PERMANENT_REDIRECT;
+
+  let actual = sut.HttpStatusTransformer.toStr(status);
+
+  expect.equal(actual, "Permanent Redirect");
+}
+
+test "Transform HttpStatusEnum.BadRequest to str" {
+  let status = sut.HttpStatuses.BAD_REQUEST;
+
+  let actual = sut.HttpStatusTransformer.toStr(status);
+
+  expect.equal(actual, "Bad Request");
+}
+
+test "Transform HttpStatusEnum.Unauthorized to str" {
+  let status = sut.HttpStatuses.UNAUTHORIZED;
+
+  let actual = sut.HttpStatusTransformer.toStr(status);
+
+  expect.equal(actual, "Unauthorized");
+}
+
+test "Transform HttpStatusEnum.PaymentRequired to str" {
+  let status = sut.HttpStatuses.PAYMENT_REQUIRED;
+
+  let actual = sut.HttpStatusTransformer.toStr(status);
+
+  expect.equal(actual, "Payment Required");
+}
+
+test "Transform HttpStatusEnum.Forbidden to str" {
+  let status = sut.HttpStatuses.FORBIDDEN;
+
+  let actual = sut.HttpStatusTransformer.toStr(status);
+
+  expect.equal(actual, "Forbidden");
+}
+
+test "Transform HttpStatusEnum.NotFound to str" {
+  let status = sut.HttpStatuses.NOT_FOUND;
+
+  let actual = sut.HttpStatusTransformer.toStr(status);
+
+  expect.equal(actual, "Not Found");
+}
+
+test "Transform HttpStatusEnum.MethodNotAllowed to str" {
+  let status = sut.HttpStatuses.METHOD_NOT_ALLOWED;
+
+  let actual = sut.HttpStatusTransformer.toStr(status);
+
+  expect.equal(actual, "Method Not Allowed");
+}
+
+test "Transform HttpStatusEnum.NotAcceptable to str" {
+  let status = sut.HttpStatuses.NOT_ACCEPTABLE;
+
+  let actual = sut.HttpStatusTransformer.toStr(status);
+
+  expect.equal(actual, "Not Acceptable");
+}
+
+test "Transform HttpStatusEnum.ProxyAuthenticationRequired to str" {
+  let status = sut.HttpStatuses.PROXY_AUTHENTICATION_REQUIRED;
+
+  let actual = sut.HttpStatusTransformer.toStr(status);
+
+  expect.equal(actual, "Proxy Authentication Required");
+}
+
+test "Transform HttpStatusEnum.RequestTimeout to str" {
+  let status = sut.HttpStatuses.REQUEST_TIMEOUT;
+
+  let actual = sut.HttpStatusTransformer.toStr(status);
+
+  expect.equal(actual, "Request Timeout");
+}
+
+test "Transform HttpStatusEnum.Conflict to str" {
+  let status = sut.HttpStatuses.CONFLICT;
+
+  let actual = sut.HttpStatusTransformer.toStr(status);
+
+  expect.equal(actual, "Conflict");
+}
+
+test "Transform HttpStatusEnum.Gone to str" {
+  let status = sut.HttpStatuses.GONE;
+
+  let actual = sut.HttpStatusTransformer.toStr(status);
+
+  expect.equal(actual, "Gone");
+}
+
+test "Transform HttpStatusEnum.LengthRequired to str" {
+  let status = sut.HttpStatuses.LENGTH_REQUIRED;
+
+  let actual = sut.HttpStatusTransformer.toStr(status);
+
+  expect.equal(actual, "Length Required");
+}
+
+test "Transform HttpStatusEnum.PreconditionFailed to str" {
+  let status = sut.HttpStatuses.PRECONDITION_FAILED;
+
+  let actual = sut.HttpStatusTransformer.toStr(status);
+
+  expect.equal(actual, "Precondition Failed");
+}
+
+test "Transform HttpStatusEnum.PayloadTooLarge to str" {
+  let status = sut.HttpStatuses.PAYLOAD_TOO_LARGE;
+
+  let actual = sut.HttpStatusTransformer.toStr(status);
+
+  expect.equal(actual, "Payload Too Large");
+}
+
+test "Transform HttpStatusEnum.URITooLong to str" {
+  let status = sut.HttpStatuses.URI_TOO_LONG;
+
+  let actual = sut.HttpStatusTransformer.toStr(status);
+
+  expect.equal(actual, "URI Too Long");
+}
+
+test "Transform HttpStatusEnum.UnsupportedMediaType to str" {
+  let status = sut.HttpStatuses.UNSUPPORTED_MEDIA_TYPE;
+
+  let actual = sut.HttpStatusTransformer.toStr(status);
+
+  expect.equal(actual, "Unsupported Media Type");
+}
+
+test "Transform HttpStatusEnum.RangeNotSatisfiable to str" {
+  let status = sut.HttpStatuses.RANGE_NOT_SATISFIABLE;
+
+  let actual = sut.HttpStatusTransformer.toStr(status);
+
+  expect.equal(actual, "Range Not Satisfiable");
+}
+
+test "Transform HttpStatusEnum.ExpectationFailed to str" {
+  let status = sut.HttpStatuses.EXPECTATION_FAILED;
+
+  let actual = sut.HttpStatusTransformer.toStr(status);
+
+  expect.equal(actual, "Expectation Failed");
+}
+
+test "Transform HttpStatusEnum.IMATeapot to str" {
+  let status = sut.HttpStatuses.I_M_A_TEAPOT;
+
+  let actual = sut.HttpStatusTransformer.toStr(status);
+
+  expect.equal(actual, "I'm a teapot");
+}
+
+test "Transform HttpStatusEnum.MisdirectedRequest to str" {
+  let status = sut.HttpStatuses.MISDIRECTED_REQUEST;
+
+  let actual = sut.HttpStatusTransformer.toStr(status);
+
+  expect.equal(actual, "Misdirected Request");
+}
+
+test "Transform HttpStatusEnum.UnprocessableEntity to str" {
+  let status = sut.HttpStatuses.UNPROCESSABLE_ENTITY;
+
+  let actual = sut.HttpStatusTransformer.toStr(status);
+
+  expect.equal(actual, "Unprocessable Entity");
+}
+
+test "Transform HttpStatusEnum.Locked to str" {
+  let status = sut.HttpStatuses.LOCKED;
+
+  let actual = sut.HttpStatusTransformer.toStr(status);
+
+  expect.equal(actual, "Locked");
+}
+
+test "Transform HttpStatusEnum.FailedDependency to str" {
+  let status = sut.HttpStatuses.FAILED_DEPENDENCY;
+
+  let actual = sut.HttpStatusTransformer.toStr(status);
+
+  expect.equal(actual, "Failed Dependency");
+}
+
+test "Transform HttpStatusEnum.TooEarly to str" {
+  let status = sut.HttpStatuses.TOO_EARLY;
+
+  let actual = sut.HttpStatusTransformer.toStr(status);
+
+  expect.equal(actual, "Too Early");
+}
+
+test "Transform HttpStatusEnum.UpgradeRequired to str" {
+  let status = sut.HttpStatuses.UPGRADE_REQUIRED;
+
+  let actual = sut.HttpStatusTransformer.toStr(status);
+
+  expect.equal(actual, "Upgrade Required");
+}
+
+test "Transform HttpStatusEnum.PreconditionRequired to str" {
+  let status = sut.HttpStatuses.PRECONDITION_REQUIRED;
+
+  let actual = sut.HttpStatusTransformer.toStr(status);
+
+  expect.equal(actual, "Precondition Required");
+}
+
+test "Transform HttpStatusEnum.TooManyRequests to str" {
+  let status = sut.HttpStatuses.TOO_MANY_REQUESTS;
+
+  let actual = sut.HttpStatusTransformer.toStr(status);
+
+  expect.equal(actual, "Too Many Requests");
+}
+
+test "Transform HttpStatusEnum.RequestHeaderFieldsTooLarge to str" {
+  let status = sut.HttpStatuses.REQUEST_HEADER_FIELDS_TOO_LARGE;
+
+  let actual = sut.HttpStatusTransformer.toStr(status);
+
+  expect.equal(actual, "Request Header Fields Too Large");
+}
+
+test "Transform HttpStatusEnum.UnavailableForLegalReasons to str" {
+  let status = sut.HttpStatuses.UNAVAILABLE_FOR_LEGAL_REASONS;
+
+  let actual = sut.HttpStatusTransformer.toStr(status);
+
+  expect.equal(actual, "Unavailable For Legal Reasons");
+}
+
+test "Transform HttpStatusEnum.InternalServerError to str" {
+  let status = sut.HttpStatuses.INTERNAL_SERVER_ERROR;
+
+  let actual = sut.HttpStatusTransformer.toStr(status);
+
+  expect.equal(actual, "Internal Server Error");
+}
+
+test "Transform HttpStatusEnum.NotImplemented to str" {
+  let status = sut.HttpStatuses.NOT_IMPLEMENTED;
+
+  let actual = sut.HttpStatusTransformer.toStr(status);
+
+  expect.equal(actual, "Not Implemented");
+}
+
+test "Transform HttpStatusEnum.BadGateway to str" {
+  let status = sut.HttpStatuses.BAD_GATEWAY;
+
+  let actual = sut.HttpStatusTransformer.toStr(status);
+
+  expect.equal(actual, "Bad Gateway");
+}
+
+test "Transform HttpStatusEnum.ServiceUnavailable to str" {
+  let status = sut.HttpStatuses.SERVICE_UNAVAILABLE;
+
+  let actual = sut.HttpStatusTransformer.toStr(status);
+
+  expect.equal(actual, "Service Unavailable");
+}
+
+test "Transform HttpStatusEnum.GatewayTimeout to str" {
+  let status = sut.HttpStatuses.GATEWAY_TIMEOUT;
+
+  let actual = sut.HttpStatusTransformer.toStr(status);
+
+  expect.equal(actual, "Gateway Timeout");
+}
+
+test "Transform HttpStatusEnum.HTTPVersionNotSupported to str" {
+  let status = sut.HttpStatuses.HTTP_VERSION_NOT_SUPPORTED;
+
+  let actual = sut.HttpStatusTransformer.toStr(status);
+
+  expect.equal(actual, "HTTP Version Not Supported");
+}
+
+test "Transform HttpStatusEnum.VariantAlsoNegotiates to str" {
+  let status = sut.HttpStatuses.VARIANT_ALSO_NEGOTIATES;
+
+  let actual = sut.HttpStatusTransformer.toStr(status);
+
+  expect.equal(actual, "Variant Also Negotiates");
+}
+
+test "Transform HttpStatusEnum.InsufficientStorage to str" {
+  let status = sut.HttpStatuses.INSUFFICIENT_STORAGE;
+
+  let actual = sut.HttpStatusTransformer.toStr(status);
+
+  expect.equal(actual, "Insufficient Storage");
+}
+
+test "Transform HttpStatusEnum.LoopDetected to str" {
+  let status = sut.HttpStatuses.LOOP_DETECTED;
+
+  let actual = sut.HttpStatusTransformer.toStr(status);
+
+  expect.equal(actual, "Loop Detected");
+}
+
+test "Transform HttpStatusEnum.NotExtended to str" {
+  let status = sut.HttpStatuses.NOT_EXTENDED;
+
+  let actual = sut.HttpStatusTransformer.toStr(status);
+
+  expect.equal(actual, "Not Extended");
+}
+
+test "Transform HttpStatusEnum.NetworkAuthenticationRequired to str" {
+  let status = sut.HttpStatuses.NETWORK_AUTHENTICATION_REQUIRED;
+
+  let actual = sut.HttpStatusTransformer.toStr(status);
+
+  expect.equal(actual, "Network Authentication Required");
+}
+
 // Testing toStatusEnum
 
 test "Transforms statusCode=100 to HttpStatusEnum.CONTINUE" {

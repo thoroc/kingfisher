@@ -13,24 +13,10 @@ pub class CloseSessionHandler impl cloud.IApiEndpointHandler {
 
   pub inflight handle(request: cloud.ApiRequest): cloud.ApiResponse {
     let sessionId = request.vars.get("sessionId");
-    let session = this._table.closeSession(sessionId);
 
-    if (session == nil) {
-      let message = "Failed to update session";
-      let exception = new exceptions.InternalServerError(message);
+    log("sessionId={sessionId}");
 
-      log(message);
-
-      return {
-        status: exception.status.code,
-        headers: {
-          "Content-Type": "application/json"
-        },
-        body: Json.stringify(exception.asErr())
-      };
-    }
-
-    log("Session={Json.stringify(session!)}");
+    let session = this._table.getSession(sessionId);
 
     if (session?.closedAt != nil) {
       let message = "Session already closed";
@@ -47,14 +33,33 @@ pub class CloseSessionHandler impl cloud.IApiEndpointHandler {
       };
     }
 
-    log("Updated session with sessionId={session!.sessionId}");
+    let closedSession = this._table.closeSession(sessionId);
+
+    if (closedSession == nil) {
+      let message = "Failed to update session";
+      let exception = new exceptions.InternalServerError(message);
+
+      log(message);
+
+      return {
+        status: exception.status.code,
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: Json.stringify(exception.asErr())
+      };
+    }
+
+    log("Session={Json.stringify(closedSession!)}");
+
+    log("Closed session with sessionId={sessionId}");
 
     return {
       status: 200,
       headers: {
         "Content-Type": "application/json"
       },
-      body: Json.stringify(session)
+      body: Json.stringify(closedSession)
     };
 
     let message = "Failed to parse event";

@@ -20,7 +20,6 @@ let handlerOptions: handlers.SessionHandlerOptions = {
 };
 
 let getSessionHandler = new handlers.GetSessionHandler(handlerOptions) as "{companyName}-GetSessionFn";
-
 // Get a session
 sessionApi.get("{basePath}/:sessionId", inflight (request: cloud.ApiRequest): cloud.ApiResponse => {
   return getSessionHandler.handle(request);

@@ -14,11 +14,15 @@ pub class UpdateSessionHandler impl cloud.IApiEndpointHandler {
   pub inflight handle(request: cloud.ApiRequest): cloud.ApiResponse {
     let sessionId = request.vars.get("sessionId");
 
-    if let sessionJson = Json.tryParse(request.body!) {
-      let sessionRequest = ports.SessionRequest.tryFromJson(sessionJson);
+    log("sessionId={sessionId}");
 
-      if (sessionRequest == nil) {
-        let exception = new exceptions.BadRequestError();
+    log("request.body={request.body!}");
+
+    if let sessionJson = Json.tryParse(request.body!) {
+      let user = ports.User.tryFromJson(sessionJson.get("user"));
+
+      if (user == nil) {
+        let exception = new exceptions.BadRequestError("Invalid user");
 
         log(exception.status.message);
 
@@ -29,24 +33,12 @@ pub class UpdateSessionHandler impl cloud.IApiEndpointHandler {
         };
       }
 
-      log("SessionRequest={Json.stringify(sessionRequest!)}");
+      let response = this._table.updateSession(ports.SessionRequest {
+        sessionId: sessionId,
+        user: user!
+      });
 
-      let session = this._table.updateSession(sessionRequest!);
-
-      if (session == nil) {
-        let message = "Failed to update session";
-        let exception = new exceptions.InternalServerError(message);
-
-        log(message);
-
-        return {
-          status: exception.status.code,
-          headers: { "Content-Type": "application/json" },
-          body: Json.stringify(exception.asErr())
-        };
-      }
-
-      if (session?.closedAt != nil) {
+      if (response?.closedAt != nil) {
         let message = "Session already closed";
         let exception = new exceptions.BadRequestError(message);
 
@@ -64,7 +56,7 @@ pub class UpdateSessionHandler impl cloud.IApiEndpointHandler {
       return {
         status: 200,
         headers: { "Content-Type": "application/json" },
-        body: Json.stringify(session)
+        body: Json.stringify(response)
       };
     }
   }

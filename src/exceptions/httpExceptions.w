@@ -1,6 +1,10 @@
 bring "./exceptions.w" as exceptions;
 bring "../http" as http;
-bring "../types.w" as types;
+
+pub struct Error {
+  error: http.HttpStatus;
+  message: str?;
+}
 
 // HTTP exceptions
 pub inflight class HttpException {
@@ -13,8 +17,8 @@ pub inflight class HttpException {
     };
   }
 
-  pub asErr(): types.SessionError {
-    return types.SessionError {
+  pub asErr(): Error {
+    return Error {
       error: {
         code: this.status.code,
         message: this.status.message

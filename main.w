@@ -2,9 +2,7 @@ bring cloud;
 bring dynamodb;
 bring util;
 bring "./src/handlers" as handlers;
-bring "./src/types.w" as types;
 bring "./src/ports" as ports;
-bring "./src/http" as http;
 
 let companyName = util.env("ORGANISATION_NAME");
 let AwsRegion = util.env("AWS_REGION");

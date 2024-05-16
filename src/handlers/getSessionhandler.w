@@ -1,13 +1,12 @@
 bring cloud;
 bring "../exceptions" as exceptions;
-bring "../types.w" as types;
 bring "../ports" as ports;
-bring "./defaultSessionHandler.w" as options;
+bring "./types.w" as types;
 
 pub class GetSessionHandler impl cloud.IApiEndpointHandler {
   _table: ports.ISessionTable;
 
-  new(options: options.SessionHandlerOptions) {
+  new(options: types.SessionHandlerOptions) {
     this._table = options.table;
   }
 

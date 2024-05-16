@@ -1,5 +1,4 @@
-bring dynamodb;
-bring "./http" as http;
+bring "../ports" as ports;
 
 pub struct Session {
   sessionId: str;
@@ -11,8 +10,7 @@ pub struct AwsConfig {
   region: str?;
 }
 
-pub struct SessionError {
-  error: http.HttpStatus;
-  message: str?;
-}
 
+pub struct SessionHandlerOptions extends AwsConfig {
+  table: ports.ISessionTable;
+}

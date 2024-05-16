@@ -1,3 +1,5 @@
+bring cloud;
+bring http;
 bring expect;
 bring "../mocks" as mocks;
 bring "../exceptions" as exceptions;
@@ -10,7 +12,12 @@ test "Returns an error" {
   let invalidSessionId = "invalid session id";
   let exception = new exceptions.NotFoundError("No record found for session with sessionId={invalidSessionId}");
 
-  let result = errorHandler.handle(invalidSessionId);
+  let result = errorHandler.handle(cloud.ApiRequest {
+    method: http.HttpMethod.GET,
+    path: "/sessions/{invalidSessionId}",
+    query: {},
+    vars: {},
+  });
 
   expect.equal(result, Json.stringify(exception.asErr()));
 }
@@ -24,7 +31,12 @@ let validHandler = new sut.GetSessionHandler({table: validMockTable}) as "ValidG
 test "Returns a session" {
   let validSessionId = "session id";
 
-  let result = validHandler.handle(validSessionId);
+  let result = errorHandler.handle(cloud.ApiRequest {
+    method: http.HttpMethod.GET,
+    path: "/sessions/{validSessionId}",
+    query: {},
+    vars: {},
+  });
 
   expect.equal(result, Json.stringify({
     sessionId: "session id",

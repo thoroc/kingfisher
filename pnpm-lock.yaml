@@ -8,9 +8,15 @@ importers:
 
   .:
     dependencies:
+      '@cdktf/provider-aws':
+        specifier: ^19.19.0
+        version: 19.19.0(cdktf@0.20.7(constructs@10.3.0))(constructs@10.3.0)
       '@winglibs/dynamodb':
         specifier: ^0.1.9
         version: 0.1.9(@aws-sdk/client-dynamodb-streams@3.577.0)(@aws-sdk/client-dynamodb@3.577.0)(@aws-sdk/lib-dynamodb@3.577.0(@aws-sdk/client-dynamodb@3.577.0))(@aws-sdk/util-dynamodb@3.577.0(@aws-sdk/client-dynamodb@3.577.0))(@cdktf/provider-aws@19.19.0(cdktf@0.20.7(constructs@10.3.0))(constructs@10.3.0))(get-port@7.1.0)
+      cdktf:
+        specifier: ^0.20.7
+        version: 0.20.7(constructs@10.3.0)
       winglang:
         specifier: ^0.74.0
         version: 0.74.0(constructs@10.3.0)(encoding@0.1.13)(typescript@5.4.5)

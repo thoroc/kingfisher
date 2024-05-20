@@ -17,28 +17,28 @@ env:
 
 # Run the development server
 dev:
-  npm run dev
+  pnpm run dev
 
 # Run the production build
 build:
-  npm run compile
+  pnpm run compile
 
 # Run the tests
 test:
-  npm run test
+  pnpm run test
 
 # Initialize Terraform
 terraform:
-  npm run tf:init
+  pnpm run tf:init
 
 # Plan Terraform
 synth:
-  npm run tf:plan
+  pnpm run tf:plan
 
 # Apply Terraform
 deploy:
-  npm run tf:apply
+  pnpm run tf:apply
 
 # Destroy Terraform
 destroy:
-  npm run tf:destroy
+  pnpm run tf:destroy

@@ -17,5 +17,9 @@
   "dependencies": {
     "@winglibs/dynamodb": "^0.1.9",
     "winglang": "^0.74.0"
+  },
+  "engines": {
+    "npm": "please-use-pnpm",
+    "pnpm": ">=8.15.0"
   }
 }

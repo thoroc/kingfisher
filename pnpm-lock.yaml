@@ -9,11 +9,11 @@ importers:
   .:
     dependencies:
       '@winglibs/dynamodb':
-        specifier: ^0.1.8
+        specifier: ^0.1.9
         version: 0.1.9(@aws-sdk/client-dynamodb-streams@3.577.0)(@aws-sdk/client-dynamodb@3.577.0)(@aws-sdk/lib-dynamodb@3.577.0(@aws-sdk/client-dynamodb@3.577.0))(@aws-sdk/util-dynamodb@3.577.0(@aws-sdk/client-dynamodb@3.577.0))(@cdktf/provider-aws@19.19.0(cdktf@0.20.7(constructs@10.3.0))(constructs@10.3.0))(get-port@7.1.0)
       winglang:
-        specifier: ^0.73.52
-        version: 0.73.59(constructs@10.3.0)(encoding@0.1.13)(typescript@5.4.5)
+        specifier: ^0.74.0
+        version: 0.74.0(constructs@10.3.0)(encoding@0.1.13)(typescript@5.4.5)
 
 packages:
 
@@ -585,26 +585,26 @@ packages:
     resolution: {integrity: sha512-92F7/SFyufn4DXsha9+QfKnN03JGqtMFMXgSHbZOo8JG59WkTni7UzAouNQDf7AuP9OAMxVOPQcqG3sB7w+kkg==}
     engines: {node: ^16.14.0 || >=18.0.0}
 
-  '@wingcloud/framework@0.73.59':
-    resolution: {integrity: sha512-YWKu7eYzfPdU8vdll6nFpFhhCxFxsW1vKrKXrnVugKLBGEsVJwSjhZVl2auktjrzYJYTOB2cwp+yIIHPBJdq0w==}
+  '@wingcloud/framework@0.74.0':
+    resolution: {integrity: sha512-uVGNLBDFfvhb18uB5biYFx6eNY9F0IjCd3hbklQAsFNHB2i9+V9oQ76a670ybhw7b6IHv71PDnzCvAGBDSvEFw==}
     peerDependencies:
       '@winglang/sdk': '*'
       typescript: ^5.3.3
 
-  '@wingconsole/app@0.73.59':
-    resolution: {integrity: sha512-jmZ9idHPH9i/J0T/XQHvIz7W0g2rsm/nkPiKMs4qPqCUyOVXLCqD2870qLLYMA/s1GbflAmB1glDMEA6s/gSSQ==}
+  '@wingconsole/app@0.74.0':
+    resolution: {integrity: sha512-/+fynZZi4/IY818pCXaIcTstTH3ebUhwuhJkfYPXQXZ1rk7EUQvYW6Exup0+5Yffwq/UNK0N1vX9Jjw9Q8kJRQ==}
 
-  '@wingconsole/server@0.73.59':
-    resolution: {integrity: sha512-VUUzkJ9EFjdUjJTryzHHYN6V2elVhlfFFMcl7dx/6EtronDmqYybxubJ8smvUDYaQAFfWN1JbrU/afts/XkedQ==}
+  '@wingconsole/server@0.74.0':
+    resolution: {integrity: sha512-Yv7obQo/fn7KNQw7AQIapEatQJwLG4NhknnmBuscUjyQ31MNK1wqlgz2D2ruNGqDzv7vWpyagaExhe4S0pddew==}
 
-  '@winglang/compiler@0.73.59':
-    resolution: {integrity: sha512-1gUFo2t1OgiJaoJT0hkVDEJXVb7QPTuFExsoSrQg7fkfnvbBSUia1iPcrdpg+P+11nSzH+4RxlV7wkE64N3lFw==}
+  '@winglang/compiler@0.74.0':
+    resolution: {integrity: sha512-h2eZ0y4u2jEYC8A4U1mlhQBJ7pjfh6LtYzBdOGq8zWrWHdcEyOPe2D39ttqYCXPVzK3cAVWQJldrv7wBHNXNmw==}
     engines: {node: '>=v20.0.0'}
     bundledDependencies:
       - wasi-js
 
-  '@winglang/sdk@0.73.59':
-    resolution: {integrity: sha512-HAa8UW6di1D14i9AD65NVGjgtcXOF/LViBi23poZquxpit3BHU3a7pHI16wIM0ihQu3W6LQcnbuZX0bRhBZxFQ==}
+  '@winglang/sdk@0.74.0':
+    resolution: {integrity: sha512-WuFieURXENDat/oQSFiOcLwzqwDFEnYAgDQkWbzOhduEXNtiqrFX4FUpJg3yRcjhQkBuGjFsIcBsaIWoRtQ/Ow==}
     engines: {node: '>= 20.0.0'}
     peerDependencies:
       constructs: ^10.3
@@ -1684,8 +1684,8 @@ packages:
     engines: {node: ^16.13.0 || >=18.0.0}
     hasBin: true
 
-  winglang@0.73.59:
-    resolution: {integrity: sha512-RBs90OtcvXhUh/oWmWTqUWum4vQfF8nXS8kvjY/pqIr9Sr6eCv1rVtsA0UD69zLE9oLAi1kTDxCqBJf7sZkxeA==}
+  winglang@0.74.0:
+    resolution: {integrity: sha512-zBvU3o1bzyZB35Ca7TGj4f6cBBwhYSxpP1jRcSABCbhfircQHKCfsUvQWotmfM99NfkfuGYMwNQmxBibaIA7Zg==}
     engines: {node: '>=v18.0.0'}
     hasBin: true
 
@@ -2713,15 +2713,15 @@ snapshots:
       '@tufjs/canonical-json': 2.0.0
       minimatch: 9.0.4
 
-  '@wingcloud/framework@0.73.59(@winglang/sdk@0.73.59(constructs@10.3.0))(typescript@5.4.5)':
+  '@wingcloud/framework@0.74.0(@winglang/sdk@0.74.0(constructs@10.3.0))(typescript@5.4.5)':
     dependencies:
-      '@winglang/sdk': 0.73.59(constructs@10.3.0)
+      '@winglang/sdk': 0.74.0(constructs@10.3.0)
       typescript: 5.4.5
 
-  '@wingconsole/app@0.73.59(constructs@10.3.0)(encoding@0.1.13)(typescript@5.4.5)':
+  '@wingconsole/app@0.74.0(constructs@10.3.0)(encoding@0.1.13)(typescript@5.4.5)':
     dependencies:
       '@segment/analytics-node': 1.3.0(encoding@0.1.13)
-      '@wingconsole/server': 0.73.59(constructs@10.3.0)(typescript@5.4.5)
+      '@wingconsole/server': 0.74.0(constructs@10.3.0)(typescript@5.4.5)
       cross-spawn: 7.0.3
       express: 4.19.2
       open: 8.4.2
@@ -2732,10 +2732,10 @@ snapshots:
       - supports-color
       - typescript
 
-  '@wingconsole/server@0.73.59(constructs@10.3.0)(typescript@5.4.5)':
+  '@wingconsole/server@0.74.0(constructs@10.3.0)(typescript@5.4.5)':
     dependencies:
-      '@winglang/compiler': 0.73.59(constructs@10.3.0)(typescript@5.4.5)
-      '@winglang/sdk': 0.73.59(constructs@10.3.0)
+      '@winglang/compiler': 0.74.0(constructs@10.3.0)(typescript@5.4.5)
+      '@winglang/sdk': 0.74.0(constructs@10.3.0)
       codespan-wasm: 0.4.0
       debug: 4.3.4
       launch-editor: 2.6.1
@@ -2745,16 +2745,16 @@ snapshots:
       - supports-color
       - typescript
 
-  '@winglang/compiler@0.73.59(constructs@10.3.0)(typescript@5.4.5)':
+  '@winglang/compiler@0.74.0(constructs@10.3.0)(typescript@5.4.5)':
     dependencies:
-      '@wingcloud/framework': 0.73.59(@winglang/sdk@0.73.59(constructs@10.3.0))(typescript@5.4.5)
-      '@winglang/sdk': 0.73.59(constructs@10.3.0)
+      '@wingcloud/framework': 0.74.0(@winglang/sdk@0.74.0(constructs@10.3.0))(typescript@5.4.5)
+      '@winglang/sdk': 0.74.0(constructs@10.3.0)
       jiti: 1.21.0
     transitivePeerDependencies:
       - constructs
       - typescript
 
-  '@winglang/sdk@0.73.59(constructs@10.3.0)':
+  '@winglang/sdk@0.74.0(constructs@10.3.0)':
     dependencies:
       constructs: 10.3.0
     optionalDependencies:
@@ -3854,15 +3854,15 @@ snapshots:
     dependencies:
       isexe: 3.1.1
 
-  winglang@0.73.59(constructs@10.3.0)(encoding@0.1.13)(typescript@5.4.5):
+  winglang@0.74.0(constructs@10.3.0)(encoding@0.1.13)(typescript@5.4.5):
     dependencies:
       '@npmcli/arborist': 7.5.2
       '@segment/analytics-node': 1.3.0(encoding@0.1.13)
       '@supercharge/promise-pool': 3.2.0
-      '@wingconsole/app': 0.73.59(constructs@10.3.0)(encoding@0.1.13)(typescript@5.4.5)
-      '@wingconsole/server': 0.73.59(constructs@10.3.0)(typescript@5.4.5)
-      '@winglang/compiler': 0.73.59(constructs@10.3.0)(typescript@5.4.5)
-      '@winglang/sdk': 0.73.59(constructs@10.3.0)
+      '@wingconsole/app': 0.74.0(constructs@10.3.0)(encoding@0.1.13)(typescript@5.4.5)
+      '@wingconsole/server': 0.74.0(constructs@10.3.0)(typescript@5.4.5)
+      '@winglang/compiler': 0.74.0(constructs@10.3.0)(typescript@5.4.5)
+      '@winglang/sdk': 0.74.0(constructs@10.3.0)
       chalk: 4.1.2
       codespan-wasm: 0.4.0
       commander: 10.0.1

@@ -15,7 +15,7 @@
     "tf:destroy": "terraform -chdir=./target/main.tfaws destroy"
   },
   "dependencies": {
-    "@winglibs/dynamodb": "^0.1.8",
-    "winglang": "^0.73.52"
+    "@winglibs/dynamodb": "^0.1.9",
+    "winglang": "^0.74.0"
   }
 }

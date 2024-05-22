@@ -24,7 +24,6 @@ jobs:
       - name: Setup Node
         uses: actions/setup-node@v4
         with:
-          cache: "npm"
           node-version: ${{ env.NODE_VERSION }}
           
       - name: Install Dependencies

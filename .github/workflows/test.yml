@@ -11,7 +11,6 @@ on:
 
 env:
   NODE_VERSION: "20.11.1"
-  PNPM_VERSION: "8.15.1"
 
 jobs:
   build:
@@ -21,19 +20,14 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Setup pnpm
-        uses: pnpm/action-setup@v3
-        with:
-          version: ${{ env.PNPM_VERSION }}
 
       - name: Setup Node
         uses: actions/setup-node@v4
         with:
-          cache: "pnpm"
           node-version: ${{ env.NODE_VERSION }}
           
       - name: Install Dependencies
-        run: pnpm install --frozen-lockfile
+        run: npm ci
 
       - name: Run test
-        run: pnpm test
+        run: npm test

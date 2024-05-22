@@ -15,13 +15,11 @@
     "tf:destroy": "terraform -chdir=./target/main.tfaws destroy"
   },
   "dependencies": {
-    "@cdktf/provider-aws": "^19.19.0",
-    "@winglibs/dynamodb": "^0.1.9",
-    "cdktf": "^0.20.7",
-    "winglang": "^0.74.0"
+    "@winglibs/dynamodb": "0.1.10",
+    "winglang": "0.74.2"
   },
   "engines": {
-    "npm": "please-use-pnpm",
+    "npm": ">=10.2.4",
     "pnpm": ">=8.15.0"
   }
 }

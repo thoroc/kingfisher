@@ -24,6 +24,8 @@ pub class GetSessionHandler impl cloud.IApiEndpointHandler {
     let sessionId = request.vars.get("sessionId");
     let session = this._table.getSession(sessionId);
 
+    log("session={Json.stringify(session)}");
+
     if (session == nil) {
       let message = "No record found for session with sessionId={sessionId}";
       let exception = new exceptions.NotFoundError(message);

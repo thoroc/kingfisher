@@ -16,7 +16,7 @@
   },
   "dependencies": {
     "@winglibs/dynamodb": "0.1.10",
-    "winglang": "^0.74.10"
+    "winglang": "^0.74.12"
   },
   "devDependencies": {
     "@cdktf/provider-aws": "^19.20.0",

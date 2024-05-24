@@ -16,10 +16,6 @@
   },
   "dependencies": {
     "@winglibs/dynamodb": "0.1.10",
-    "winglang": "0.74.9"
-  },
-  "engines": {
-    "node": ">=20.11.0",
-    "npm": ">=10.2.4"
+    "winglang": "^0.74.10"
   }
 }

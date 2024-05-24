@@ -12,6 +12,15 @@ pub class GetSessionHandler impl cloud.IApiEndpointHandler {
   }
 
   pub inflight handle(request: cloud.ApiRequest): cloud.ApiResponse {
+    if (request.vars.has("sessionId") == false) {
+      let message = "Missing required parameter sessionId";
+      let exception = new exceptions.BadRequestError(message);
+
+      log(exception.asStr());
+
+      return new apiResponse.SessionResponseBadRequest(exception.asErr()).toCloudApiResponse();
+    }
+
     let sessionId = request.vars.get("sessionId");
     let session = this._table.getSession(sessionId);
 

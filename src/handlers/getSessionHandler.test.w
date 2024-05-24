@@ -6,14 +6,14 @@ bring "../mocks" as mocks;
 bring "../ports" as ports;
 bring "./getSessionHandler.w" as sut;
 
-let erroMockTable = new mocks.MockTable(nil) as "ErroMockTable";
-let errorHandler = new sut.GetSessionHandler({table: erroMockTable}) as "ErrorGetSessionHandler";
+let nilMockTable = new mocks.MockTable(nil) as "NilMockTable";
+let missingSessionIdHandler = new sut.GetSessionHandler({table: nilMockTable}) as "MissingSessionIdGetSessionHandler";
 
-test "Returns an error when the session id is missing" {
+test "Returns an error when the sessionId is missing" {
   let invalidSessionId = "invalid-session-id";
   let exception = new exceptions.BadRequestError("Missing required parameter sessionId");
 
-  let result = errorHandler.handle(cloud.ApiRequest {
+  let result = missingSessionIdHandler.handle(cloud.ApiRequest {
     method: http.HttpMethod.GET,
     path: "/sessions/{invalidSessionId}",
     query: {},
@@ -23,11 +23,13 @@ test "Returns an error when the session id is missing" {
   expect.equal(result.body, Json.stringify(exception.asErr()));
 }
 
-test "Returns an error when the session id is invalid" {
+let invalidSessionIdHandler = new sut.GetSessionHandler({table: nilMockTable}) as "InvalidSessionIdGetSessionHandler";
+
+test "Returns an error when the sessionId is invalid" {
   let invalidSessionId = "invalid-session-id";
   let exception = new exceptions.NotFoundError("No record found for session with sessionId={invalidSessionId}");
 
-  let result = errorHandler.handle(cloud.ApiRequest {
+  let result = invalidSessionIdHandler.handle(cloud.ApiRequest {
     method: http.HttpMethod.GET,
     path: "/sessions/{invalidSessionId}",
     query: {},
@@ -41,13 +43,12 @@ let validMockTable = new mocks.MockTable(ports.SessionResponse {
   sessionId: "valid-session-id",
   createdAt: "2021-01-01T00:00:00Z",
 }) as "ValidMockTable";
+let validSessionIdHandler = new sut.GetSessionHandler({table: validMockTable}) as "ValidSessionIdGetSessionHandler";
 
-let validHandler = new sut.GetSessionHandler({table: validMockTable}) as "ValidGetSessionHandler";
-
-test "Returns a session from the table when the session id is valid" {
+test "Returns a session from the table when the sessionId is valid" {
   let validSessionId = "valid-session-id";
 
-  let result = errorHandler.handle(cloud.ApiRequest {
+  let result = validSessionIdHandler.handle(cloud.ApiRequest {
     method: http.HttpMethod.GET,
     path: "/sessions/{validSessionId}",
     query: {},

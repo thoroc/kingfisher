@@ -35,6 +35,22 @@ pub class SessionTable impl ISessionTable.ISessionTable {
     return types.SessionResponse.fromJson(response.Item);
   }
 
+  pub inflight listSessions(): Array<types.SessionResponse> {
+    let response = this._table.scan();
+
+    if (response.Items.length == 0) {
+      return [];
+    }
+
+    let data = MutArray<types.SessionResponse>[];
+
+    for item in response.Items {
+      data.push(types.SessionResponse.fromJson(item));
+    }
+
+    return data.copy();
+  }
+
   pub inflight updateSession(session: types.SessionRequest): types.SessionResponse? {
 
     let currSession = this.getSession(session.sessionId);

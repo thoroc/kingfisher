@@ -1,9 +1,9 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import './App.css';
 import '../.winglibs/wing-env.d.ts';
 import { SessionDataTable } from './components/SessionDataTable.tsx';
 import { Session } from './models/Session.ts';
-import { createSession } from './services/SessionApi.ts';
+import { createSession, listSessions } from './services/SessionApi.ts';
 
 export const App: React.FC = () => {
   const API_URL = window.wing.env.API_URL;
@@ -22,6 +22,14 @@ export const App: React.FC = () => {
       console.error('General error:', error.message);
     }
   };
+
+  useEffect(() => {
+    listSessions().then((sessions) => {
+      setSessions(sessions);
+    });
+    // fetch the sessions data from the API
+    // set the sessions data to the state
+  }, []);
 
   return (
     <>

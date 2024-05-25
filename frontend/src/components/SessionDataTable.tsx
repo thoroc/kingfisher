@@ -7,15 +7,22 @@ export interface SessionDataTableProps {
 }
 
 export const SessionDataTable: React.FC<SessionDataTableProps> = (props) => {
-  const clickHandler = (event: React.MouseEvent) => {
-    event.preventDefault();
-    console.log('Action clicked');
-  };
-
   const columns = [
     {
       name: 'SessionId',
       selector: (row: Session) => row.sessionId,
+    },
+    {
+      name: 'CreatedAt',
+      selector: (row: Session) => row.createdAt.toString(),
+    },
+    {
+      name: 'UpdatedAt',
+      selector: (row: Session) => row.updatedAt?.toString() || '',
+    },
+    {
+      name: 'ClosedAt',
+      selector: (row: Session) => row.closedAt?.toString() || '',
     },
     {
       name: 'FirstName',
@@ -42,21 +49,6 @@ export const SessionDataTable: React.FC<SessionDataTableProps> = (props) => {
     {
       name: 'Postcode',
       selector: (row: Session) => row.user?.address.postcode || '',
-    },
-    { name: 'CreatedAt', selector: (row: Session) => row.createdAt.toString() },
-    {
-      name: 'UpdatedAt',
-      selector: (row: Session) => row.updatedAt?.toString() || '',
-    },
-    {
-      name: 'ClosedAt',
-      selector: (row: Session) => row.closedAt?.toString() || '',
-    },
-    {
-      name: 'Action',
-      selector: (row: any) => row.action,
-      cell: () => <button onClick={clickHandler}>Action</button>,
-      ignoreRowClick: true,
     },
   ];
 

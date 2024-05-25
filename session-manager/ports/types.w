@@ -1,13 +1,13 @@
 pub struct Address {
-  houseNumber: str;
-  street: str;
-  city: str;
-  postcode: str;
+  houseNumber: str?;
+  street: str?;
+  city: str?;
+  postcode: str?;
 }
 
 pub struct User {
-  firstName: str;
-  lastName: str;
+  firstName: str?;
+  lastName: str?;
   email: str?;
   phoneNumber: str?;
   address: Address?;

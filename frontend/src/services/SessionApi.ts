@@ -1,5 +1,5 @@
 import axios, { AxiosResponse } from 'axios';
-import { Session } from '../models/Session';
+import { Session, User } from '../models/Session';
 
 export const getSession = async (sessionId: string) => {
   const options = {
@@ -61,15 +61,17 @@ export const createSession = async () => {
     });
 };
 
-export const updateSession = async (sessionId: string, session: Session) => {
+export const updateSession = async (sessionId: string, user: User) => {
   const options = {
-    data: session,
+    data: { user: user },
     headers: {
       'Content-Type': 'application/json',
     },
     method: 'PUT',
     url: `${window.wing.env.API_URL}/sessions/${sessionId}`,
   };
+
+  console.log(`Data: ${JSON.stringify(options.data)}`);
 
   return await axios
     .request(options)

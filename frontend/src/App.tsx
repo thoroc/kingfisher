@@ -16,7 +16,11 @@ export const App: React.FC = () => {
       const session = await createSession();
       if (session !== undefined) {
         setSessionId(session.sessionId);
-        setSessions([...sessions, session]);
+        if (sessions === undefined) {
+          setSessions([session]);
+        } else {
+          setSessions([...sessions, session]);
+        }
       }
     } catch (error: any) {
       console.error('General error:', error.message);

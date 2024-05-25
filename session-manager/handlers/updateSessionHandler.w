@@ -20,6 +20,8 @@ pub class UpdateSessionHandler impl cloud.IApiEndpointHandler {
 
     let currSession = this._table.getSession(sessionId);
 
+    log("currSession={Json.stringify(currSession)}");
+
     if (currSession?.closedAt != nil) {
       let message = "Session already closed";
       let exception = new exceptions.BadRequestError(message);
@@ -44,6 +46,8 @@ pub class UpdateSessionHandler impl cloud.IApiEndpointHandler {
         return new apiResponse.SessionResponseBadRequest(exception.asErr()).toCloudApiResponse();
       }
 
+      log("Udating session with sessionId={sessionId} user={Json.stringify(user)}");
+
       let updatedSession = this._table.updateSession(ports.SessionRequest {
         sessionId: sessionId,
         user: user!
@@ -53,5 +57,9 @@ pub class UpdateSessionHandler impl cloud.IApiEndpointHandler {
 
       return new apiResponse.SessionResponseOk(updatedSession).toCloudApiResponse();
     }
+
+    let exception = new exceptions.BadRequestError("Invalid request body");
+
+    return new apiResponse.SessionResponseBadRequest(exception.asErr()).toCloudApiResponse();
   }
 }

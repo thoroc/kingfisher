@@ -56,8 +56,11 @@ pub class SessionTable impl ISessionTable.ISessionTable {
     let currSession = this.getSession(session.sessionId);
 
     if (currSession == nil) {
+      log("No session found for sessionId={session.sessionId}");
       return nil;
     }
+
+    log("Updating session: {session.sessionId}");
 
     let updatedSession: types.SessionResponse = {
       createdAt: currSession!.createdAt,

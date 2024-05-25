@@ -29,10 +29,10 @@ export const App: React.FC = () => {
 
   useEffect(() => {
     listSessions().then((sessions) => {
-      setSessions(sessions);
+      setSessions(sessions || []);
     });
-    // fetch the sessions data from the API
-    // set the sessions data to the state
+    // TODO : figure out why we have 2 calls on load
+    // TODO : figure out how to load the data on the first call
   }, []);
 
   return (
@@ -42,7 +42,6 @@ export const App: React.FC = () => {
         <div>{API_URL}</div>
         <button onClick={createSessionHandler}>Create Session</button>
 
-        {/* pass the sessions data to the Sessions component */}
         <SessionDataTable data={sessions} />
       </div>
     </>

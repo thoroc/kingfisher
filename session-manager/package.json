@@ -16,6 +16,7 @@
   },
   "dependencies": {
     "@winglibs/dynamodb": "0.1.10",
+    "@winglibs/vite": "^0.2.0",
     "winglang": "^0.74.12"
   },
   "devDependencies": {

@@ -1,13 +1,14 @@
 bring cloud;
 bring dynamodb;
 bring util;
-bring "./src/handlers" as handlers;
-bring "./src/ports" as ports;
+bring vite;
+bring "./handlers" as handlers;
+bring "./ports" as ports;
 
 let companyName = util.env("ORGANISATION_NAME");
 let AwsRegion = util.env("AWS_REGION");
 
-let sessionApi = new cloud.Api() as "{companyName}-Session-Api";
+let sessionApi = new cloud.Api(cors: true) as "{companyName}-Session-Api";
 let sessionTable = new ports.SessionTable("sessions") as "{companyName}-Session-Table";
 
 let basePath = "/sessions";
@@ -40,3 +41,11 @@ let closeSessionHandler = new handlers.CloseSessionHandler(handlerOptions) as "{
 sessionApi.post("{basePath}/:sessionId/close", inflight (request: cloud.ApiRequest): cloud.ApiResponse => {
   return closeSessionHandler.handle(request);
 });
+
+new vite.Vite(
+  root: "../frontend",
+  publicEnv: {
+    TITLE: "Wing + Vite + React",
+    API_URL: sessionApi.url
+  }
+);

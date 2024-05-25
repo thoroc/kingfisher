@@ -17,28 +17,28 @@ env:
 
 # Run the development server
 dev:
-  pnpm run dev
+  cd session-manager && pnpm run dev
 
-# Run the production build
-build:
-  pnpm run compile
+# Run the production compile for session-manager
+compile-session-manager:
+  cd session-manager && pnpm run compile
 
-# Run the tests
-test:
-  pnpm run test
+# Run the tests in session-manager
+test-session-manager:
+  cd session-manager && pnpm run test
 
-# Initialize Terraform
-terraform:
-  pnpm run tf:init
+# Initialize Terraform in session-manager
+terraform-init-session-manager:
+  cd session-manager && pnpm run tf:init
 
-# Plan Terraform
-synth:
-  pnpm run tf:plan
+# Plan Terraform in session-manager
+plan-session-manager:
+  cd session-manager && pnpm run tf:plan
 
-# Apply Terraform
-deploy:
-  pnpm run tf:apply
+# Apply Terraform in session-manager
+deploy-session-manager:
+  cd session-manager && pnpm run tf:apply
 
-# Destroy Terraform
-destroy:
-  pnpm run tf:destroy
+# Destroy Terraform in session-manager
+destroy-session-manager:
+  cd session-manager && pnpm run tf:destroy

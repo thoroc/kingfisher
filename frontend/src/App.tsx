@@ -1,7 +1,7 @@
 import React from 'react';
 import './App.css';
 import '../.winglibs/wing-env.d.ts';
-import { Sessions } from './components/Sessions.tsx';
+import { SessionDataTable } from './components/SessionDataTable.tsx';
 import { Session } from './models/Session.ts';
 import { createSession } from './services/SessionApi.ts';
 
@@ -31,7 +31,7 @@ export const App: React.FC = () => {
         <button onClick={createSessionHandler}>Create Session</button>
 
         {/* pass the sessions data to the Sessions component */}
-        <Sessions data={sessions} />
+        <SessionDataTable data={sessions} />
       </div>
     </>
   );

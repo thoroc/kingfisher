@@ -2,11 +2,16 @@ import React from 'react';
 import DataTable from 'react-data-table-component';
 import { Session } from '../models/Session';
 
-export interface SessionsProps {
+export interface SessionDataTableProps {
   data: Session[];
 }
 
-export const Sessions: React.FC<SessionsProps> = (props) => {
+export const SessionDataTable: React.FC<SessionDataTableProps> = (props) => {
+  const clickHandler = (event: React.MouseEvent) => {
+    event.preventDefault();
+    console.log('Action clicked');
+  };
+
   const columns = [
     {
       name: 'SessionId',
@@ -46,6 +51,12 @@ export const Sessions: React.FC<SessionsProps> = (props) => {
     {
       name: 'ClosedAt',
       selector: (row: Session) => row.closedAt?.toString() || '',
+    },
+    {
+      name: 'Action',
+      selector: (row: any) => row.action,
+      cell: () => <button onClick={clickHandler}>Action</button>,
+      ignoreRowClick: true,
     },
   ];
 

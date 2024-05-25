@@ -18,16 +18,22 @@ let handlerOptions: handlers.SessionHandlerOptions = {
   region: AwsRegion,
 };
 
+let createSessionHandler = new handlers.CreateSessionHandler(handlerOptions) as "{companyName}-CreateSessionFn";
+// Create a new session
+sessionApi.post("{basePath}/new", inflight (request: cloud.ApiRequest): cloud.ApiResponse => {
+  return createSessionHandler.handle(request);
+});
+
 let getSessionHandler = new handlers.GetSessionHandler(handlerOptions) as "{companyName}-GetSessionFn";
 // Get a session
 sessionApi.get("{basePath}/:sessionId", inflight (request: cloud.ApiRequest): cloud.ApiResponse => {
   return getSessionHandler.handle(request);
 });
 
-let createSessionHandler = new handlers.CreateSessionHandler(handlerOptions) as "{companyName}-CreateSessionFn";
-// Create a new session
-sessionApi.post("{basePath}/new", inflight (request: cloud.ApiRequest): cloud.ApiResponse => {
-  return createSessionHandler.handle(request);
+let listSessionsHandler = new handlers.ListSessionsHandler(handlerOptions) as "{companyName}-ListSessionsFn";
+// List all sessions
+sessionApi.get("{basePath}", inflight (request: cloud.ApiRequest): cloud.ApiResponse => {
+  return listSessionsHandler.handle(request);
 });
 
 let updateSessionHandler = new handlers.UpdateSessionHandler(handlerOptions) as "{companyName}-UpdateSessionFn";

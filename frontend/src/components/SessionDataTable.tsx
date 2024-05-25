@@ -12,18 +12,22 @@ export const SessionDataTable: React.FC<SessionDataTableProps> = (props) => {
     {
       name: 'SessionId',
       selector: (row: Session) => row.sessionId,
+      sortable: true,
     },
     {
       name: 'CreatedAt',
       selector: (row: Session) => row.createdAt.toString(),
+      sortable: true,
     },
     {
       name: 'UpdatedAt',
       selector: (row: Session) => row.updatedAt?.toString() || '',
+      sortable: true,
     },
     {
       name: 'ClosedAt',
       selector: (row: Session) => row.closedAt?.toString() || '',
+      sortable: true,
     },
   ];
 

@@ -77,17 +77,17 @@ pub class SessionTable impl ISessionTable.ISessionTable {
   pub inflight listSessions(): Array<types.SessionResponse> {
     let response = this._table.scan();
 
-    if (response.Items.length == 0) {
-      return [];
-    }
+    let sessions = MutArray<types.SessionResponse>[];
 
-    let data = MutArray<types.SessionResponse>[];
+    if (response.Items.length == 0) {
+      return sessions.copy();
+    }
 
     for item in response.Items {
-      data.push(types.SessionResponse.fromJson(item));
+      sessions.push(types.SessionResponse.fromJson(item));
     }
 
-    return data.copy();
+    return sessions.copy();
   }
 
   pub inflight updateSession(session: types.SessionRequest): types.SessionResponse? {
@@ -145,10 +145,10 @@ pub class MockSessionTable impl ISessionTable.ISessionTable {
     log("> listSessions");
     log("response: {Json.stringify(this._response)}");
 
-    let response = MutArray<types.SessionResponse>();
+    let response = MutArray<types.SessionResponse>[];
 
     if (this._response != nil) {
-      response.push(this._response);
+      response.push(this._response!);
     }
 
     return response.copy();

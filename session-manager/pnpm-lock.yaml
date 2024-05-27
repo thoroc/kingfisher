@@ -7,18 +7,18 @@ settings:
 dependencies:
   '@winglibs/dynamodb':
     specifier: 0.1.10
-    version: 0.1.10(@aws-sdk/client-dynamodb-streams@3.583.0)(@aws-sdk/client-dynamodb@3.583.0)(@aws-sdk/lib-dynamodb@3.583.0)(@aws-sdk/util-dynamodb@3.583.0)(@cdktf/provider-aws@19.20.0)(aws-sdk@2.1627.0)(dynamodb-admin@4.6.1)(get-port@7.1.0)
+    version: 0.1.10(@aws-sdk/client-dynamodb-streams@3.583.0)(@aws-sdk/client-dynamodb@3.583.0)(@aws-sdk/lib-dynamodb@3.583.0)(@aws-sdk/util-dynamodb@3.583.0)(@cdktf/provider-aws@19.20.1)(aws-sdk@2.1627.0)(dynamodb-admin@4.6.1)(get-port@7.1.0)
   '@winglibs/vite':
     specifier: ^0.2.0
-    version: 0.2.0(@cdktf/provider-aws@19.20.0)(cdktf@0.20.7)(mime-types@2.1.35)(vite@5.2.11)
+    version: 0.2.0(@cdktf/provider-aws@19.20.1)(cdktf@0.20.7)(mime-types@2.1.35)(vite@5.2.11)
   winglang:
-    specifier: ^0.74.12
-    version: 0.74.12(constructs@10.3.0)(typescript@5.4.5)
+    specifier: ^0.74.17
+    version: 0.74.17(constructs@10.3.0)(typescript@5.4.5)
 
 devDependencies:
   '@cdktf/provider-aws':
-    specifier: ^19.20.0
-    version: 19.20.0(cdktf@0.20.7)(constructs@10.3.0)
+    specifier: ^19.20.1
+    version: 19.20.1(cdktf@0.20.7)(constructs@10.3.0)
   cdktf:
     specifier: ^0.20.7
     version: 0.20.7(constructs@10.3.0)
@@ -599,8 +599,8 @@ packages:
       tslib: 2.6.2
     dev: false
 
-  /@cdktf/provider-aws@19.20.0(cdktf@0.20.7)(constructs@10.3.0):
-    resolution: {integrity: sha512-lAMgC2SPLPYKujy8FNL2ibyyTD1vp6/vCEqONWTR2cgtycB3rZk8fBlRMWVzj4KP0X0ysGonckfzfp8ZsRgCUQ==}
+  /@cdktf/provider-aws@19.20.1(cdktf@0.20.7)(constructs@10.3.0):
+    resolution: {integrity: sha512-Ih0IKc8TBvr6wrONuLDTZmx0Qc+/kJdZIE43T8AmHLTJBe0GnEIB3AhQAmn1ORhLZrWci4VLY6DNKYTskwVyug==}
     engines: {node: '>= 18.12.0'}
     peerDependencies:
       cdktf: ^0.20.0
@@ -1832,21 +1832,21 @@ packages:
     resolution: {integrity: sha512-/kYRxGDLWzHOB7q+wtSUQlFrtcdUccpfy+X+9iMBpHK8QLLhx2wIPYuS5DYtR9Wa/YlZAbIovy7qVdB1Aq6Lyw==}
     dev: false
 
-  /@wingcloud/framework@0.74.12(@winglang/sdk@0.74.12)(typescript@5.4.5):
-    resolution: {integrity: sha512-c1ekNiTqCYjB+Gvx6w1/v1fj7gwAEzxcq4MC/rOuSt+XVAYEJkGMsj0j7wuLpr51INTLR+Mhhdx+u4rgKZr/xg==}
+  /@wingcloud/framework@0.74.17(@winglang/sdk@0.74.17)(typescript@5.4.5):
+    resolution: {integrity: sha512-5qaBH7nLCJ6JlpZoJc6i9zhxm1W+xCMvc+DBzZRF2lAQG8++WTd3NIJRi3ASrMh2Fx1AXnzbPEPUvPCKHQzHJw==}
     peerDependencies:
       '@winglang/sdk': '*'
       typescript: ^5.3.3
     dependencies:
-      '@winglang/sdk': 0.74.12(constructs@10.3.0)
+      '@winglang/sdk': 0.74.17(constructs@10.3.0)
       typescript: 5.4.5
     dev: false
 
-  /@wingconsole/app@0.74.12(constructs@10.3.0)(typescript@5.4.5):
-    resolution: {integrity: sha512-TiCo05yFSylr16wi976takI7WwyglKAnB+3TTzOlg3aHJivVgLpNu1OmhweJAN+Mbz7rWcj6KMKv63JZt/A1Ow==}
+  /@wingconsole/app@0.74.17(constructs@10.3.0)(typescript@5.4.5):
+    resolution: {integrity: sha512-4v19Vg0r/9fCre/sFxMDReLcnlz1YceBnaBQTwT/mhd4A2Sbik9xzd6yuUU3RGA91jPiAEqLSfEJTkaTuYHNlw==}
     dependencies:
       '@segment/analytics-node': 1.3.0
-      '@wingconsole/server': 0.74.12(constructs@10.3.0)(typescript@5.4.5)
+      '@wingconsole/server': 0.74.17(constructs@10.3.0)(typescript@5.4.5)
       cross-spawn: 7.0.3
       express: 4.19.2
       open: 8.4.2
@@ -1858,11 +1858,11 @@ packages:
       - typescript
     dev: false
 
-  /@wingconsole/server@0.74.12(constructs@10.3.0)(typescript@5.4.5):
-    resolution: {integrity: sha512-99FbfGkYH55Atj1/d5mScVGnklpatpaWeLwhQwEi/GnZAxlJzbDTiebKJkXx2GlY0jsVPmZQcE44oR5IZ7ITOw==}
+  /@wingconsole/server@0.74.17(constructs@10.3.0)(typescript@5.4.5):
+    resolution: {integrity: sha512-0OCtVql7A8fnUkRNtOR3pmaV+isCceXhNyoSpOTa4llCyZXYaI3AM1iWogXdnOg3AK2t9DWFCUW9FNEgWws0qw==}
     dependencies:
-      '@winglang/compiler': 0.74.12(constructs@10.3.0)(typescript@5.4.5)
-      '@winglang/sdk': 0.74.12(constructs@10.3.0)
+      '@winglang/compiler': 0.74.17(constructs@10.3.0)(typescript@5.4.5)
+      '@winglang/sdk': 0.74.17(constructs@10.3.0)
       codespan-wasm: 0.4.0
       debug: 4.3.4
       launch-editor: 2.6.1
@@ -1873,12 +1873,12 @@ packages:
       - typescript
     dev: false
 
-  /@winglang/compiler@0.74.12(constructs@10.3.0)(typescript@5.4.5):
-    resolution: {integrity: sha512-NxdMKHfluJ+aiwnTOjvk7Qzxksu+ZtFl7xEpE9rDdDvuqofRJ46PAV2LMcWov/vaxOWbRAt/AAh/3RW2iZNXTg==}
+  /@winglang/compiler@0.74.17(constructs@10.3.0)(typescript@5.4.5):
+    resolution: {integrity: sha512-VGpP9ETqP47r/s3LFnaa+bAf01jFKVNeyucjeYgVAA3kNIdYoTltGZOYrAACTDfQDOrvnhR7lApNGWbPGJjwpA==}
     engines: {node: '>=v20.0.0'}
     dependencies:
-      '@wingcloud/framework': 0.74.12(@winglang/sdk@0.74.12)(typescript@5.4.5)
-      '@winglang/sdk': 0.74.12(constructs@10.3.0)
+      '@wingcloud/framework': 0.74.17(@winglang/sdk@0.74.17)(typescript@5.4.5)
+      '@winglang/sdk': 0.74.17(constructs@10.3.0)
       jiti: 1.21.0
     transitivePeerDependencies:
       - constructs
@@ -1887,8 +1887,8 @@ packages:
     bundledDependencies:
       - wasi-js
 
-  /@winglang/sdk@0.74.12(constructs@10.3.0):
-    resolution: {integrity: sha512-8BHUdsw3QDTmGWKfn3mvxDx+ZK1GDliWGNx+XZhZUQ86CEqEo4+W0QCj6QWDHG0zVwgGehLghT/g5pfNN+j5rQ==}
+  /@winglang/sdk@0.74.17(constructs@10.3.0):
+    resolution: {integrity: sha512-Ojeb+XBcB2lRnv3RlEu7TSv2+27HDhsujPc1nA5z2mBRiMXgD9GPkoxRSQ0Vs0vZfFuQTFEx0D3r2mfE9WcDQA==}
     engines: {node: '>= 20.0.0'}
     peerDependencies:
       constructs: ^10.3
@@ -1940,7 +1940,7 @@ packages:
       - vlq
       - yaml
 
-  /@winglibs/dynamodb@0.1.10(@aws-sdk/client-dynamodb-streams@3.583.0)(@aws-sdk/client-dynamodb@3.583.0)(@aws-sdk/lib-dynamodb@3.583.0)(@aws-sdk/util-dynamodb@3.583.0)(@cdktf/provider-aws@19.20.0)(aws-sdk@2.1627.0)(dynamodb-admin@4.6.1)(get-port@7.1.0):
+  /@winglibs/dynamodb@0.1.10(@aws-sdk/client-dynamodb-streams@3.583.0)(@aws-sdk/client-dynamodb@3.583.0)(@aws-sdk/lib-dynamodb@3.583.0)(@aws-sdk/util-dynamodb@3.583.0)(@cdktf/provider-aws@19.20.1)(aws-sdk@2.1627.0)(dynamodb-admin@4.6.1)(get-port@7.1.0):
     resolution: {integrity: sha512-8xbGBF6jSyCKBTSBreyNlGaPCHjskyee/bWlFFi1kAn857b0HS/oxvaw6MakikHdwcfrnJW+lSnBKdoEpUNTOA==}
     peerDependencies:
       '@aws-sdk/client-dynamodb': ^3.461.0
@@ -1956,13 +1956,13 @@ packages:
       '@aws-sdk/client-dynamodb-streams': 3.583.0
       '@aws-sdk/lib-dynamodb': 3.583.0(@aws-sdk/client-dynamodb@3.583.0)
       '@aws-sdk/util-dynamodb': 3.583.0(@aws-sdk/client-dynamodb@3.583.0)
-      '@cdktf/provider-aws': 19.20.0(cdktf@0.20.7)(constructs@10.3.0)
+      '@cdktf/provider-aws': 19.20.1(cdktf@0.20.7)(constructs@10.3.0)
       aws-sdk: 2.1627.0
       dynamodb-admin: 4.6.1
       get-port: 7.1.0
     dev: false
 
-  /@winglibs/vite@0.2.0(@cdktf/provider-aws@19.20.0)(cdktf@0.20.7)(mime-types@2.1.35)(vite@5.2.11):
+  /@winglibs/vite@0.2.0(@cdktf/provider-aws@19.20.1)(cdktf@0.20.7)(mime-types@2.1.35)(vite@5.2.11):
     resolution: {integrity: sha512-KC/CFuhQJu72R57JtBy9xeSOTWDIQ5cVN9XAaoUONAT1jJF36ZO7iZ31yNkrNw6AKqZF96/oQDtFjkx3FpcVMQ==}
     peerDependencies:
       '@cdktf/provider-aws': ^19.12.0
@@ -1970,7 +1970,7 @@ packages:
       mime-types: ^2.1.35
       vite: ^5.1.3
     dependencies:
-      '@cdktf/provider-aws': 19.20.0(cdktf@0.20.7)(constructs@10.3.0)
+      '@cdktf/provider-aws': 19.20.1(cdktf@0.20.7)(constructs@10.3.0)
       cdktf: 0.20.7(constructs@10.3.0)
       mime-types: 2.1.35
       vite: 5.2.11
@@ -4293,18 +4293,18 @@ packages:
       isexe: 3.1.1
     dev: false
 
-  /winglang@0.74.12(constructs@10.3.0)(typescript@5.4.5):
-    resolution: {integrity: sha512-7NzPES37v0t3OBu1KGbUlCTWc15wV4iyCpaAqbjX6+mn0kOVuEJ5vVbwG+rS1LnD/5NlwCEXKwWLFTQ5yipGOw==}
+  /winglang@0.74.17(constructs@10.3.0)(typescript@5.4.5):
+    resolution: {integrity: sha512-dGOXBqDcRNDrm6QmnTewHHhfbhmsFWRnxaAP1znjlI6BUd0J4Rag/LEtKpxmgD3ZkU7VTSZ2et/2MIZm6OkISQ==}
     engines: {node: '>=v18.0.0'}
     hasBin: true
     dependencies:
       '@npmcli/arborist': 7.5.2
       '@segment/analytics-node': 1.3.0
       '@supercharge/promise-pool': 3.2.0
-      '@wingconsole/app': 0.74.12(constructs@10.3.0)(typescript@5.4.5)
-      '@wingconsole/server': 0.74.12(constructs@10.3.0)(typescript@5.4.5)
-      '@winglang/compiler': 0.74.12(constructs@10.3.0)(typescript@5.4.5)
-      '@winglang/sdk': 0.74.12(constructs@10.3.0)
+      '@wingconsole/app': 0.74.17(constructs@10.3.0)(typescript@5.4.5)
+      '@wingconsole/server': 0.74.17(constructs@10.3.0)(typescript@5.4.5)
+      '@winglang/compiler': 0.74.17(constructs@10.3.0)(typescript@5.4.5)
+      '@winglang/sdk': 0.74.17(constructs@10.3.0)
       chalk: 4.1.2
       codespan-wasm: 0.4.0
       commander: 10.0.1

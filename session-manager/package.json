@@ -17,10 +17,10 @@
   "dependencies": {
     "@winglibs/dynamodb": "0.1.10",
     "@winglibs/vite": "^0.2.0",
-    "winglang": "^0.74.12"
+    "winglang": "^0.74.17"
   },
   "devDependencies": {
-    "@cdktf/provider-aws": "^19.20.0",
+    "@cdktf/provider-aws": "^19.20.1",
     "cdktf": "^0.20.7",
     "constructs": "^10.3.0"
   }

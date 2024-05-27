@@ -21,8 +21,6 @@ pub class CloseSessionHandler impl cloud.IApiEndpointHandler {
       let message = "Session already closed";
       let exception = new exceptions.BadRequestError(message);
 
-      log(message);
-
       return {
         status: exception.status.code,
         headers: {
@@ -37,8 +35,6 @@ pub class CloseSessionHandler impl cloud.IApiEndpointHandler {
     if (closedSession == nil) {
       let message = "Failed to update session";
       let exception = new exceptions.InternalServerError(message);
-
-      log(message);
 
       return {
         status: exception.status.code,

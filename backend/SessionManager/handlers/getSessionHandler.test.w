@@ -1,7 +1,7 @@
 bring cloud;
 bring expect;
 bring http;
-bring "../exceptions" as exceptions;
+bring "../../libs/exceptions" as exceptions;
 bring "../ports" as ports;
 bring "./getSessionHandler.w" as sut;
 

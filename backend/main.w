@@ -2,8 +2,9 @@ bring cloud;
 bring dynamodb;
 bring util;
 bring vite;
-bring "./handlers" as handlers;
-bring "./ports" as ports;
+bring "./SessionManager/handlers" as handlers;
+bring "./SessionManager/ports" as ports;
+
 
 let companyName = util.env("ORGANISATION_NAME");
 let AwsRegion = util.env("AWS_REGION");
@@ -49,9 +50,9 @@ sessionApi.post("{basePath}/:sessionId/close", inflight (request: cloud.ApiReque
 });
 
 new vite.Vite(
-  root: "../frontend",
+  root: "{@dirname}/../frontend",
   publicEnv: {
     TITLE: "Wing + Vite + React",
     API_URL: sessionApi.url
   }
-);
+) as "{companyName}-Vite";

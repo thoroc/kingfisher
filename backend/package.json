@@ -1,7 +1,7 @@
 {
-  "name": "redbull",
+  "name": "kinfisher",
   "version": "0.0.2",
-  "description": "Redbull gives you wings!",
+  "description": "kinfisher is an example of a serverless application that uses Winglang targetting AWS and terraform deploy a API and website.",
   "author": "thoroc",
   "license": "MIT",
   "wing": true,

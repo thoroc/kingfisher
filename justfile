@@ -1,7 +1,7 @@
 set dotenv-load
 set dotenv-filename := ".env.local"
 
-# Default target; show help message
+# Default backend/target; show help message
 default: help
 
 # Show this help message
@@ -15,30 +15,38 @@ env:
   @echo "AWS_ACCESS_KEY_ID     = ${AWS_ACCESS_KEY_ID}"
   @echo "AWS_SECRET_ACCESS_KEY = ${AWS_SECRET_ACCESS_KEY}"
 
+# Install dependencies
+dependencies: frontend
+  cd backend && pnpm install
+
+# Install frontend dependencies
+frontend:
+  cd frontend && pnpm install
+
 # Run the development server
 dev:
-  cd session-manager && pnpm run dev
+  cd backend && wing it
 
-# Run the production compile for session-manager
-compile-session-manager:
-  cd session-manager && pnpm run compile
+# Run the production compile
+compile:
+  cd backend && wing compile --platform tf-aws main.w
 
-# Run the tests in session-manager
-test-session-manager:
-  cd session-manager && pnpm run test
+# Run the tests
+test:
+  cd backend && wing test
 
-# Initialize Terraform in session-manager
-terraform-init-session-manager:
-  cd session-manager && pnpm run tf:init
+# Initialize Terraform
+terraform-init:
+  terraform -chdir=./backend/target/main.tfaws init
 
-# Plan Terraform in session-manager
-plan-session-manager:
-  cd session-manager && pnpm run tf:plan
+# Plan Terraform
+plan:
+  terraform -chdir=./backend/target/main.tfaws plan
 
-# Apply Terraform in session-manager
-deploy-session-manager:
-  cd session-manager && pnpm run tf:apply
+# Apply Terraform
+apply:
+  terraform -chdir=./backend/target/main.tfaws apply
 
-# Destroy Terraform in session-manager
-destroy-session-manager:
-  cd session-manager && pnpm run tf:destroy
+# Destroy Terraform
+destroy:
+  terraform -chdir=./backend/target/main.tfaws destroy

@@ -13,12 +13,12 @@ pub struct ApiRequest {
   body: str;
 }
 
-pub interface IHandler {
+pub inflight interface IHandler {
   inflight handle(request: cloud.ApiRequest): cloud.ApiResponse;
 }
 
-pub interface IMiddleware {
-  inflight invoke(request: cloud.ApiRequest): cloud.ApiResponse;
+pub inflight interface IMiddleware {
+  inflight handle(request: cloud.ApiRequest, next: inflight (cloud.ApiRequest): cloud.ApiResponse): cloud.ApiResponse;
 }
 
 pub interface ISessionApi {

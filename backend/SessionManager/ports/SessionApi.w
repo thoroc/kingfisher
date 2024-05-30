@@ -16,31 +16,27 @@ pub class SessionApi impl ISessionApi.ISessionApi {
   }
 
   wrapHandler(
-    handler: inflight (cloud.ApiRequest): cloud.ApiResponse,
-    middlewares: Array<ISessionApi.IMiddleware>,
+    handler: ISessionApi.IHandler,
   ): inflight (cloud.ApiRequest): cloud.ApiResponse {
-    class ApplyMiddleware {
-      pub inflight apply(request: cloud.ApiRequest, index: num?): cloud.ApiResponse  {
-        if let middleware = middlewares.tryAt(index ?? 0) {
-          let next = (request: cloud.ApiRequest): cloud.ApiResponse => {
-            let newIndex = (index ?? 0) + 1;
-            if newIndex < middlewares.length {
-              return this.apply(request, newIndex);
-            }
-            return handler(request);
-          };
-          return middleware.handle(request, next);
-        }
+    let applyMiddlewares = inflight (request: cloud.ApiRequest, index: num?): cloud.ApiResponse => {
+      log("{index ?? 0}");
 
-        return handler(request);
+      if let middleware = this._middlewares.tryAt(index ?? 0) {
+        let next = (request: cloud.ApiRequest): cloud.ApiResponse => {
+          let newIndex = (index ?? 0) + 1;
+          if newIndex < this._middlewares.length {
+            return applyMiddlewares(request, newIndex);
+          }
+          return handler(request);
+        };
+        return middleware.handle(request, next);
       }
-    }
-
-    let applyMiddleware = new ApplyMiddleware();
+      return handler(request);
+    };
 
     return inflight (request: cloud.ApiRequest): cloud.ApiResponse => {
       try {
-        let response = applyMiddleware.apply(request);
+        let response = applyMiddlewares(request);
 
         let headers = response.headers?.copyMut();
         headers?.set("content-type", "application/json");
@@ -89,50 +85,34 @@ pub class SessionApi impl ISessionApi.ISessionApi {
   }
 
   pub connect(path: str, handler: ISessionApi.IHandler): void {
-    this.api.connect(path, inflight (request: cloud.ApiRequest): cloud.ApiResponse => {
-      return handler.handle(request);
-    });
+    this.api.connect(path, this.wrapHandler(handler));
   }
 
   pub delete(path: str, handler: ISessionApi.IHandler): void {
-    this.api.delete(path, inflight (request: cloud.ApiRequest): cloud.ApiResponse => {
-      return handler.handle(request);
-    });
+    this.api.delete(path, this.wrapHandler(handler));
   }
 
   pub get(path: str, handler: ISessionApi.IHandler): void {
-    this.api.post(path, inflight (request: cloud.ApiRequest): cloud.ApiResponse => {
-      return handler.handle(request);
-    });
+    this.api.get(path, this.wrapHandler(handler));
   }
 
   pub head(path: str, handler: ISessionApi.IHandler): void {
-    this.api.head(path, inflight (request: cloud.ApiRequest): cloud.ApiResponse => {
-      return handler.handle(request);
-    });
+    this.api.head(path, this.wrapHandler(handler));
   }
 
   pub options(path: str, handler: ISessionApi.IHandler): void {
-    this.api.options(path, inflight (request: cloud.ApiRequest): cloud.ApiResponse => {
-      return handler.handle(request);
-    });
+    this.api.options(path, this.wrapHandler(handler));
   }
 
   pub patch(path: str, handler: ISessionApi.IHandler): void {
-    this.api.patch(path, inflight (request: cloud.ApiRequest): cloud.ApiResponse => {
-      return handler.handle(request);
-    });
+    this.api.patch(path, this.wrapHandler(handler));
   }
 
   pub post(path: str, handler: ISessionApi.IHandler): void {
-    this.api.post(path, inflight (request: cloud.ApiRequest): cloud.ApiResponse => {
-      return handler.handle(request);
-    });
+    this.api.post(path, this.wrapHandler(handler, ));
   }
 
   pub put(path: str, handler: ISessionApi.IHandler): void {
-    this.api.post(path, inflight (request: cloud.ApiRequest): cloud.ApiResponse => {
-      return handler.handle(request);
-    });
+    this.api.put(path, this.wrapHandler(handler));
   }
 }

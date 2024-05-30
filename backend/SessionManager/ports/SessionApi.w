@@ -9,47 +9,62 @@ pub struct SessionApiProps {
 pub class SessionApi impl ISessionApi.ISessionApi {
   pub api: cloud.Api;
   _middlewares: MutArray<ISessionApi.IMiddleware>;
+  var handlerCount: num;
 
   new(props: SessionApiProps) {
     this.api = props.api ?? new cloud.Api();
     this._middlewares = MutArray<ISessionApi.IMiddleware>[];
+    this.handlerCount = 0;
   }
 
   wrapHandler(
     handler: ISessionApi.IHandler,
   ): inflight (cloud.ApiRequest): cloud.ApiResponse {
-    let applyMiddlewares = inflight (request: cloud.ApiRequest, index: num?): cloud.ApiResponse => {
-      log("{index ?? 0}");
+    class ApplyMiddleware {
 
-      if let middleware = this._middlewares.tryAt(index ?? 0) {
-        let next = (request: cloud.ApiRequest): cloud.ApiResponse => {
-          let newIndex = (index ?? 0) + 1;
-          if newIndex < this._middlewares.length {
-            return applyMiddlewares(request, newIndex);
-          }
-          return handler(request);
-        };
-        return middleware.handle(request, next);
+      _middlewares: MutArray<ISessionApi.IMiddleware>;
+
+      new(middleware: MutArray<ISessionApi.IMiddleware>) {
+        this._middlewares = middleware;
       }
-      return handler(request);
-    };
+
+      pub inflight apply(request: cloud.ApiRequest, index: num?): cloud.ApiResponse  {
+        log("{index ?? 0}");
+
+        if let middleware = this._middlewares.tryAt(index ?? 0) {
+          let next = (request: cloud.ApiRequest): cloud.ApiResponse => {
+            let newIndex = (index ?? 0) + 1;
+            if newIndex < this._middlewares.length {
+              return this.apply(request, newIndex);
+            }
+            return handler(request);
+          };
+          return middleware.handle(request, next);
+        }
+        return handler(request);
+      }
+    }
+
+    this.handlerCount += 1;
+
+    let applyMiddleware = new ApplyMiddleware(this._middlewares) as "ApplyMiddleware-{this.handlerCount}";
 
     return inflight (request: cloud.ApiRequest): cloud.ApiResponse => {
       try {
-        let response = applyMiddlewares(request);
+        let response = applyMiddleware.apply(request);
 
         let headers = response.headers?.copyMut();
         headers?.set("content-type", "application/json");
 
-        let var bodyStr = "";
-        if let body = response.body {
-          bodyStr = Json.stringify(body);
-        }
+        // let var bodyStr = "";
+        // if let body = response.body {
+        //   bodyStr = Json.stringify(body);
+        // }
 
         return {
           status: response.status ?? 200,
           headers: headers?.copy(),
-          body: bodyStr,
+          body: response.body,
         };
       } catch error {
         if let httpError = http.HttpStatus.tryFromJson(Json.tryParse(error)) {

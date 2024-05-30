@@ -4,7 +4,7 @@ bring "../ports" as ports;
 bring "./types.w" as types;
 bring "./response.w" as apiResponse;
 
-pub class UpdateSessionHandler impl ports.IHandler {
+pub class UpdateSessionHandler impl ports.ISessionHandler {
   pub id: str;
   _table: ports.ISessionTable;
 
@@ -25,18 +25,8 @@ pub class UpdateSessionHandler impl ports.IHandler {
     log("currSession={Json.stringify(currSession)}");
 
     if (currSession?.closedAt != nil) {
-      let message = "Session already closed";
-      let exception = new exceptions.BadRequestError(message);
-
-      log(message);
-
-      return {
-        status: exception.status.code,
-        headers: {
-          "Content-Type": "application/json"
-        },
-        body: Json.stringify(exception.asErr())
-      };
+      let exception = new exceptions.BadRequestError("Session already closed");
+      return new apiResponse.SessionResponseBadRequest(exception.asErr()).toCloudApiResponse();
     }
 
     if let sessionJson = Json.tryParse(request.body!) {
@@ -61,7 +51,6 @@ pub class UpdateSessionHandler impl ports.IHandler {
     }
 
     let exception = new exceptions.BadRequestError("Invalid request body");
-
     return new apiResponse.SessionResponseBadRequest(exception.asErr()).toCloudApiResponse();
   }
 }

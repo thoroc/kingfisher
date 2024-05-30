@@ -1,5 +1,6 @@
 bring cloud;
 bring "./ISessionApi.w" as ISessionApi;
+bring "./ISessionHandler.w" as ISessionHandler;
 bring "../../libs/http" as http;
 
 pub struct SessionApiProps {
@@ -19,7 +20,7 @@ pub class SessionApi impl ISessionApi.ISessionApi {
   }
 
   wrapHandler(
-    handler: ISessionApi.IHandler,
+    handler: ISessionHandler.ISessionHandler,
   ): inflight (cloud.ApiRequest): cloud.ApiResponse {
     class ApplyMiddleware {
 
@@ -95,35 +96,35 @@ pub class SessionApi impl ISessionApi.ISessionApi {
     this._middlewares.push(middleware);
   }
 
-  pub connect(path: str, handler: ISessionApi.IHandler): void {
+  pub connect(path: str, handler: ISessionHandler.ISessionHandler): void {
     this.api.connect(path, this.wrapHandler(handler));
   }
 
-  pub delete(path: str, handler: ISessionApi.IHandler): void {
+  pub delete(path: str, handler: ISessionHandler.ISessionHandler): void {
     this.api.delete(path, this.wrapHandler(handler));
   }
 
-  pub get(path: str, handler: ISessionApi.IHandler): void {
+  pub get(path: str, handler: ISessionHandler.ISessionHandler): void {
     this.api.get(path, this.wrapHandler(handler));
   }
 
-  pub head(path: str, handler: ISessionApi.IHandler): void {
+  pub head(path: str, handler: ISessionHandler.ISessionHandler): void {
     this.api.head(path, this.wrapHandler(handler));
   }
 
-  pub options(path: str, handler: ISessionApi.IHandler): void {
+  pub options(path: str, handler: ISessionHandler.ISessionHandler): void {
     this.api.options(path, this.wrapHandler(handler));
   }
 
-  pub patch(path: str, handler: ISessionApi.IHandler): void {
+  pub patch(path: str, handler: ISessionHandler.ISessionHandler): void {
     this.api.patch(path, this.wrapHandler(handler));
   }
 
-  pub post(path: str, handler: ISessionApi.IHandler): void {
+  pub post(path: str, handler: ISessionHandler.ISessionHandler): void {
     this.api.post(path, this.wrapHandler(handler, ));
   }
 
-  pub put(path: str, handler: ISessionApi.IHandler): void {
+  pub put(path: str, handler: ISessionHandler.ISessionHandler): void {
     this.api.put(path, this.wrapHandler(handler));
   }
 }

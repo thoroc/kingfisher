@@ -1,9 +1,10 @@
 bring cloud;
+bring "./response.w" as apiResponse;
 bring "../../libs/exceptions" as exceptions;
 bring "../ports" as ports;
 bring "./types.w" as types;
 
-pub class CloseSessionHandler impl ports.IHandler {
+pub class CloseSessionHandler impl ports.ISessionHandler {
   pub id: str;
   _table: ports.ISessionTable;
 
@@ -20,56 +21,21 @@ pub class CloseSessionHandler impl ports.IHandler {
     let session = this._table.getSession(sessionId);
 
     if (session?.closedAt != nil) {
-      let message = "Session already closed";
-      let exception = new exceptions.BadRequestError(message);
-
-      return {
-        status: exception.status.code,
-        headers: {
-          "Content-Type": "application/json"
-        },
-        body: Json.stringify(exception.asErr())
-      };
+      let exception = new exceptions.BadRequestError("Session already closed");
+      return new apiResponse.SessionResponseBadRequest(exception.asErr()).toCloudApiResponse();
     }
 
     let closedSession = this._table.closeSession(sessionId);
 
     if (closedSession == nil) {
-      let message = "Failed to update session";
-      let exception = new exceptions.InternalServerError(message);
-
-      return {
-        status: exception.status.code,
-        headers: {
-          "Content-Type": "application/json"
-        },
-        body: Json.stringify(exception.asErr())
-      };
+      let expection = new exceptions.InternalServerError("Failed to update session");
+      return new apiResponse.SessionResponseInternalServerError(expection.asErr()).toCloudApiResponse();
     }
 
     log("Session={Json.stringify(closedSession!)}");
 
     log("Closed session with sessionId={sessionId}");
 
-    return {
-      status: 200,
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: Json.stringify(closedSession)
-    };
-
-    let message = "Failed to parse event";
-    let exception = new exceptions.BadRequestError(message);
-
-    log(message);
-
-    return {
-      status: exception.status.code,
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: Json.stringify(exception.asErr())
-    };
+    return new apiResponse.SessionResponseOk(closedSession).toCloudApiResponse();
   }
 }

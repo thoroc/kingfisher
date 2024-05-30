@@ -1,5 +1,6 @@
 bring cloud;
 bring "./ISessionTable.w" as ISessionTable;
+bring "./ISessionHandler.w" as ISessionHandler;
 
 pub struct ApiResponse {
   status: num;
@@ -13,22 +14,18 @@ pub struct ApiRequest {
   body: str;
 }
 
-pub inflight interface IHandler {
-  inflight handle(request: cloud.ApiRequest): cloud.ApiResponse;
-}
-
 pub inflight interface IMiddleware {
   inflight handle(request: cloud.ApiRequest, next: inflight (cloud.ApiRequest): cloud.ApiResponse): cloud.ApiResponse;
 }
 
 pub interface ISessionApi {
   addMiddleware(middleware: IMiddleware): void;
-  connect(path: str, handler: IHandler): void;
-  delete(path: str, handler: IHandler): void;
-  get(path: str, handler: IHandler): void;
-  head(path: str, handler: IHandler): void;
-  options(path: str, handler: IHandler): void;
-  patch(path: str, handler: IHandler): void;
-  post(path: str, handler: IHandler): void;
-  put(path: str, handler: IHandler): void;
+  connect(path: str, handler: ISessionHandler.ISessionHandler): void;
+  delete(path: str, handler: ISessionHandler.ISessionHandler): void;
+  get(path: str, handler: ISessionHandler.ISessionHandler): void;
+  head(path: str, handler: ISessionHandler.ISessionHandler): void;
+  options(path: str, handler: ISessionHandler.ISessionHandler): void;
+  patch(path: str, handler: ISessionHandler.ISessionHandler): void;
+  post(path: str, handler: ISessionHandler.ISessionHandler): void;
+  put(path: str, handler: ISessionHandler.ISessionHandler): void;
 }

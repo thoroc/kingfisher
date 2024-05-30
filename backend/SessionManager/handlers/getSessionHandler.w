@@ -4,7 +4,7 @@ bring "../ports" as ports;
 bring "./types.w" as types;
 bring "./response.w" as apiResponse;
 
-pub class GetSessionHandler impl ports.IHandler {
+pub class GetSessionHandler impl ports.ISessionHandler {
   pub id: str;
   _table: ports.ISessionTable;
 

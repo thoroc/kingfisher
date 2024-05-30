@@ -1,6 +1,7 @@
 bring cloud;
 bring "./ISessionApi.w" as ISessionApi;
 bring "./ISessionHandler.w" as ISessionHandler;
+bring "./IMiddleware.w" as IMiddleware;
 bring "../../libs/http" as http;
 
 pub struct SessionApiProps {
@@ -10,12 +11,12 @@ pub struct SessionApiProps {
 
 pub class SessionApi impl ISessionApi.ISessionApi {
   pub api: cloud.Api;
-  _middlewares: MutArray<ISessionApi.IMiddleware>;
+  _middlewares: MutArray<IMiddleware.IMiddleware>;
   var _handlerCount: num;
 
   new(props: SessionApiProps) {
     this.api = props.api ?? new cloud.Api(cors: props.cors ?? true);
-    this._middlewares = MutArray<ISessionApi.IMiddleware>[];
+    this._middlewares = MutArray<IMiddleware.IMiddleware>[];
     this._handlerCount = 0;
   }
 
@@ -24,10 +25,11 @@ pub class SessionApi impl ISessionApi.ISessionApi {
   ): inflight (cloud.ApiRequest): cloud.ApiResponse {
     class ApplyMiddleware {
 
-      _middlewares: MutArray<ISessionApi.IMiddleware>;
+      _middlewares: MutArray<IMiddleware.IMiddleware>;
 
-      new(middleware: MutArray<ISessionApi.IMiddleware>) {
+      new(middleware: MutArray<IMiddleware.IMiddleware>) {
         this._middlewares = middleware;
+        nodeof(this).hidden = true;
       }
 
       pub inflight apply(request: cloud.ApiRequest, index: num?): cloud.ApiResponse  {
@@ -92,7 +94,7 @@ pub class SessionApi impl ISessionApi.ISessionApi {
     };
   }
 
-  pub addMiddleware(middleware: ISessionApi.IMiddleware) {
+  pub addMiddleware(middleware: IMiddleware.IMiddleware) {
     this._middlewares.push(middleware);
   }
 

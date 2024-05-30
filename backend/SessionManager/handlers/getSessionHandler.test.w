@@ -5,7 +5,7 @@ bring "../../libs/exceptions" as exceptions;
 bring "../ports" as ports;
 bring "./getSessionHandler.w" as sut;
 
-let nilMockTable = new ports.MockSessionTable() as "NilSessionMockSessionTable";
+let nilMockTable = new ports.MockSessionTable({}) as "NilSessionMockSessionTable";
 let missingSessionIdHandler = new sut.GetSessionHandler({table: nilMockTable}) as "MissingSessionIdGetSessionHandler";
 
 test "Returns an error when the sessionId is missing" {
@@ -38,9 +38,11 @@ test "Returns an error when the sessionId is invalid" {
   expect.equal(result.body, Json.stringify(exception.asErr()));
 }
 
-let validMockTable = new ports.MockSessionTable(ports.SessionResponse {
-  sessionId: "valid-session-id",
-  createdAt: "2021-01-01T00:00:00Z",
+let validMockTable = new ports.MockSessionTable({
+  response: {
+    sessionId: "valid-session-id",
+    createdAt: "2021-01-01T00:00:00Z",
+  }
 }) as "ValidSessionIdMockSessionTable";
 let validSessionIdHandler = new sut.GetSessionHandler({table: validMockTable}) as "ValidSessionIdGetSessionHandler";
 

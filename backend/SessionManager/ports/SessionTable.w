@@ -5,7 +5,8 @@ bring "./ISessionTable.w" as ISessionTable;
 
 
 pub class SessionTable impl ISessionTable.ISessionTable {
-  _table: dynamodb.Table;
+  _name: str;
+  _table: dynamodb.ITable;
 
   new(tableName: str) {
     this._table = new dynamodb.Table(
@@ -18,6 +19,11 @@ pub class SessionTable impl ISessionTable.ISessionTable {
       ],
       hashKey: "sessionId",
     );
+    this._name = tableName;
+  }
+
+  pub inflight getTableName(): str {
+    return this._name;
   }
 
 
@@ -116,11 +122,22 @@ pub class SessionTable impl ISessionTable.ISessionTable {
   }
 }
 
+pub struct MockSessionTableProps {
+  name: str?;
+  response: types.SessionResponse?;
+}
+
 pub class MockSessionTable impl ISessionTable.ISessionTable {
+  _name: str;
   _response: types.SessionResponse?;
 
-  new(response: types.SessionResponse?) {
-    this._response = response;
+  new(props: MockSessionTableProps) {
+    this._name = props.name ?? "MockTable";
+    this._response = props.response;
+  }
+
+  pub inflight getTableName(): str {
+    return this._name;
   }
 
   pub inflight closeSession(sessionId: str): types.SessionResponse? {
@@ -143,13 +160,15 @@ pub class MockSessionTable impl ISessionTable.ISessionTable {
 
   pub inflight listSessions(): Array<types.SessionResponse> {
     log("> listSessions");
-    log("response: {Json.stringify(this._response)}");
+    log("response props: {Json.stringify(this._response)}");
 
     let response = MutArray<types.SessionResponse>[];
 
-    if (this._response != nil) {
-      response.push(this._response!);
-    }
+    log("response new: {Json.stringify(response)}");
+
+    // if (this._response != nil) {
+    //   response.push(this._response!);
+    // }
 
     return response.copy();
   }

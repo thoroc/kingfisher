@@ -5,10 +5,15 @@ bring "./types.w" as types;
 bring "./response.w" as apiResponse;
 
 pub class GetSessionHandler impl cloud.IApiEndpointHandler {
-  _table: ports.ISessionTable;
+  pub _table: ports.ISessionTable;
 
   new(options: types.SessionHandlerOptions) {
+    log("GetSessionHandler.new()");
     this._table = options.table;
+  }
+
+  pub inflight getSession(sessionId: str): ports.SessionResponse? {
+    return this._table.getSession(sessionId);
   }
 
   pub inflight handle(request: cloud.ApiRequest): cloud.ApiResponse {

@@ -49,6 +49,13 @@ sessionApi.post("{basePath}/:sessionId/close", inflight (request: cloud.ApiReque
   return closeSessionHandler.handle(request);
 });
 
+let newApi = new ports.SessionApi({}) as "{companyName}-Session-Api-Port";
+
+newApi.get(
+  "/sessions", 
+  new handlers.GetSessionHandler(handlerOptions), 
+);
+
 new vite.Vite(
   root: "{@dirname}/../frontend",
   publicEnv: {

@@ -14,16 +14,21 @@ pub struct ApiRequest {
 }
 
 pub interface IHandler {
-  inflight handle(request: ApiRequest): ApiResponse;
+  inflight handle(request: cloud.ApiRequest): cloud.ApiResponse;
 }
 
 pub interface IMiddleware {
-  inflight handle(request: ApiRequest, response: ApiResponse): void;
+  inflight invoke(request: cloud.ApiRequest): cloud.ApiResponse;
 }
 
 pub interface ISessionApi {
   addMiddleware(middleware: IMiddleware): void;
-  get(path: str, handler: IHandler, request: ApiRequest): ApiResponse;
-  post(path: str, handler: IHandler, request: ApiRequest): ApiResponse;
-  put(path: str, handler: IHandler, request: ApiRequest): ApiResponse;
+  connect(path: str, handler: IHandler): void;
+  delete(path: str, handler: IHandler): void;
+  get(path: str, handler: IHandler): void;
+  head(path: str, handler: IHandler): void;
+  options(path: str, handler: IHandler): void;
+  patch(path: str, handler: IHandler): void;
+  post(path: str, handler: IHandler): void;
+  put(path: str, handler: IHandler): void;
 }

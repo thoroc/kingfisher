@@ -3,11 +3,13 @@ bring "../ports" as ports;
 bring "./types.w" as types;
 bring "./response.w" as apiResponse;
 
-pub class ListSessionsHandler impl cloud.IApiEndpointHandler {
+pub class ListSessionsHandler impl ports.IHandler {
+  pub id: str;
   _table: ports.ISessionTable;
 
-  new(options: types.SessionHandlerOptions) {
-    this._table = options.table;
+  new(props: types.SessionHandlerProps) {
+    this.id = props.id;
+    this._table = props.table;
   }
 
   pub inflight handle(request: cloud.ApiRequest): cloud.ApiResponse {

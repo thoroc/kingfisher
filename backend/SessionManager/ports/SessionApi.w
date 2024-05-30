@@ -4,17 +4,18 @@ bring "../../libs/http" as http;
 
 pub struct SessionApiProps {
   api: cloud.Api?;
+  cors: bool?;
 }
 
 pub class SessionApi impl ISessionApi.ISessionApi {
   pub api: cloud.Api;
   _middlewares: MutArray<ISessionApi.IMiddleware>;
-  var handlerCount: num;
+  var _handlerCount: num;
 
   new(props: SessionApiProps) {
-    this.api = props.api ?? new cloud.Api();
+    this.api = props.api ?? new cloud.Api(cors: props.cors ?? true);
     this._middlewares = MutArray<ISessionApi.IMiddleware>[];
-    this.handlerCount = 0;
+    this._handlerCount = 0;
   }
 
   wrapHandler(
@@ -45,9 +46,9 @@ pub class SessionApi impl ISessionApi.ISessionApi {
       }
     }
 
-    this.handlerCount += 1;
+    this._handlerCount += 1;
 
-    let applyMiddleware = new ApplyMiddleware(this._middlewares) as "ApplyMiddleware-{this.handlerCount}";
+    let applyMiddleware = new ApplyMiddleware(this._middlewares) as "ApplyMiddlewareInstance-{this._handlerCount}";
 
     return inflight (request: cloud.ApiRequest): cloud.ApiResponse => {
       try {
@@ -55,11 +56,6 @@ pub class SessionApi impl ISessionApi.ISessionApi {
 
         let headers = response.headers?.copyMut();
         headers?.set("content-type", "application/json");
-
-        // let var bodyStr = "";
-        // if let body = response.body {
-        //   bodyStr = Json.stringify(body);
-        // }
 
         return {
           status: response.status ?? 200,

@@ -11,6 +11,7 @@ pub struct AwsConfig {
 }
 
 
-pub struct SessionHandlerOptions extends AwsConfig {
+pub struct SessionHandlerProps extends AwsConfig {
+  id: str;
   table: ports.ISessionTable;
 }

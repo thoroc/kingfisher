@@ -1,19 +1,6 @@
 bring cloud;
-bring "./ISessionTable.w" as ISessionTable;
 bring "./ISessionHandler.w" as ISessionHandler;
 bring "./IMiddleware.w" as IMiddleware;
-
-pub struct ApiResponse {
-  status: num;
-  headers: Map<str>;
-  body: str;
-}
-
-pub struct ApiRequest {
-  status: num;
-  headers: Map<str>;
-  body: str;
-}
 
 pub interface ISessionApi {
   addMiddleware(middleware: IMiddleware.IMiddleware): void;

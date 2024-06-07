@@ -3,6 +3,7 @@ bring "../../libs/exceptions" as exceptions;
 bring "../ports" as ports;
 bring "./types.w" as types;
 bring "./response.w" as apiResponse;
+bring "../core" as core;
 
 pub class UpdateSessionHandler impl ports.ISessionHandler {
   pub id: str;
@@ -29,8 +30,19 @@ pub class UpdateSessionHandler impl ports.ISessionHandler {
       return new apiResponse.SessionResponseBadRequest(exception.asErr()).toCloudApiResponse();
     }
 
+    log("Body={request.body!}");
+    let jsonBody = Json.tryParse(request.body!);
+    // log("User={Json.stringify(ports.User.tryParseJson(request.body!)!)}");
+
+    try {
+      let resquestUser = core.User.fromJson(jsonBody?.get("user"));
+      log("Request User={Json.stringify(resquestUser)}");
+    } catch e {
+      log("Error={e}");
+    }
+
     if let sessionJson = Json.tryParse(request.body!) {
-      let user = ports.User.tryFromJson(sessionJson.get("user"));
+      let user = core.User.tryFromJson(sessionJson.get("user"));
 
       if (user == nil) {
         let exception = new exceptions.BadRequestError("Invalid user");

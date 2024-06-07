@@ -2,7 +2,6 @@ bring cloud;
 bring "../../libs/exceptions" as exceptions;
 bring "../ports" as ports;
 bring "./types.w" as types;
-bring "./response.w" as apiResponse;
 bring "../core" as core;
 
 pub class UpdateSessionHandler impl ports.ISessionHandler {
@@ -27,7 +26,7 @@ pub class UpdateSessionHandler impl ports.ISessionHandler {
 
     if (currSession?.closedAt != nil) {
       let exception = new exceptions.BadRequestError("Session already closed");
-      return new apiResponse.SessionResponseBadRequest(exception.asErr()).toCloudApiResponse();
+      return new ports.SessionResponseBadRequest(exception.asErr()).toCloudApiResponse();
     }
 
     log("updatedSessionHandler - Body={request.body!}");
@@ -47,7 +46,7 @@ pub class UpdateSessionHandler impl ports.ISessionHandler {
       if (user == nil) {
         let exception = new exceptions.BadRequestError("Invalid user");
 
-        return new apiResponse.SessionResponseBadRequest(exception.asErr()).toCloudApiResponse();
+        return new ports.SessionResponseBadRequest(exception.asErr()).toCloudApiResponse();
       }
 
       log("updatedSessionHandler - Udating session with sessionId={sessionId} user={Json.stringify(user)}");
@@ -66,10 +65,10 @@ pub class UpdateSessionHandler impl ports.ISessionHandler {
 
       log("updatedSessionHandler - Updated session with sessionId={sessionId}");
 
-      return new apiResponse.SessionResponseOk(updatedSession).toCloudApiResponse();
+      return new ports.SessionResponseOk(updatedSession).toCloudApiResponse();
     }
 
     let exception = new exceptions.BadRequestError("Invalid request body");
-    return new apiResponse.SessionResponseBadRequest(exception.asErr()).toCloudApiResponse();
+    return new ports.SessionResponseBadRequest(exception.asErr()).toCloudApiResponse();
   }
 }

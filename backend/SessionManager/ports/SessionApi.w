@@ -4,7 +4,7 @@ bring "./ISessionHandler.w" as ISessionHandler;
 bring "./IMiddleware.w" as IMiddleware;
 bring "../../libs/http" as http;
 bring "../../libs/exceptions" as exceptions;
-bring "../handlers/response.w" as apiResponse;
+bring "./SessionApiResponse.w" as apiResponse;
 
 pub struct SessionApiProps {
   api: cloud.Api?;

@@ -1,5 +1,4 @@
 bring cloud;
-bring "./response.w" as apiResponse;
 bring "../../libs/exceptions" as exceptions;
 bring "../ports" as ports;
 bring "./types.w" as types;
@@ -22,20 +21,20 @@ pub class CloseSessionHandler impl ports.ISessionHandler {
 
     if (session?.closedAt != nil) {
       let exception = new exceptions.BadRequestError("Session already closed");
-      return new apiResponse.SessionResponseBadRequest(exception.asErr()).toCloudApiResponse();
+      return new ports.SessionResponseBadRequest(exception.asErr()).toCloudApiResponse();
     }
 
     let closedSession = this._table.closeSession(sessionId);
 
     if (closedSession == nil) {
       let exception = new exceptions.InternalServerError("Failed to update session");
-      return new apiResponse.SessionResponseInternalServerError(exception.asErr()).toCloudApiResponse();
+      return new ports.SessionResponseInternalServerError(exception.asErr()).toCloudApiResponse();
     }
 
     log("closeSessionHandler - Session={Json.stringify(closedSession!)}");
 
     log("closeSessionHandler - Closed session with sessionId={sessionId}");
 
-    return new apiResponse.SessionResponseOk(closedSession).toCloudApiResponse();
+    return new ports.SessionResponseOk(closedSession).toCloudApiResponse();
   }
 }

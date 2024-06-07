@@ -2,7 +2,6 @@ bring cloud;
 bring "../../libs/exceptions" as exceptions;
 bring "../ports" as ports;
 bring "./types.w" as types;
-bring "./response.w" as apiResponse;
 
 pub class CreateSessionHandler impl ports.ISessionHandler {
   pub id: str;
@@ -22,11 +21,11 @@ pub class CreateSessionHandler impl ports.ISessionHandler {
 
       log(message);
 
-      return new apiResponse.SessionResponseInternalServerError(exceptions.asErr()).toCloudApiResponse();
+      return new ports.SessionResponseInternalServerError(exceptions.asErr()).toCloudApiResponse();
     }
 
     log("createSessionHandler - Created new session with sessionId={session!.sessionId}");
 
-    return new apiResponse.SessionResponseOk(session).toCloudApiResponse();
+    return new ports.SessionResponseOk(session).toCloudApiResponse();
   }
 }

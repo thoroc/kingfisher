@@ -1,6 +1,6 @@
 bring cloud;
 
-pub inflight class SessionResponse {
+pub inflight class SessionApiResponse {
   _status: num;
   _headers: Map<str>;
   _body: str;
@@ -22,31 +22,31 @@ pub inflight class SessionResponse {
   }
 }
 
-pub inflight class SessionResponseOk extends SessionResponse {
+pub inflight class SessionResponseOk extends SessionApiResponse {
   new(body: Json) {
     super(200, body, {"Content-Type": "application/json"});
   }
 }
 
-pub inflight class SessionResponseCreated extends SessionResponse {
+pub inflight class SessionResponseCreated extends SessionApiResponse {
   new(body: Json) {
     super(201, body, {"Content-Type": "application/json"});
   }
 }
 
-pub inflight class SessionResponseNotFound extends SessionResponse {
+pub inflight class SessionResponseNotFound extends SessionApiResponse {
   new(body: Json) {
     super(404, body, {"Content-Type": "application/json"});
   }
 }
 
-pub inflight class SessionResponseBadRequest extends SessionResponse {
+pub inflight class SessionResponseBadRequest extends SessionApiResponse {
   new(body: Json) {
     super(400, body, {"Content-Type": "application/json"});
   }
 }
 
-pub inflight class SessionResponseInternalServerError extends SessionResponse {
+pub inflight class SessionResponseInternalServerError extends SessionApiResponse {
   new(body: Json) {
     super(500, body, {"Content-Type": "application/json"});
   }

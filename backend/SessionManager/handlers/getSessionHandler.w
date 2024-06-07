@@ -2,7 +2,6 @@ bring cloud;
 bring "../../libs/exceptions" as exceptions;
 bring "../ports" as ports;
 bring "./types.w" as types;
-bring "./response.w" as apiResponse;
 
 pub class GetSessionHandler impl ports.ISessionHandler {
   pub id: str;
@@ -24,7 +23,7 @@ pub class GetSessionHandler impl ports.ISessionHandler {
 
       log(exception.asStr());
 
-      return new apiResponse.SessionResponseBadRequest(exception.asErr()).toCloudApiResponse();
+      return new ports.SessionResponseBadRequest(exception.asErr()).toCloudApiResponse();
     }
 
     let sessionId = request.vars.get("sessionId");
@@ -38,11 +37,11 @@ pub class GetSessionHandler impl ports.ISessionHandler {
 
       log(exception.asStr());
 
-      return new apiResponse.SessionResponseNotFound(exception.asErr()).toCloudApiResponse();
+      return new ports.SessionResponseNotFound(exception.asErr()).toCloudApiResponse();
     }
 
     log("getSessionHandler - Fetched record for session with sessionId={session!.sessionId}");
 
-    return new apiResponse.SessionResponseOk(session).toCloudApiResponse();
+    return new ports.SessionResponseOk(session).toCloudApiResponse();
   }
 }

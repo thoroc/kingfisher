@@ -1,7 +1,6 @@
 bring cloud;
 bring "../ports" as ports;
 bring "./types.w" as types;
-bring "./response.w" as apiResponse;
 
 pub class ListSessionsHandler impl ports.ISessionHandler {
   pub id: str;
@@ -15,6 +14,6 @@ pub class ListSessionsHandler impl ports.ISessionHandler {
   pub inflight handle(request: cloud.ApiRequest): cloud.ApiResponse {
     let sessions = this._table.listSessions();
 
-    return new apiResponse.SessionResponseOk(sessions).toCloudApiResponse();
+    return new ports.SessionResponseOk(sessions).toCloudApiResponse();
   }
 }

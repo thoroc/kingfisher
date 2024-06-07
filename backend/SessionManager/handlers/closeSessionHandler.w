@@ -16,7 +16,7 @@ pub class CloseSessionHandler impl ports.ISessionHandler {
   pub inflight handle(request: cloud.ApiRequest): cloud.ApiResponse {
     let sessionId = request.vars.get("sessionId");
 
-    log("sessionId={sessionId}");
+    log("closeSessionHandler - sessionId={sessionId}");
 
     let session = this._table.getSession(sessionId);
 
@@ -32,9 +32,9 @@ pub class CloseSessionHandler impl ports.ISessionHandler {
       return new apiResponse.SessionResponseInternalServerError(expection.asErr()).toCloudApiResponse();
     }
 
-    log("Session={Json.stringify(closedSession!)}");
+    log("closeSessionHandler - Session={Json.stringify(closedSession!)}");
 
-    log("Closed session with sessionId={sessionId}");
+    log("closeSessionHandler - Closed session with sessionId={sessionId}");
 
     return new apiResponse.SessionResponseOk(closedSession).toCloudApiResponse();
   }

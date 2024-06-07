@@ -33,7 +33,7 @@ pub class SessionApi impl ISessionApi.ISessionApi {
       }
 
       pub inflight apply(request: cloud.ApiRequest, index: num?): cloud.ApiResponse  {
-        log("{index ?? 0}");
+        log("SessionApi - Middleware Inder: {index ?? 0}");
 
         if let middleware = this._middlewares.tryAt(index ?? 0) {
           let next = (request: cloud.ApiRequest): cloud.ApiResponse => {
@@ -57,6 +57,9 @@ pub class SessionApi impl ISessionApi.ISessionApi {
       try {
         let response = applyMiddleware.apply(request);
 
+        log("SessionApi - Response's body: {Json.stringify(response.body)}");
+        log("SessionApi - Response: {Json.stringify(response)}");
+
         let headers = response.headers?.copyMut();
         headers?.set("content-type", "application/json");
 
@@ -78,8 +81,8 @@ pub class SessionApi impl ISessionApi.ISessionApi {
           };
         }
 
-        log("Internal server error");
-        log(unsafeCast(error));
+        log("SessionApi - Internal server error");
+        log("SessionApi - {unsafeCast(error)}");
 
         return {
           status: 500,

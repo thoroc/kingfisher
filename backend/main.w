@@ -19,21 +19,25 @@ let createSessionHandler = new handlers.CreateSessionHandler({
   table: sessionTable,
   region: AwsRegion,
 }) as "{companyName}-CreateSessionFn";
+
 let getSessionHandler = new handlers.GetSessionHandler({
   id: "getSessionHandler", 
   table: sessionTable,
   region: AwsRegion,
 }) as "{companyName}-GetSessionFn";
+
 let listSessionsHandler = new handlers.ListSessionsHandler({
   id: "listSessionsHandler",
   table: sessionTable,
   region: AwsRegion,
 }) as "{companyName}-ListSessionsFn";
+
 let updateSessionHandler = new handlers.UpdateSessionHandler({
   id: "updateSessionHandler",
   table: sessionTable,
   region: AwsRegion,
 }) as "{companyName}-UpdateSessionFn";
+
 let closeSessionHandler = new handlers.CloseSessionHandler({
   id: "closeSessionHandler",
   table: sessionTable,

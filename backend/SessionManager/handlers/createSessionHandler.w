@@ -25,7 +25,7 @@ pub class CreateSessionHandler impl ports.ISessionHandler {
       return new apiResponse.SessionResponseInternalServerError(exceptions.asErr()).toCloudApiResponse();
     }
 
-    log("Created new session with sessionId={session!.sessionId}");
+    log("createSessionHandler - Created new session with sessionId={session!.sessionId}");
 
     return new apiResponse.SessionResponseOk(session).toCloudApiResponse();
   }

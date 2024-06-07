@@ -17,28 +17,28 @@ pub class UpdateSessionHandler impl ports.ISessionHandler {
   pub inflight handle(request: cloud.ApiRequest): cloud.ApiResponse {
     let sessionId = request.vars.get("sessionId");
 
-    log("sessionId={sessionId}");
+    log("updatedSessionHandler - sessionId={sessionId}");
 
-    log("request.body={request.body!}");
+    log("updatedSessionHandler - request.body={request.body!}");
 
     let currSession = this._table.getSession(sessionId);
 
-    log("currSession={Json.stringify(currSession)}");
+    log("updatedSessionHandler - currSession={Json.stringify(currSession)}");
 
     if (currSession?.closedAt != nil) {
       let exception = new exceptions.BadRequestError("Session already closed");
       return new apiResponse.SessionResponseBadRequest(exception.asErr()).toCloudApiResponse();
     }
 
-    log("Body={request.body!}");
+    log("updatedSessionHandler - Body={request.body!}");
     let jsonBody = Json.tryParse(request.body!);
     // log("User={Json.stringify(ports.User.tryParseJson(request.body!)!)}");
 
     try {
       let resquestUser = core.User.fromJson(jsonBody?.get("user"));
-      log("Request User={Json.stringify(resquestUser)}");
+      log("updatedSessionHandler - Request User={Json.stringify(resquestUser)}");
     } catch e {
-      log("Error={e}");
+      log("updatedSessionHandler - Error={e}");
     }
 
     if let sessionJson = Json.tryParse(request.body!) {
@@ -50,14 +50,21 @@ pub class UpdateSessionHandler impl ports.ISessionHandler {
         return new apiResponse.SessionResponseBadRequest(exception.asErr()).toCloudApiResponse();
       }
 
-      log("Udating session with sessionId={sessionId} user={Json.stringify(user)}");
+      log("updatedSessionHandler - Udating session with sessionId={sessionId} user={Json.stringify(user)}");
+
+      let sessionRequest = ports.SessionRequest {
+        sessionId: sessionId,
+        user: user!
+      };
+
+      log("updatedSessionHandler - sessionRequest={Json.stringify(sessionRequest)}");
 
       let updatedSession = this._table.updateSession(ports.SessionRequest {
         sessionId: sessionId,
         user: user!
       });
 
-      log("Updated session with sessionId={sessionId}");
+      log("updatedSessionHandler - Updated session with sessionId={sessionId}");
 
       return new apiResponse.SessionResponseOk(updatedSession).toCloudApiResponse();
     }

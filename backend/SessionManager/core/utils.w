@@ -1,5 +1,6 @@
 pub inflight class CoreUtils {
   pub static inflight mergeJson(left: Json, right: Json, override: bool?): Json {
+    log("CoreUtils - mergeJson: {Json.stringify(left)} {Json.stringify(right)} {override ?? true}");
     // create new object
     let var newObject = MutJson {};
 

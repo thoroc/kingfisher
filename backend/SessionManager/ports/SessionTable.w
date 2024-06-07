@@ -98,32 +98,42 @@ pub class SessionTable impl ISessionTable.ISessionTable {
   }
 
   pub inflight updateSession(session: types.SessionRequest): types.SessionResponse? {
+    log("SessionTable - updateSession: {session.sessionId}");
 
-    let currSession = this.getSession(session.sessionId);
+    let currSession: types.SessionResponse? = this.getSession(session.sessionId);
+
+    log("SessionTable - currSession: {Json.stringify(currSession)}");
 
     if (currSession == nil) {
-      log("No session found for sessionId={session.sessionId}");
+      log("SessionTable - No session found for sessionId={session.sessionId}");
       return nil;
     }
 
-    let currUser = currSession!.user;
-    let reqUser = session.user;
+    let currUser = currSession!.user ?? {};
+    let reqUser = session.user ?? {};
     let updatedUser = core.CoreUtils.mergeJson(currUser, reqUser);
 
-    log("Updating session: {session.sessionId}");
+    log("SessionTable - Updating session: {session.sessionId}");
 
-    let updatedSession: types.SessionResponse = {
-      createdAt: currSession!.createdAt,
-      sessionId: session.sessionId,
-      updatedAt: std.Datetime.utcNow().toIso(),
-      user: core.User.fromJson(updatedUser),
-    };
+    try {
+      log("SessionTable - updatedUser: {Json.stringify(updatedUser)}");
 
-    this._table.put(
-      Item: updatedSession
-    );
+      let updatedSession: types.SessionResponse = {
+        createdAt: currSession!.createdAt,
+        sessionId: session.sessionId,
+        updatedAt: std.Datetime.utcNow().toIso(),
+        user: core.User.fromJson(updatedUser),
+      };
 
-    return updatedSession;
+      this._table.put(
+        Item: updatedSession
+      );
+
+      return updatedSession;
+    } catch error {
+      log("SessionTable - Error: {error}");
+      throw("Error: {error}");
+    }
   }
 }
 
@@ -146,30 +156,30 @@ pub class MockSessionTable impl ISessionTable.ISessionTable {
   }
 
   pub inflight closeSession(sessionId: str): types.SessionResponse? {
-    log("> closeSession: {sessionId}");
-    log("response: {Json.stringify(this._response)}");
+    log("MockSessionTable - closeSession: {sessionId}");
+    log("MockSessionTable - response: {Json.stringify(this._response)}");
     return this._response;
   }
 
   pub inflight createSession(): types.SessionResponse? {
-    log("> createSession");
-    log("response: {Json.stringify(this._response)}");
+    log("MockSessionTable - createSession");
+    log("MockSessionTable - response: {Json.stringify(this._response)}");
     return this._response;
   }
 
   pub inflight getSession(sessionId: str): types.SessionResponse? {
-    log("> getSession: {sessionId}");
-    log("response: {Json.stringify(this._response)}");
+    log("MockSessionTable - getSession: {sessionId}");
+    log("MockSessionTable - response: {Json.stringify(this._response)}");
     return this._response;
   }
 
   pub inflight listSessions(): Array<types.SessionResponse> {
-    log("> listSessions");
-    log("response props: {Json.stringify(this._response)}");
+    log("MockSessionTable - listSessions");
+    log("MockSessionTable - response props: {Json.stringify(this._response)}");
 
     let response = MutArray<types.SessionResponse>[];
 
-    log("response new: {Json.stringify(response)}");
+    log("MockSessionTable - response new: {Json.stringify(response)}");
 
     // if (this._response != nil) {
     //   response.push(this._response!);
@@ -179,8 +189,8 @@ pub class MockSessionTable impl ISessionTable.ISessionTable {
   }
 
   pub inflight updateSession(session: types.SessionRequest): types.SessionResponse? {
-    log("> updateSession");
-    log("response: {Json.stringify(this._response)}");
+    log("MockSessionTable - updateSession");
+    log("MockSessionTable - response: {Json.stringify(this._response)}");
     return this._response;
   }
 }

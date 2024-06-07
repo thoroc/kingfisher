@@ -30,7 +30,7 @@ pub class GetSessionHandler impl ports.ISessionHandler {
     let sessionId = request.vars.get("sessionId");
     let session = this._table.getSession(sessionId);
 
-    log("session={Json.stringify(session)}");
+    log("getSessionHandler - session={Json.stringify(session)}");
 
     if (session == nil) {
       let message = "No record found for session with sessionId={sessionId}";
@@ -41,7 +41,7 @@ pub class GetSessionHandler impl ports.ISessionHandler {
       return new apiResponse.SessionResponseNotFound(exception.asErr()).toCloudApiResponse();
     }
 
-    log("Fetched record for session with sessionId={session!.sessionId}");
+    log("getSessionHandler - Fetched record for session with sessionId={session!.sessionId}");
 
     return new apiResponse.SessionResponseOk(session).toCloudApiResponse();
   }

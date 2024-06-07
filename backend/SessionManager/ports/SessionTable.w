@@ -2,6 +2,7 @@ bring dynamodb;
 bring util;
 bring "./types.w" as types;
 bring "./ISessionTable.w" as ISessionTable;
+bring "../core" as core;
 
 
 pub class SessionTable impl ISessionTable.ISessionTable {
@@ -105,13 +106,17 @@ pub class SessionTable impl ISessionTable.ISessionTable {
       return nil;
     }
 
+    let currUser = currSession!.user;
+    let reqUser = session.user;
+    let updatedUser = core.CoreUtils.mergeJson(currUser, reqUser);
+
     log("Updating session: {session.sessionId}");
 
     let updatedSession: types.SessionResponse = {
       createdAt: currSession!.createdAt,
       sessionId: session.sessionId,
       updatedAt: std.Datetime.utcNow().toIso(),
-      user: session.user,
+      user: core.User.fromJson(updatedUser),
     };
 
     this._table.put(

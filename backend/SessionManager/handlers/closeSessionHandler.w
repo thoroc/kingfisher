@@ -28,8 +28,8 @@ pub class CloseSessionHandler impl ports.ISessionHandler {
     let closedSession = this._table.closeSession(sessionId);
 
     if (closedSession == nil) {
-      let expection = new exceptions.InternalServerError("Failed to update session");
-      return new apiResponse.SessionResponseInternalServerError(expection.asErr()).toCloudApiResponse();
+      let exception = new exceptions.InternalServerError("Failed to update session");
+      return new apiResponse.SessionResponseInternalServerError(exception.asErr()).toCloudApiResponse();
     }
 
     log("closeSessionHandler - Session={Json.stringify(closedSession!)}");

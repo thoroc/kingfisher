@@ -3,6 +3,8 @@ bring "./ISessionApi.w" as ISessionApi;
 bring "./ISessionHandler.w" as ISessionHandler;
 bring "./IMiddleware.w" as IMiddleware;
 bring "../../libs/http" as http;
+bring "../../libs/exceptions" as exceptions;
+bring "../handlers/response.w" as apiResponse;
 
 pub struct SessionApiProps {
   api: cloud.Api?;
@@ -60,14 +62,7 @@ pub class SessionApi impl ISessionApi.ISessionApi {
         log("SessionApi - Response's body: {Json.stringify(response.body)}");
         log("SessionApi - Response: {Json.stringify(response)}");
 
-        let headers = response.headers?.copyMut();
-        headers?.set("content-type", "application/json");
-
-        return {
-          status: response.status ?? 200,
-          headers: headers?.copy(),
-          body: response.body,
-        };
+        return response;
       } catch error {
         if let httpError = http.HttpStatus.tryFromJson(Json.tryParse(error)) {
           return {
@@ -84,15 +79,8 @@ pub class SessionApi impl ISessionApi.ISessionApi {
         log("SessionApi - Internal server error");
         log("SessionApi - {unsafeCast(error)}");
 
-        return {
-          status: 500,
-          headers: {
-            "content-type": "application/json",
-          },
-          body: Json.stringify({
-            error: "Internal server error",
-          }),
-        };
+        let exception = new exceptions.InternalServerError("Internal server error");
+        return new apiResponse.SessionResponseInternalServerError(exception.asErr()).toCloudApiResponse();
       }
     };
   }
